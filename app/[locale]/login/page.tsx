@@ -21,7 +21,6 @@ export default async function Login({
 }) {
   const user = await getServerUser()
 
-  console.log(user)
   const cookieStore = cookies()
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -50,18 +49,11 @@ export default async function Login({
 
     return redirect(`/${homeWorkspace.id}/chat`)
   }
-
-  async function checkIfUserExists(email: string) {
-    const { data, error } = await supabase.rpc("check_user_exists", {
-      email_to_check: email
-    })
-
-    if (error) {
-      console.error("Error checking user existence", error)
-      return false
-    }
-
-    return data
+  const { data: exists, error } = await supabase.rpc("check_user_exists", {
+    email_to_check: user.email
+  })
+  if (error) {
+    console.error("Error checking user existence", error)
   }
 
   const signIn = async () => {
@@ -90,8 +82,6 @@ export default async function Login({
       .eq("user_id", data.user.id)
       .eq("is_home", true)
       .single()
-
-    console.log(homeWorkspace)
 
     if (!homeWorkspace) {
       throw new Error(
@@ -163,14 +153,6 @@ export default async function Login({
     // return redirect("/login?message=Check email to continue sign in process")
   }
 
-  checkIfUserExists(user.email).then(exists => {
-    if (exists) {
-      signIn()
-    } else {
-      signUp()
-    }
-  })
-
   return (
     <div className="flex size-full flex-col items-center justify-center">
       <div>
@@ -178,7 +160,7 @@ export default async function Login({
       </div>
 
       <div className="mt-2 text-4xl font-bold">Chatbot UI</div>
-      <form className="" action={signIn}>
+      <form className="" action={exists ? signIn : signUp}>
         <SubmitButton className="mt-4 flex w-[200px] items-center justify-center rounded-md bg-blue-500 p-2 font-semibold">
           Start chatting
           <IconArrowRight className="ml-1" size={20} />

@@ -42,6 +42,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import { TextareaAutosize } from "../ui/textarea-autosize"
 import { WithTooltip } from "../ui/with-tooltip"
 import { ThemeSwitcher } from "./theme-switcher"
+import { signOut } from "next-auth/react"
 
 interface ProfileSettingsProps {}
 
@@ -120,7 +121,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
-    router.push("/login")
+    signOut({ callbackUrl: "/loginEuricom" })
     router.refresh()
     return
   }
