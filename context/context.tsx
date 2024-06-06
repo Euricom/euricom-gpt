@@ -1,3 +1,4 @@
+import { User } from "@/server/auth"
 import { Tables } from "@/supabase/types"
 import {
   ChatFile,
@@ -16,6 +17,8 @@ interface ChatbotUIContext {
   // PROFILE STORE
   profile: Tables<"profiles"> | null
   setProfile: Dispatch<SetStateAction<Tables<"profiles"> | null>>
+  user: User | null
+  setUser: Dispatch<SetStateAction<User | null>>
 
   // ITEMS STORE
   assistants: Tables<"assistants">[]
@@ -142,6 +145,8 @@ export const ChatbotUIContext = createContext<ChatbotUIContext>({
   // PROFILE STORE
   profile: null,
   setProfile: () => {},
+  user: null,
+  setUser: () => {},
 
   // ITEMS STORE
   assistants: [],

@@ -43,6 +43,7 @@ import { TextareaAutosize } from "../ui/textarea-autosize"
 import { WithTooltip } from "../ui/with-tooltip"
 import { ThemeSwitcher } from "./theme-switcher"
 import { signOut } from "next-auth/react"
+import { UserCard } from "../header/user-card"
 
 interface ProfileSettingsProps {}
 
@@ -334,106 +335,103 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
             </SheetTitle>
           </SheetHeader>
 
-          <Tabs defaultValue="profile">
+          {/* <Tabs defaultValue="profile">
             <TabsList className="mt-4 grid w-full grid-cols-2">
               <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="keys">API Keys</TabsTrigger>
-            </TabsList>
+            </TabsList> */}
+          <UserCard />
+          {/* <TabsContent className="mt-4 space-y-4" value="profile"> */}
+          <div className="mt-4 space-y-5">
+            <div className="flex items-center space-x-2">
+              <Label>Username</Label>
 
-            <TabsContent className="mt-4 space-y-4" value="profile">
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <Label>Username</Label>
+              <div className="text-xs">
+                {username !== profile.username ? (
+                  usernameAvailable ? (
+                    <div className="text-green-500">AVAILABLE</div>
+                  ) : (
+                    <div className="text-red-500">UNAVAILABLE</div>
+                  )
+                ) : null}
+              </div>
+            </div>
 
-                  <div className="text-xs">
-                    {username !== profile.username ? (
-                      usernameAvailable ? (
-                        <div className="text-green-500">AVAILABLE</div>
-                      ) : (
-                        <div className="text-red-500">UNAVAILABLE</div>
-                      )
-                    ) : null}
-                  </div>
+            <div className="relative">
+              <Input
+                className="pr-10"
+                placeholder="Username..."
+                value={username}
+                onChange={e => {
+                  setUsername(e.target.value)
+                  checkUsernameAvailability(e.target.value)
+                }}
+                minLength={PROFILE_USERNAME_MIN}
+                maxLength={PROFILE_USERNAME_MAX}
+              />
+
+              {username !== profile.username ? (
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  {loadingUsername ? (
+                    <IconLoader2 className="animate-spin" />
+                  ) : usernameAvailable ? (
+                    <IconCircleCheckFilled className="text-green-500" />
+                  ) : (
+                    <IconCircleXFilled className="text-red-500" />
+                  )}
                 </div>
+              ) : null}
+            </div>
 
-                <div className="relative">
-                  <Input
-                    className="pr-10"
-                    placeholder="Username..."
-                    value={username}
-                    onChange={e => {
-                      setUsername(e.target.value)
-                      checkUsernameAvailability(e.target.value)
-                    }}
-                    minLength={PROFILE_USERNAME_MIN}
-                    maxLength={PROFILE_USERNAME_MAX}
-                  />
+            <LimitDisplay used={username.length} limit={PROFILE_USERNAME_MAX} />
+          </div>
 
-                  {username !== profile.username ? (
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                      {loadingUsername ? (
-                        <IconLoader2 className="animate-spin" />
-                      ) : usernameAvailable ? (
-                        <IconCircleCheckFilled className="text-green-500" />
-                      ) : (
-                        <IconCircleXFilled className="text-red-500" />
-                      )}
-                    </div>
-                  ) : null}
-                </div>
+          <div className="space-y-1">
+            <Label>Profile Image</Label>
 
-                <LimitDisplay
-                  used={username.length}
-                  limit={PROFILE_USERNAME_MAX}
-                />
-              </div>
+            <ImagePicker
+              src={profileImageSrc}
+              image={profileImageFile}
+              height={50}
+              width={50}
+              onSrcChange={setProfileImageSrc}
+              onImageChange={setProfileImageFile}
+            />
+          </div>
 
-              <div className="space-y-1">
-                <Label>Profile Image</Label>
+          <div className="space-y-1">
+            <Label>Chat Display Name</Label>
 
-                <ImagePicker
-                  src={profileImageSrc}
-                  image={profileImageFile}
-                  height={50}
-                  width={50}
-                  onSrcChange={setProfileImageSrc}
-                  onImageChange={setProfileImageFile}
-                />
-              </div>
+            <Input
+              placeholder="Chat display name..."
+              value={displayName}
+              onChange={e => setDisplayName(e.target.value)}
+              maxLength={PROFILE_DISPLAY_NAME_MAX}
+            />
+          </div>
 
-              <div className="space-y-1">
-                <Label>Chat Display Name</Label>
+          <div className="space-y-1">
+            <Label className="text-sm">
+              What would you like the AI to know about you to provide better
+              responses?
+            </Label>
 
-                <Input
-                  placeholder="Chat display name..."
-                  value={displayName}
-                  onChange={e => setDisplayName(e.target.value)}
-                  maxLength={PROFILE_DISPLAY_NAME_MAX}
-                />
-              </div>
+            <TextareaAutosize
+              value={profileInstructions}
+              onValueChange={setProfileInstructions}
+              placeholder="Profile context... (optional)"
+              minRows={6}
+              maxRows={10}
+            />
 
-              <div className="space-y-1">
-                <Label className="text-sm">
-                  What would you like the AI to know about you to provide better
-                  responses?
-                </Label>
+            <LimitDisplay
+              used={profileInstructions.length}
+              limit={PROFILE_CONTEXT_MAX}
+            />
+          </div>
+          {/* </TabsContent> */}
 
-                <TextareaAutosize
-                  value={profileInstructions}
-                  onValueChange={setProfileInstructions}
-                  placeholder="Profile context... (optional)"
-                  minRows={6}
-                  maxRows={10}
-                />
-
-                <LimitDisplay
-                  used={profileInstructions.length}
-                  limit={PROFILE_CONTEXT_MAX}
-                />
-              </div>
-            </TabsContent>
-
-            <TabsContent className="mt-4 space-y-4" value="keys">
+          {/* <TabsContent className="mt-4 space-y-4" value="keys">
               <div className="mt-5 space-y-2">
                 <Label className="flex items-center">
                   {useAzureOpenai
@@ -723,9 +721,9 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
                     />
                   </>
                 )}
-              </div>
-            </TabsContent>
-          </Tabs>
+              </div> */}
+          {/* </TabsContent> */}
+          {/* </Tabs> */}
         </div>
 
         <div className="mt-6 flex items-center">

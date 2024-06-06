@@ -12,13 +12,13 @@ export default function ChangePasswordPage() {
 
   useEffect(() => {
     ;(async () => {
-      const session = (await supabase.auth.getSession()).data.session
+      // const session = (await supabase.auth.getSession()).data.session
 
-      if (!session) {
-        router.push("/login")
-      } else {
-        setLoading(false)
-      }
+      // if (!session) {
+      //   router.push("/login")
+      // } else {
+      setLoading(false)
+      // }
     })()
   }, [])
 

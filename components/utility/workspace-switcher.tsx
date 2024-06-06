@@ -23,6 +23,7 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
   useHotkey(";", () => setOpen(prevState => !prevState))
 
   const {
+    user,
     workspaces,
     workspaceImages,
     selectedWorkspace,
@@ -48,7 +49,7 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
     if (!selectedWorkspace) return
 
     const createdWorkspace = await createWorkspace({
-      user_id: selectedWorkspace.user_id,
+      user_id: user?.id ?? selectedWorkspace.user_id,
       default_context_length: selectedWorkspace.default_context_length,
       default_model: selectedWorkspace.default_model,
       default_prompt: selectedWorkspace.default_prompt,

@@ -13,6 +13,7 @@ import {
   fetchOpenRouterModels
 } from "@/lib/models/fetch-models"
 import { supabase } from "@/lib/supabase/browser-client"
+import { Role, User, isInRole } from "@/server/auth"
 import { Tables } from "@/supabase/types"
 import {
   ChatFile,
@@ -30,13 +31,35 @@ import { FC, useEffect, useState } from "react"
 
 interface GlobalStateProps {
   children: React.ReactNode
+  InputUser: {
+    email: string
+    id: string
+    isAuthenticated: boolean
+    // isInRole: (role: Role | Role[]) => boolean
+    name: string
+    roles: string[]
+  }
 }
 
-export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
+export const GlobalState: FC<GlobalStateProps> = ({ children, InputUser }) => {
   const router = useRouter()
+
+  const isInRoleFunction = (role: Role | Role[]) => {
+    return isInRole(InputUser, role)
+  }
+
+  const u: User = {
+    email: InputUser.email,
+    id: InputUser.id,
+    isAuthenticated: InputUser.isAuthenticated,
+    isInRole: isInRoleFunction,
+    name: InputUser.name,
+    roles: InputUser.roles
+  }
 
   // PROFILE STORE
   const [profile, setProfile] = useState<Tables<"profiles"> | null>(null)
+  const [user, setUser] = useState<User | null>(u)
 
   // ITEMS STORE
   const [assistants, setAssistants] = useState<Tables<"assistants">[]>([])
@@ -204,6 +227,8 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
         // PROFILE STORE
         profile,
         setProfile,
+        user,
+        setUser,
 
         // ITEMS STORE
         assistants,

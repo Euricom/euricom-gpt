@@ -64,24 +64,27 @@ export default async function Login({
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    })
+    // const { data, error } = await supabase.auth.signInWithPassword({
+    //   email,
+    //   password
+    // })
 
-    if (error) {
-      return redirect(`/login?message=${error.message}`)
-    }
-    let session = (await supabase.auth.getSession()).data.session
+    // if (error) {
+    //   return redirect(`/login?message=${error.message}`)
+    // }
+    // let session = (await supabase.auth.getSession()).data.session
 
-    console.log(session)
+    // console.log(session)
 
     const { data: homeWorkspace, error: homeWorkspaceError } = await supabase
       .from("workspaces")
       .select("*")
-      .eq("user_id", data.user.id)
+      .eq("user_id", "b34602d1-dc6d-449d-a367-e94efa035baf")
       .eq("is_home", true)
       .single()
+    console.log("hier")
+
+    console.log(homeWorkspace)
 
     if (!homeWorkspace) {
       throw new Error(

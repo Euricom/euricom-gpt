@@ -10,21 +10,26 @@ export const getHomeWorkspaceByUserId = async (userId: string) => {
     .single()
 
   if (!homeWorkspace) {
-    throw new Error(error.message)
+    throw new Error(error?.message)
   }
 
   return homeWorkspace.id
 }
 
 export const getWorkspaceById = async (workspaceId: string) => {
+  console.log(workspaceId)
+
   const { data: workspace, error } = await supabase
     .from("workspaces")
     .select("*")
     .eq("id", workspaceId)
     .single()
 
+  console.log(workspace)
+  console.log(error)
+
   if (!workspace) {
-    throw new Error(error.message)
+    throw new Error(error?.message)
   }
 
   return workspace

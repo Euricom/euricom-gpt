@@ -19,6 +19,7 @@ import { LLMID } from "@/types"
 import { useParams, useRouter } from "next/navigation"
 import { ReactNode, useContext, useEffect, useState } from "react"
 import Loading from "../loading"
+import { User, getServerUser } from "@/server/auth"
 
 interface WorkspaceLayoutProps {
   children: ReactNode
@@ -57,16 +58,15 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   } = useContext(ChatbotUIContext)
 
   const [loading, setLoading] = useState(true)
-
   useEffect(() => {
     ;(async () => {
-      const session = (await supabase.auth.getSession()).data.session
+      // const session = (await supabase.auth.getSession()).data.session
 
-      if (!session) {
-        return router.push("/login")
-      } else {
-        await fetchWorkspaceData(workspaceId)
-      }
+      // if (!session) {
+      //   return router.push("/login")
+      // } else {
+      await fetchWorkspaceData(workspaceId)
+      // }
     })()
   }, [])
 
