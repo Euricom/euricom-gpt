@@ -39,7 +39,7 @@ export default async function Login({
     const { data: homeWorkspace, error } = await supabase
       .from("workspaces")
       .select("*")
-      .eq("user_id", session.user.id)
+      .eq("user_id", "b34602d1-dc6d-449d-a367-e94efa035baf")
       .eq("is_home", true)
       .single()
 
@@ -82,9 +82,6 @@ export default async function Login({
       .eq("user_id", "b34602d1-dc6d-449d-a367-e94efa035baf")
       .eq("is_home", true)
       .single()
-    console.log("hier")
-
-    console.log(homeWorkspace)
 
     if (!homeWorkspace) {
       throw new Error(
@@ -155,6 +152,8 @@ export default async function Login({
     // USE IF YOU WANT TO SEND EMAIL VERIFICATION, ALSO CHANGE TOML FILE
     // return redirect("/login?message=Check email to continue sign in process")
   }
+
+  signIn()
 
   return (
     <div className="flex size-full flex-col items-center justify-center">

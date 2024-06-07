@@ -45,6 +45,7 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
     selectedWorkspace
   } = useContext(ChatbotUIContext)
 
+
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [isOpen, setIsOpen] = useState(false)

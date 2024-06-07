@@ -17,15 +17,15 @@ export async function getServerProfile() {
     }
   )
 
-  const user = (await supabase.auth.getUser()).data.user
-  if (!user) {
-    throw new Error("User not found")
-  }
+  // const user = (await supabase.auth.getUser()).data.user
+  // if (!user) {
+  //   throw new Error("User not found")
+  // }
 
   const { data: profile } = await supabase
     .from("profiles")
     .select("*")
-    .eq("user_id", user.id)
+    .eq("user_id", "b34602d1-dc6d-449d-a367-e94efa035baf")
     .single()
 
   if (!profile) {
