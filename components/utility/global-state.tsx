@@ -181,19 +181,16 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, InputUser }) => {
 
     // if (session) {
     // const user = session.user
+    if (!user) return
 
-    const profile = await getProfileByUserId(
-      "b34602d1-dc6d-449d-a367-e94efa035baf"
-    )
+    const profile = await getProfileByUserId(user.id)
     setProfile(profile)
 
     if (!profile.has_onboarded) {
       return router.push("/setup")
     }
 
-    const workspaces = await getWorkspacesByUserId(
-      "b34602d1-dc6d-449d-a367-e94efa035baf"
-    )
+    const workspaces = await getWorkspacesByUserId(user.id)
     setWorkspaces(workspaces)
 
     for (const workspace of workspaces) {

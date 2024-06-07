@@ -1,7 +1,9 @@
+import { ChatbotUIContext } from "@/context/context"
 import { Database, Tables } from "@/supabase/types"
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
+import { useContext } from "react"
 
 export async function getServerProfile() {
   const cookieStore = cookies()
@@ -18,14 +20,16 @@ export async function getServerProfile() {
   )
 
   // const user = (await supabase.auth.getUser()).data.user
-  // if (!user) {
-  //   throw new Error("User not found")
-  // }
+
+  const { user } = useContext(ChatbotUIContext)
+  if (!user) {
+    throw new Error("User not found")
+  }
 
   const { data: profile } = await supabase
     .from("profiles")
     .select("*")
-    .eq("user_id", "b34602d1-dc6d-449d-a367-e94efa035baf")
+    .eq("user_id", user.id)
     .single()
 
   if (!profile) {

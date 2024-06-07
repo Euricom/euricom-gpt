@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/middleware"
 import { i18nRouter } from "next-i18n-router"
 import { NextResponse, type NextRequest } from "next/server"
 import i18nConfig from "./i18nConfig"
+import { useContext } from "react"
+import { ChatbotUIContext } from "./context/context"
 
 export async function middleware(request: NextRequest) {
   const i18nResult = i18nRouter(request, i18nConfig)
@@ -12,13 +14,15 @@ export async function middleware(request: NextRequest) {
 
     // const session = await supabase.auth.getSession()
 
-    const redirectToChat = true //session && request.nextUrl.pathname === "/"
+    // const redirectToChat = session && request.nextUrl.pathname === "/"
 
-    if (redirectToChat) {
+    const { user } = useContext(ChatbotUIContext)
+
+    if (user) {
       const { data: homeWorkspace, error } = await supabase
         .from("workspaces")
         .select("*")
-        .eq("user_id", "b34602d1-dc6d-449d-a367-e94efa035baf")
+        .eq("user_id", user.id)
         .eq("is_home", true)
         .single()
 

@@ -112,12 +112,15 @@ export default function SetupPage() {
   }
 
   const handleSaveSetupSetting = async () => {
-    const session = (await supabase.auth.getSession()).data.session
-    if (!session) {
-      return router.push("/login")
-    }
+    // const session = (await supabase.auth.getSession()).data.session
+    // if (!session) {
+    //   return router.push("/login")
+    // }
 
-    const user = session.user
+    // const user = session.user
+
+    const { user } = useContext(ChatbotUIContext)
+    if (!user) return
     const profile = await getProfileByUserId(user.id)
 
     const updateProfilePayload: TablesUpdate<"profiles"> = {
@@ -145,9 +148,7 @@ export default function SetupPage() {
     const updatedProfile = await updateProfile(profile.id, updateProfilePayload)
     setProfile(updatedProfile)
 
-    const workspaces = await getWorkspacesByUserId(
-      "b34602d1-dc6d-449d-a367-e94efa035baf"
-    )
+    const workspaces = await getWorkspacesByUserId(user.id)
     const homeWorkspace = workspaces.find(w => w.is_home)
 
     // There will always be a home workspace
