@@ -45,6 +45,7 @@ export default async function Login({
 
     if (!homeWorkspace) {
       throw new Error(error?.message)
+      return redirect("/setup")
     }
 
     return redirect(`/${homeWorkspace.id}/chat`)
