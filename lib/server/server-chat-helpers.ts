@@ -1,9 +1,9 @@
 import { ChatbotUIContext } from "@/context/context"
+import { getServerUser } from "@/server/auth"
 import { Database, Tables } from "@/supabase/types"
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
-import { useContext } from "react"
 
 export async function getServerProfile() {
   const cookieStore = cookies()
@@ -21,7 +21,7 @@ export async function getServerProfile() {
 
   // const user = (await supabase.auth.getUser()).data.user
 
-  const { user } = useContext(ChatbotUIContext)
+  const user = await getServerUser()
   if (!user) {
     throw new Error("User not found")
   }
