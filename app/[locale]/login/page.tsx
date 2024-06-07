@@ -44,7 +44,7 @@ export default async function Login({
       .single()
 
     if (!homeWorkspace) {
-      throw new Error(error?.message)
+      // throw new Error(error?.message)
       return redirect("/setup")
     }
 
