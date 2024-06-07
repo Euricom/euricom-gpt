@@ -102,36 +102,33 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
   const IconComponent = selectedWorkspace?.is_home ? IconHome : IconBuilding
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        className="border-input flex h-[36px]
-        w-full cursor-pointer items-center justify-between rounded-md border px-2 py-1 hover:opacity-50"
-      >
-        <div className="flex items-center truncate">
-          {selectedWorkspace && (
-            <div className="flex items-center">
-              {workspaceImage ? (
-                <Image
-                  style={{ width: "22px", height: "22px" }}
-                  className="mr-2 rounded"
-                  src={imageSrc}
-                  width={22}
-                  height={22}
-                  alt={selectedWorkspace.name}
-                />
-              ) : (
-                <IconComponent className="mb-0.5 mr-2" size={22} />
-              )}
-            </div>
-          )}
+    // <Popover>
+    <div
+      className="border-input flex h-[36px]
+        w-full cursor-pointer items-center justify-between rounded-md border px-2 py-1 "
+    >
+      <div className="flex items-center truncate">
+        {selectedWorkspace && (
+          <div className="flex items-center">
+            {workspaceImage ? (
+              <Image
+                style={{ width: "22px", height: "22px" }}
+                className="mr-2 rounded"
+                src={imageSrc}
+                width={22}
+                height={22}
+                alt={selectedWorkspace.name}
+              />
+            ) : (
+              <IconComponent className="mb-0.5 mr-2" size={22} />
+            )}
+          </div>
+        )}
 
-          {getWorkspaceName(value) || "Select workspace..."}
-        </div>
-
-        <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-      </PopoverTrigger>
-
-      <PopoverContent className="p-2">
+        {getWorkspaceName(value) || "Select workspace..."}
+      </div>
+      {/* <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" /> */}
+      {/* <PopoverContent className="p-2">
         <div className="space-y-2">
           <Button
             className="flex w-full items-center space-x-2"
@@ -224,7 +221,8 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
               })}
           </div>
         </div>
-      </PopoverContent>
-    </Popover>
+      </PopoverContent> */}{" "}
+    </div>
+    // </Popover>
   )
 }
