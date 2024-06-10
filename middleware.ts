@@ -4,7 +4,6 @@ import { NextResponse, type NextRequest } from "next/server"
 import i18nConfig from "./i18nConfig"
 import { useContext } from "react"
 import { ChatbotUIContext } from "./context/context"
-import { getServerUser } from "./server/auth"
 
 export async function middleware(request: NextRequest) {
   const i18nResult = i18nRouter(request, i18nConfig)

@@ -2,6 +2,10 @@
   "name": "chatbot-ui",
   "version": "2.0.0",
   "private": true,
+  "browser": {
+    "crypto": false,
+    "stream": false
+  },
   "scripts": {
     "chat": "supabase start && npm run db-types && npm run dev",
     "restart": "supabase stop && npm run chat",
