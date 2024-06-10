@@ -46,9 +46,9 @@ export default function ChatPage() {
             <ChatInput />
           </div>
 
-          <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
+          {/* <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
             <ChatHelp />
-          </div>
+          </div> */}
         </div>
       ) : (
         <ChatUI />

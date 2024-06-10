@@ -244,7 +244,6 @@ export const useChatHandler = () => {
           userInput,
           newMessageFiles,
           chatFiles,
-          [],
           chatSettings!.embeddingsProvider,
           sourceCount
         )

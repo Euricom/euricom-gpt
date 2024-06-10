@@ -34,6 +34,23 @@ export default async function Login({
     }
   )
 
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: "kobe.dehandschutter@euri.com",
+    password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
+  })
+
+  if (error) {
+    return redirect(`/login?message=${error.message}`)
+  }
+  let session = (await supabase.auth.getSession()).data.session
+
+  const { data: homeWorkspace, error: homeWorkspaceError } = await supabase
+    .from("workspaces")
+    .select("*")
+    .eq("user_id", user.id)
+    .eq("is_home", true)
+    .single()
+
   // if (errorLogin) {
   //   return redirect(`/login?message=${errorLogin.message}`)
   // }
@@ -45,14 +62,13 @@ export default async function Login({
   //     .eq("user_id", user.id)
   //     .eq("is_home", true)
   //     .single()
-  //   console.log(homeWorkspace)
 
-  //   if (!homeWorkspace) {
-  //     // throw new Error(error?.message)
-  //     return redirect("/setup")
-  //   }
+  if (!homeWorkspace) {
+    // throw new Error(error?.message)
+    return redirect("/setup")
+  }
 
-  //   return redirect(`/${homeWorkspace.id}/chat`)
+  return redirect(`/${homeWorkspace.id}/chat`)
   // }
 
   // const { data: exists, error } = await supabase.rpc("check_user_exists", {
@@ -70,32 +86,30 @@ export default async function Login({
   //   const cookieStore = cookies()
   //   const supabase = createClient(cookieStore)
 
-  //   // const { data, error } = await supabase.auth.signInWithPassword({
-  //   //   email,
-  //   //   password
-  //   // })
+  //   const { data, error } = await supabase.auth.signInWithPassword({
+  //     email,
+  //     password
+  //   })
 
-  //   // if (error) {
-  //   //   return redirect(`/login?message=${error.message}`)
-  //   // }
-  //   // let session = (await supabase.auth.getSession()).data.session
-
-  //   // console.log(session)
+  //   if (error) {
+  //     return redirect(`/login?message=${error.message}`)
+  //   }
+  //   let session = (await supabase.auth.getSession()).data.session
 
   //   const { data: homeWorkspace, error: homeWorkspaceError } = await supabase
   //     .from("workspaces")
   //     .select("*")
-  //     .eq("user_id", "b34602d1-dc6d-449d-a367-e94efa035baf")
+  //     .eq("user_id", "18d332af-2d5b-49e5-8c42-9168b3910f97")
   //     .eq("is_home", true)
   //     .single()
 
-  //   if (!homeWorkspace) {
-  //     throw new Error(
-  //       homeWorkspaceError?.message || "An unexpected error occurred"
-  //     )
-  //   }
+  // if (!homeWorkspace) {
+  //   throw new Error(
+  //     homeWorkspaceError?.message || "An unexpected error occurred"
+  //   )
+  // }
 
-  //   return redirect(`/${homeWorkspace.id}/chat`)
+  // return redirect(`/${homeWorkspace.id}/chat`)
   // }
 
   // const getEnvVarOrEdgeConfigValue = async (name: string) => {
@@ -107,35 +121,32 @@ export default async function Login({
   //   return process.env[name]
   // }
 
-  const signUp = async () => {
-    "use server"
+  // const signUp = async () => {
+  //   "use server"
 
-    const cookieStore = cookies()
-    const supabasehier = createClient(cookieStore)
+  //   const cookieStore = cookies()
+  //   const supabasehier = createClient(cookieStore)
 
-    // console.log(await supabasehier.auth.getSession())
+  //   // const { data: homeWorkspace1, error1 } = await supabase
+  //   //   .from("workspaces")
+  //   //   .select("*")
+  //   //   .eq("user_id", user.id)
+  //   //   .eq("is_home", true)
+  //   //   .single()
+  
+  //   const { data, error: errorLogin } =
+  //     await supabasehier.auth.signInWithPassword({
+  //       email: "kobe.dehandschutter@euri.com",
+  //       password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
+  //     })
 
-    // const { data: homeWorkspace1, error1 } = await supabase
-    //   .from("workspaces")
-    //   .select("*")
-    //   .eq("user_id", user.id)
-    //   .eq("is_home", true)
-    //   .single()
-    // console.log(homeWorkspace1)
-    const { data, error: errorLogin } =
-      await supabasehier.auth.signInWithPassword({
-        email: "kobe.dehandschutter@euri.com",
-        password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
-      })
-
-    const { data: homeWorkspace, error } = await supabasehier
-      .from("workspaces")
-      .select("*")
-      .eq("user_id", user.id)
-      .eq("is_home", true)
-      .single()
-    console.log(homeWorkspace)
-  }
+  //   const { data: homeWorkspace, error } = await supabasehier
+  //     .from("workspaces")
+  //     .select("*")
+  //     .eq("user_id", user.id)
+  //     .eq("is_home", true)
+  //     .single()
+  // }
 
   //   const email = user.email as string
   //   const password = user.id as string
@@ -195,12 +206,12 @@ export default async function Login({
       </div>
 
       <div className="mt-2 text-4xl font-bold">Chatbot UI</div>
-      <form className="" action={signUp}>
+      {/* <form className="" action={signIn}>
         <SubmitButton className="mt-4 flex w-[200px] items-center justify-center rounded-md bg-blue-500 p-2 font-semibold">
           Start chatting
           <IconArrowRight className="ml-1" size={20} />
         </SubmitButton>
-      </form>
+      </form> */}
     </div>
   )
 }

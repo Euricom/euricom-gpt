@@ -82,7 +82,7 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
     const imagePromises: Promise<MessageImage>[] = fetchedMessages.flatMap(
       message =>
         message.image_paths
-          ? message.image_paths.map(async imagePath => {
+          ? message.image_paths.map(async (imagePath: any) => {
               const url = await getMessageImageFromStorage(imagePath)
 
               if (url) {
@@ -221,10 +221,10 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
       <div className="relative w-full min-w-[300px] items-end px-2 pb-3 pt-0 sm:w-[600px] sm:pb-8 sm:pt-5 md:w-[700px] lg:w-[700px] xl:w-[800px]">
         <ChatInput />
       </div>
-
+      {/* 
       <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
         <ChatHelp />
-      </div>
+      </div> */}
     </div>
   )
 }
