@@ -33,23 +33,28 @@ export default async function Login({
       }
     }
   )
-  // const session = (await supabase.auth.getSession()).data.session
 
-  if (user) {
-    const { data: homeWorkspace, error } = await supabase
-      .from("workspaces")
-      .select("*")
-      .eq("user_id", user.id)
-      .eq("is_home", true)
-      .single()
+  // if (errorLogin) {
+  //   return redirect(`/login?message=${errorLogin.message}`)
+  // }
 
-    if (!homeWorkspace) {
-      // throw new Error(error?.message)
-      return redirect("/setup")
-    }
+  // if (user) {
+  //   const { data: homeWorkspace, error } = await supabase
+  //     .from("workspaces")
+  //     .select("*")
+  //     .eq("user_id", user.id)
+  //     .eq("is_home", true)
+  //     .single()
+  //   console.log(homeWorkspace)
 
-    return redirect(`/${homeWorkspace.id}/chat`)
-  }
+  //   if (!homeWorkspace) {
+  //     // throw new Error(error?.message)
+  //     return redirect("/setup")
+  //   }
+
+  //   return redirect(`/${homeWorkspace.id}/chat`)
+  // }
+
   // const { data: exists, error } = await supabase.rpc("check_user_exists", {
   //   email_to_check: user.email
   // })
@@ -102,8 +107,35 @@ export default async function Login({
   //   return process.env[name]
   // }
 
-  // const signUp = async () => {
-  //   "use server"
+  const signUp = async () => {
+    "use server"
+
+    const cookieStore = cookies()
+    const supabasehier = createClient(cookieStore)
+
+    // console.log(await supabasehier.auth.getSession())
+
+    // const { data: homeWorkspace1, error1 } = await supabase
+    //   .from("workspaces")
+    //   .select("*")
+    //   .eq("user_id", user.id)
+    //   .eq("is_home", true)
+    //   .single()
+    // console.log(homeWorkspace1)
+    const { data, error: errorLogin } =
+      await supabasehier.auth.signInWithPassword({
+        email: "kobe.dehandschutter@euri.com",
+        password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
+      })
+
+    const { data: homeWorkspace, error } = await supabasehier
+      .from("workspaces")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("is_home", true)
+      .single()
+    console.log(homeWorkspace)
+  }
 
   //   const email = user.email as string
   //   const password = user.id as string
@@ -163,12 +195,12 @@ export default async function Login({
       </div>
 
       <div className="mt-2 text-4xl font-bold">Chatbot UI</div>
-      {/* <form className="" action={exists ? signIn : signUp}> */}
-      {/* <SubmitButton className="mt-4 flex w-[200px] items-center justify-center rounded-md bg-blue-500 p-2 font-semibold">
+      <form className="" action={signUp}>
+        <SubmitButton className="mt-4 flex w-[200px] items-center justify-center rounded-md bg-blue-500 p-2 font-semibold">
           Start chatting
           <IconArrowRight className="ml-1" size={20} />
         </SubmitButton>
-      </form> */}
+      </form>
     </div>
   )
 }

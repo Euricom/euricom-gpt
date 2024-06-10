@@ -1,3 +1,5 @@
+// Original code ChatBot UI - 16/05/2024 - d60e1f3ee9d2caf8c9aab659791b841690183b2d
+//  
 // "use client"
 
 // import { ChatbotUISVG } from "@/components/icons/chatbotui-svg"
@@ -26,6 +28,8 @@
 //     </div>
 //   )
 // }
+
+// Adapted to support Azure 
 import SignInButton from "./sign-in-button"
 
 export default async function Login({

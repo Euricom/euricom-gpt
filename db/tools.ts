@@ -9,7 +9,7 @@ export const getToolById = async (toolId: string) => {
     .single()
 
   if (!tool) {
-    throw new Error(error.message)
+    throw new Error(error?.message)
   }
 
   return tool

@@ -122,7 +122,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
-    signOut({ callbackUrl: "/loginEuricom" })
+    signOut({ callbackUrl: "/" })
     router.refresh()
     return
   }
