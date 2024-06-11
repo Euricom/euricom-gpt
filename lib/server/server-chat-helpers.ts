@@ -1,3 +1,4 @@
+import { getServerUser } from "@/server/auth"
 import { Database, Tables } from "@/supabase/types"
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { createServerClient } from "@supabase/ssr"
@@ -17,8 +18,10 @@ export async function getServerProfile() {
     }
   )
 
-  const user = (await supabase.auth.getUser()).data.user
-  if (!user) {
+  //Changes Euricom to adapt Azure (check if user exists)
+  const supabaseUser = (await supabase.auth.getUser()).data.user
+  const user = await getServerUser()
+  if (!user || !supabaseUser) {
     throw new Error("User not found")
   }
 

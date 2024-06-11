@@ -58,12 +58,25 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
   const [loading, setLoading] = useState(true)
 
+  //Changes Euricom to adapt Azure (Supabase get login session)
+  let session: any
   useEffect(() => {
     ;(async () => {
-      const session = (await supabase.auth.getSession()).data.session
-
+      session = (await supabase.auth.getSession()).data.session
       if (!session) {
-        return router.push("/login")
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: "kobe.dehandschutter@euri.com",
+          password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
+        })
+
+        if (error) {
+          console.log("Sign in error:", error.message)
+          return // Stop execution if there was an error
+        }
+        session = data.session
+      }
+      if (!session) {
+        // return router.push("/login")
       } else {
         await fetchWorkspaceData(workspaceId)
       }

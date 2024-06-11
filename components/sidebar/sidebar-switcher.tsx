@@ -44,19 +44,20 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           contentType="prompts"
           onContentTypeChange={onContentTypeChange}
         />
-
+{/* 
+        //Changes Euricom to adapt Azure (remove models, collections, assistants, tools)
         <SidebarSwitchItem
           icon={<IconSparkles size={SIDEBAR_ICON_SIZE} />}
           contentType="models"
           onContentTypeChange={onContentTypeChange}
-        />
+        /> */}
 
         <SidebarSwitchItem
           icon={<IconFile size={SIDEBAR_ICON_SIZE} />}
           contentType="files"
           onContentTypeChange={onContentTypeChange}
         />
-
+{/* 
         <SidebarSwitchItem
           icon={<IconBooks size={SIDEBAR_ICON_SIZE} />}
           contentType="collections"
@@ -73,7 +74,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
           contentType="tools"
           onContentTypeChange={onContentTypeChange}
-        />
+        /> */}
       </TabsList>
 
       <div className="flex flex-col items-center space-y-4">

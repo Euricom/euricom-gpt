@@ -222,9 +222,11 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
         <ChatInput />
       </div>
 
+      {/* 
+      //Changes Euricom to adapt Azure (remove help component)
       <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
         <ChatHelp />
-      </div>
+      </div> */}
     </div>
   )
 }

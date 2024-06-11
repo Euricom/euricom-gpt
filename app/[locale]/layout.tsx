@@ -10,6 +10,8 @@ import { Inter } from "next/font/google"
 import { cookies } from "next/headers"
 import { ReactNode } from "react"
 import "./globals.css"
+import { getServerUser } from "@/server/auth"
+import { headers } from "next/headers"
 
 const inter = Inter({ subsets: ["latin"] })
 const APP_NAME = "Chatbot UI"
@@ -82,7 +84,22 @@ export default async function RootLayout({
       }
     }
   )
-  const session = (await supabase.auth.getSession()).data.session
+
+  //Changes Euricom to adapt Azure (give user to GlobalState)
+  const headersList = headers()
+  const path = headersList.get("referer") || ""
+
+  const isLogin = path.includes("login")
+
+  const user = await getServerUser()
+  const inputUser = {
+    email: user.email,
+    id: user.id,
+    isAuthenticated: user.isAuthenticated,
+    // isInRole: user.isInRole,
+    name: user.name,
+    roles: user.roles
+  }
 
   const { t, resources } = await initTranslations(locale, i18nNamespaces)
 
@@ -97,7 +114,11 @@ export default async function RootLayout({
           >
             <Toaster richColors position="top-center" duration={3000} />
             <div className="bg-background text-foreground flex h-dvh flex-col items-center overflow-x-auto">
-              {session ? <GlobalState>{children}</GlobalState> : children}
+              {!isLogin && inputUser.isAuthenticated ? (
+                <GlobalState inputUser={inputUser}>{children}</GlobalState>
+              ) : (
+                children
+              )}
             </div>
           </TranslationsProvider>
         </Providers>

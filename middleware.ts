@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/middleware"
 import { i18nRouter } from "next-i18n-router"
 import { NextResponse, type NextRequest } from "next/server"
 import i18nConfig from "./i18nConfig"
+import { useContext } from "react"
+import { ChatbotUIContext } from "./context/context"
 
 export async function middleware(request: NextRequest) {
   const i18nResult = i18nRouter(request, i18nConfig)
@@ -14,11 +16,15 @@ export async function middleware(request: NextRequest) {
 
     const redirectToChat = session && request.nextUrl.pathname === "/"
 
-    if (redirectToChat) {
+
+    //Changes Euricom to adapt Azure (use azure user instead of supabase user)
+    const { user } = useContext(ChatbotUIContext)
+
+    if (redirectToChat && user) {
       const { data: homeWorkspace, error } = await supabase
         .from("workspaces")
         .select("*")
-        .eq("user_id", session.data.session?.user.id)
+        .eq("user_id", user.id)
         .eq("is_home", true)
         .single()
 

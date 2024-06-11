@@ -13,6 +13,7 @@ import {
   fetchOpenRouterModels
 } from "@/lib/models/fetch-models"
 import { supabase } from "@/lib/supabase/browser-client"
+import { Role, User, isInRole } from "@/server/auth"
 import { Tables } from "@/supabase/types"
 import {
   ChatFile,
@@ -30,13 +31,34 @@ import { FC, useEffect, useState } from "react"
 
 interface GlobalStateProps {
   children: React.ReactNode
+  inputUser: {
+    email: string
+    id: string
+    isAuthenticated: boolean
+    // isInRole: (role: Role | Role[]) => boolean
+    name: string
+    roles: string[]
+  }
 }
 
-export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
+export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
   const router = useRouter()
+  const isInRoleFunction = (role: Role | Role[]) => {
+    return isInRole(inputUser, role)
+  }
 
+  //Changes Euricom to adapt Azure (add user in context)
+  const u: User = {
+    email: inputUser.email,
+    id: inputUser.id,
+    isAuthenticated: inputUser.isAuthenticated,
+    isInRole: isInRoleFunction,
+    name: inputUser.name,
+    roles: inputUser.roles
+  }
   // PROFILE STORE
   const [profile, setProfile] = useState<Tables<"profiles"> | null>(null)
+  const [user, setUser] = useState<User | null>(u)
 
   // ITEMS STORE
   const [assistants, setAssistants] = useState<Tables<"assistants">[]>([])
@@ -152,13 +174,24 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
       }
     })()
   }, [])
-
+  //Changes Euricom to adapt Azure (start session if there is none)
+  let session: any
   const fetchStartingData = async () => {
-    const session = (await supabase.auth.getSession()).data.session
+    session = (await supabase.auth.getSession()).data.session
+    if (!session) {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: "kobe.dehandschutter@euri.com",
+        password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
+      })
 
-    if (session) {
-      const user = session.user
+      if (error) {
+        console.log("Sign in error:", error.message)
+        return // Stop execution if there was an error
+      }
+      session = data.session
+    }
 
+    if (session && user) {
       const profile = await getProfileByUserId(user.id)
       setProfile(profile)
 
@@ -204,6 +237,8 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
         // PROFILE STORE
         profile,
         setProfile,
+        user,
+        setUser,
 
         // ITEMS STORE
         assistants,
