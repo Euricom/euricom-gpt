@@ -4,7 +4,7 @@ import { ChatSettings } from "@/types"
 import { OpenAIStream, StreamingTextResponse } from "ai"
 import OpenAI from "openai"
 
-export const runtime = "edge"
+// export const runtime = "edge"
 
 export async function POST(request: Request) {
   const json = await request.json()
