@@ -2,10 +2,6 @@
   "name": "chatbot-ui",
   "version": "2.0.0",
   "private": true,
-  "browser": {
-    "crypto": false,
-    "stream": false
-  },
   "scripts": {
     "chat": "supabase start && npm run db-types && npm run dev",
     "restart": "supabase stop && npm run chat",
@@ -131,5 +127,9 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "browser": {
+    "crypto": false,
+    "stream": false
   }
 }
