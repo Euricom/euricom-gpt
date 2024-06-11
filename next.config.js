@@ -1,3 +1,5 @@
+const webpack = require("webpack")
+
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true"
 })
@@ -27,6 +29,19 @@ module.exports = withBundleAnalyzer(
     },
     experimental: {
       serverComponentsExternalPackages: ["sharp", "onnxruntime-node"]
+    },
+    webpack: config => {
+      // Polyfills for Node.js core modules
+      // Ensure there's a fallback configuration object
+      config.resolve.fallback = config.resolve.fallback || {}
+      Object.assign(config.resolve.fallback, {
+        crypto: require.resolve("crypto-browserify"),
+        stream: require.resolve("stream-browserify")
+        // Add other polyfills you need here
+      })
+
+      // Return the altered config
+      return config
     }
   })
 )
