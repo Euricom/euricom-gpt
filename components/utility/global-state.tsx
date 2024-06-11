@@ -179,11 +179,16 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, InputUser }) => {
   const fetchStartingData = async () => {
     // const session = (await supabase.auth.getSession()).data.session
 
-    // if (session) {
+    // if (!session) return
     // const user = session.user
     if (!user) return
+    console.log("hiere")
 
     const profile = await getProfileByUserId(user.id)
+    console.log(profile)
+    console.log("hiere")
+    console.log(user)
+
     setProfile(profile)
 
     if (!profile.has_onboarded) {

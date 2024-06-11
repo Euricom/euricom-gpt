@@ -24,7 +24,7 @@ import {
 
 export default function SetupPage() {
   const {
-    profile,
+    user,
     setProfile,
     setWorkspaces,
     setSelectedWorkspace,
@@ -41,7 +41,7 @@ export default function SetupPage() {
 
   // Profile Step
   const [displayName, setDisplayName] = useState("")
-  const [username, setUsername] = useState(profile?.username || "")
+  const [username, setUsername] = useState(user?.name || "")
   const [usernameAvailable, setUsernameAvailable] = useState(true)
 
   // API Step
@@ -63,12 +63,13 @@ export default function SetupPage() {
 
   useEffect(() => {
     ;(async () => {
-      const session = (await supabase.auth.getSession()).data.session
+      // const session = (await supabase.auth.getSession()).data.session
+      console.log(user)
 
-      if (!session) {
+      if (!user) {
         return router.push("/login")
       } else {
-        const user = session.user
+        // const user = session.user
 
         const profile = await getProfileByUserId(user.id)
         setProfile(profile)
@@ -90,9 +91,7 @@ export default function SetupPage() {
             setAvailableOpenRouterModels(openRouterModels)
           }
 
-          const homeWorkspaceId = await getHomeWorkspaceByUserId(
-            session.user.id
-          )
+          const homeWorkspaceId = await getHomeWorkspaceByUserId(user.id)
           return router.push(`/${homeWorkspaceId}/chat`)
         }
       }

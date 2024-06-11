@@ -6,19 +6,23 @@ import { useContext } from "react"
 import { ChatbotUIContext } from "./context/context"
 
 export async function middleware(request: NextRequest) {
-  const i18nResult = i18nRouter(request, i18nConfig)
-  if (i18nResult) return i18nResult
+  // const i18nResult = i18nRouter(request, i18nConfig)
+
+  // console.log("in middleware")
+  // console.log(i18nResult)
+  // if (i18nResult) return i18nResult
+  // console.log("in middleware2")
 
   try {
     const { supabase, response } = createClient(request)
 
-    // const session = await supabase.auth.getSession()
+    const session = await supabase.auth.getSession()
 
-    // const redirectToChat = session && request.nextUrl.pathname === "/"
+    const redirectToChat = session && request.nextUrl.pathname === "/"
 
     const { user } = useContext(ChatbotUIContext)
 
-    if (user) {
+    if (user && redirectToChat) {
       const { data: homeWorkspace, error } = await supabase
         .from("workspaces")
         .select("*")

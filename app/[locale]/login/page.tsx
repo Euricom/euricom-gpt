@@ -1,13 +1,16 @@
 import { ChatbotUISVG } from "@/components/icons/chatbotui-svg"
 import { SubmitButton } from "@/components/ui/submit-button"
+import { createProfile } from "@/db/profile"
+import { createWorkspace } from "@/db/workspaces"
 import { createClient } from "@/lib/supabase/server"
 import { User, getServerUser } from "@/server/auth"
-import { Database } from "@/supabase/types"
+import { Database, TablesInsert } from "@/supabase/types"
 import { createServerClient } from "@supabase/ssr"
 import { IconArrowRight } from "@tabler/icons-react"
 import { get } from "@vercel/edge-config"
 import { Metadata } from "next"
 import { cookies, headers } from "next/headers"
+// import { RedirectType, redirect } from "next/navigation"
 import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
@@ -34,15 +37,61 @@ export default async function Login({
     }
   )
 
+  console.log("voor de login")
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email: "kobe.dehandschutter@euri.com",
     password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
   })
 
-  if (error) {
-    return redirect(`/login?message=${error.message}`)
+  console.log(data)
+  console.log(error)
+  console.log("na de login")
+
+  // if (error) {
+  //   return redirect(`/login?message=${error.message}`)
+  // }
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("user_id", user.id)
+    .single()
+
+  if (!profile) {
+    if (!profile) {
+      const newProfile: TablesInsert<"profiles"> = {
+        user_id: user.id,
+        username: user.name,
+        display_name: user.name,
+        bio: "",
+        image_path: "",
+        image_url: "",
+        profile_context: "",
+        use_azure_openai: false,
+        has_onboarded: true
+      }
+
+      await createProfile(newProfile)
+
+      const newHomeWorkspace: TablesInsert<"workspaces"> = {
+        default_context_length: 4096,
+        default_model: "gpt-4-turbo-preview",
+        default_prompt: "You are a friendly, helpful AI assistant.",
+        default_temperature: 0.5,
+        description: "My home workspace.",
+        embeddings_provider: "openai",
+        include_profile_context: true,
+        include_workspace_instructions: true,
+        instructions: "",
+        name: "Home",
+        user_id: user.id,
+        is_home: true
+      }
+
+      await createWorkspace(newHomeWorkspace)
+    }
   }
-  let session = (await supabase.auth.getSession()).data.session
 
   const { data: homeWorkspace, error: homeWorkspaceError } = await supabase
     .from("workspaces")
@@ -64,9 +113,10 @@ export default async function Login({
   //     .single()
 
   if (!homeWorkspace) {
-    // throw new Error(error?.message)
-    return redirect("/setup")
+    throw new Error(homeWorkspaceError?.message)
+    // return redirect("/setup")
   }
+  console.log("voor de redirect")
 
   return redirect(`/${homeWorkspace.id}/chat`)
   // }
@@ -133,7 +183,7 @@ export default async function Login({
   //   //   .eq("user_id", user.id)
   //   //   .eq("is_home", true)
   //   //   .single()
-  
+
   //   const { data, error: errorLogin } =
   //     await supabasehier.auth.signInWithPassword({
   //       email: "kobe.dehandschutter@euri.com",

@@ -17,6 +17,7 @@ export const getHomeWorkspaceByUserId = async (userId: string) => {
 }
 
 export const getWorkspaceById = async (workspaceId: string) => {
+  console.log(workspaceId)
 
   const { data: workspace, error } = await supabase
     .from("workspaces")
