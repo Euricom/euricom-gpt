@@ -36,7 +36,10 @@ module.exports = withBundleAnalyzer(
       config.resolve.fallback = config.resolve.fallback || {}
       Object.assign(config.resolve.fallback, {
         crypto: require.resolve("crypto-browserify"),
-        stream: require.resolve("stream-browserify")
+        stream: require.resolve("stream-browserify"),
+        http: false, // Mock or false if not used directly
+        https: false, // Mock or false if not used directly
+        querystring: require.resolve("query-string")
         // Add other polyfills you need here
       })
 
