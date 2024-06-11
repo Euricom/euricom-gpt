@@ -44,7 +44,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           contentType="prompts"
           onContentTypeChange={onContentTypeChange}
         />
-{/* 
+        {/* 
         //Changes Euricom to adapt Azure (remove models, collections, assistants, tools)
         <SidebarSwitchItem
           icon={<IconSparkles size={SIDEBAR_ICON_SIZE} />}
@@ -57,7 +57,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           contentType="files"
           onContentTypeChange={onContentTypeChange}
         />
-{/* 
+        {/* 
         <SidebarSwitchItem
           icon={<IconBooks size={SIDEBAR_ICON_SIZE} />}
           contentType="collections"
