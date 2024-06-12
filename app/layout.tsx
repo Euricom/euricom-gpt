@@ -89,7 +89,8 @@ export default async function RootLayout({
   const headersList = headers()
   const path = headersList.get("referer") || ""
 
-  const isLogin = path.includes("login")
+  const isLogin = path.includes("signIn") || path.endsWith("/")
+  console.log("Root Layout", isLogin, path)
 
   const user = await getServerUser()
   const inputUser = {
