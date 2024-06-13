@@ -56,7 +56,6 @@ export default async function HomePage({
     return redirect(`/help?message=${error.message}`)
   }
 
-  // return <p>Home Page</p>
   // make sure the user has a profile
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -64,9 +63,11 @@ export default async function HomePage({
     .eq("user_id", user.id)
     .single()
 
+  // return <p>Home Page</p>
+
   if (!profile) {
     console.log("User does not have a profile")
-    return <p>Home Page</p>
+    // return <p>Home Page</p>
     // throw new Error("User does not have a profile")
 
     console.log("Create profile")
@@ -100,6 +101,8 @@ export default async function HomePage({
 
     console.log("Done")
   }
+
+  // return <p>Home Page</p>
 
   // get home workspace for current AD user
   const { data: homeWorkspace, error: homeWorkspaceError } = await supabase

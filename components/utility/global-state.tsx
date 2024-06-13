@@ -47,18 +47,20 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
     return isInRole(inputUser, role)
   }
 
-  //Changes Euricom to adapt Azure (add user in context)
-  const u: User = {
+  // Changes Euricom to adapt Azure (add user in context)
+
+  // PROFILE STORE
+  const [profile, setProfile] = useState<Tables<"profiles"> | null>(null)
+  const [user, setUser] = useState<User | null>({
     email: inputUser.email,
     id: inputUser.id,
     isAuthenticated: inputUser.isAuthenticated,
     isInRole: isInRoleFunction,
     name: inputUser.name,
     roles: inputUser.roles
-  }
-  // PROFILE STORE
-  const [profile, setProfile] = useState<Tables<"profiles"> | null>(null)
-  const [user, setUser] = useState<User | null>(u)
+  })
+
+  console.log("user: ", { user, inputUser })
 
   // ITEMS STORE
   const [assistants, setAssistants] = useState<Tables<"assistants">[]>([])
@@ -174,10 +176,12 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
       }
     })()
   }, [])
+
   //Changes Euricom to adapt Azure (start session if there is none)
   let session: any
   const fetchStartingData = async () => {
     session = (await supabase.auth.getSession()).data.session
+    console.log("session", session)
     if (!session) {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
@@ -191,7 +195,7 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
       session = data.session
     }
 
-    if (session && user) {
+    if (user.id) {
       const profile = await getProfileByUserId(user.id)
       setProfile(profile)
 
