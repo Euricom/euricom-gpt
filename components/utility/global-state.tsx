@@ -195,7 +195,7 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
       session = data.session
     }
 
-    if (user.id) {
+    if (user && user.id) {
       const profile = await getProfileByUserId(user.id)
       setProfile(profile)
 

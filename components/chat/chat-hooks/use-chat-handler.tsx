@@ -195,7 +195,6 @@ export const useChatHandler = () => {
     isRegeneration: boolean
   ) => {
     const startingInput = messageContent
-    console.log("hiere")
 
     try {
       setUserInput("")

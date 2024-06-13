@@ -25,8 +25,12 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
   onContentTypeChange
 }) => {
   return (
-    <div className="flex flex-col justify-between border-r-2 pb-5">
-      <TabsList className="bg-background grid h-[440px] grid-rows-7">
+    <div className="flex flex-col justify-between border-r-2 pb-5 bg-primaryEuricom-900">
+      <TabsList className="bg-primaryEuricom-900 grid h-[440px] grid-rows-7">
+        <div className=" inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm">
+          <img src="/euricom_logo_small.png" className="h-6 w-6" />
+        </div>
+
         <SidebarSwitchItem
           icon={<IconMessage size={SIDEBAR_ICON_SIZE} />}
           contentType="chats"
@@ -77,7 +81,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
         /> */}
       </TabsList>
 
-      <div className="flex flex-col items-center space-y-4">
+      <div className="flex flex-col items-center space-y-4 text-secondaryEuricom-300">
         {/* TODO */}
         {/* <WithTooltip display={<div>Import</div>} trigger={<Import />} /> */}
 
