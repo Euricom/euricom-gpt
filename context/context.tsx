@@ -1,4 +1,4 @@
-import { User } from "@/server/auth"
+import { User } from "@/lib/server/auth"
 import { Tables } from "@/supabase/types"
 import {
   ChatFile,
@@ -15,11 +15,9 @@ import { Dispatch, SetStateAction, createContext } from "react"
 
 interface ChatbotUIContext {
   // PROFILE STORE
+  user: User | null
   profile: Tables<"profiles"> | null
   setProfile: Dispatch<SetStateAction<Tables<"profiles"> | null>>
-  //Changes Euricom to adapt Azure (add user in context)
-  user: User | null
-  setUser: Dispatch<SetStateAction<User | null>>
 
   // ITEMS STORE
   assistants: Tables<"assistants">[]
@@ -147,7 +145,6 @@ export const ChatbotUIContext = createContext<ChatbotUIContext>({
   profile: null,
   setProfile: () => {},
   user: null,
-  setUser: () => {},
 
   // ITEMS STORE
   assistants: [],

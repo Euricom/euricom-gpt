@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import SignInButton from "./_components/sign-in-button"
+import SignInButton from "./sign-in-button"
 
 export const dynamic = "force-dynamic"
 

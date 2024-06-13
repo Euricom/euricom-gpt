@@ -2,11 +2,9 @@
 
 import { Button } from "@nextui-org/react"
 import { signIn, useSession } from "next-auth/react"
-import { redirect, useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 
 const SignInButton = () => {
-  const session = useSession()
   const searchParams = useSearchParams()
   const handleSignIn = async () => {
     await signIn("azure-ad", {
@@ -14,12 +12,6 @@ const SignInButton = () => {
       callbackUrl: searchParams.get("callbackUrl") || "/"
     })
   }
-
-  // useEffect(() => {
-  //   if (session.data) {
-  //     redirect(searchParams.get('callbackUrl') || '/');
-  //   }
-  // }, [session]);
 
   return (
     <Button color="secondary" onClick={handleSignIn}>

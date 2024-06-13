@@ -1,5 +1,3 @@
-// TODO: Separate into multiple contexts, keeping simple for now
-
 "use client"
 
 import { ChatbotUIContext } from "@/context/context"
@@ -13,7 +11,7 @@ import {
   fetchOpenRouterModels
 } from "@/lib/models/fetch-models"
 import { supabase } from "@/lib/supabase/browser-client"
-import { Role, User, isInRole } from "@/server/auth"
+import { Role, User, isInRole } from "@/lib/server/auth"
 import { Tables } from "@/supabase/types"
 import {
   ChatFile,
@@ -31,36 +29,30 @@ import { FC, useEffect, useState } from "react"
 
 interface GlobalStateProps {
   children: React.ReactNode
-  inputUser: {
-    email: string
-    id: string
-    isAuthenticated: boolean
-    // isInRole: (role: Role | Role[]) => boolean
-    name: string
-    roles: string[]
-  }
+  user: User
 }
 
-export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
+export const GlobalState: FC<GlobalStateProps> = ({ children, user }) => {
   const router = useRouter()
-  const isInRoleFunction = (role: Role | Role[]) => {
-    return isInRole(inputUser, role)
-  }
+
+  // const isInRoleFunction = (role: Role | Role[]) => {
+  //   return isInRole(inputUser, role)
+  // }
 
   // Changes Euricom to adapt Azure (add user in context)
 
   // PROFILE STORE
   const [profile, setProfile] = useState<Tables<"profiles"> | null>(null)
-  const [user, setUser] = useState<User | null>({
-    email: inputUser.email,
-    id: inputUser.id,
-    isAuthenticated: inputUser.isAuthenticated,
-    isInRole: isInRoleFunction,
-    name: inputUser.name,
-    roles: inputUser.roles
-  })
+  // const [user, setUser] = useState<User | null>({
+  //   email: inputUser.email,
+  //   id: inputUser.id,
+  //   isAuthenticated: inputUser.isAuthenticated,
+  //   isInRole: isInRoleFunction,
+  //   name: inputUser.name,
+  //   roles: inputUser.roles
+  // })
 
-  console.log("user: ", { user, inputUser })
+  // console.log("user: ", { user, inputUser })
 
   // ITEMS STORE
   const [assistants, setAssistants] = useState<Tables<"assistants">[]>([])
@@ -140,7 +132,7 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
   const [newMessageImages, setNewMessageImages] = useState<MessageImage[]>([])
   const [showFilesDisplay, setShowFilesDisplay] = useState<boolean>(false)
 
-  // RETIEVAL STORE
+  // RETRIEVAL STORE
   const [useRetrieval, setUseRetrieval] = useState<boolean>(true)
   const [sourceCount, setSourceCount] = useState<number>(4)
 
@@ -178,22 +170,22 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
   }, [])
 
   //Changes Euricom to adapt Azure (start session if there is none)
-  let session: any
+  // let session: any
   const fetchStartingData = async () => {
-    session = (await supabase.auth.getSession()).data.session
-    console.log("session", session)
-    if (!session) {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
-        password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
-      })
+    // session = (await supabase.auth.getSession()).data.session
+    // console.log("session", session)
+    // if (!session) {
+    //   const { data, error } = await supabase.auth.signInWithPassword({
+    //     email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
+    //     password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
+    //   })
 
-      if (error) {
-        console.log("Sign in error:", error.message)
-        return // Stop execution if there was an error
-      }
-      session = data.session
-    }
+    //   if (error) {
+    //     console.log("Sign in error:", error.message)
+    //     return // Stop execution if there was an error
+    //   }
+    //   session = data.session
+    // }
 
     if (user && user.id) {
       const profile = await getProfileByUserId(user.id)
@@ -239,10 +231,9 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, inputUser }) => {
     <ChatbotUIContext.Provider
       value={{
         // PROFILE STORE
+        user,
         profile,
         setProfile,
-        user,
-        setUser,
 
         // ITEMS STORE
         assistants,
