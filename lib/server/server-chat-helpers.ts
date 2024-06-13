@@ -1,4 +1,4 @@
-import { getServerUser } from "@/server/auth"
+import { getServerUser } from "@/lib/server/auth"
 import { Database, Tables } from "@/supabase/types"
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { createServerClient } from "@supabase/ssr"

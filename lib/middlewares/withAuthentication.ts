@@ -1,7 +1,11 @@
 import { getToken } from "next-auth/jwt"
 import { NextFetchEvent, NextRequest } from "next/server"
 import { MiddlewareFactory } from "./types"
-import { RouteMatcherParam, createRouteMatcher, redirectTo } from "../route"
+import {
+  RouteMatcherParam,
+  createRouteMatcher,
+  redirectTo
+} from "../../lib/route"
 
 export type WithAuthenticationConfig = {
   /**
@@ -34,8 +38,6 @@ export const withAuthentication =
   next => {
     return async (request: NextRequest, _next: NextFetchEvent) => {
       const signInPage = config.signIn || "/signIn"
-
-      console.log("Checking authentication", signInPage, request.url)
 
       // for public routes, we don't need to check for authentication
       const isPublicRoute = createRouteMatcher(

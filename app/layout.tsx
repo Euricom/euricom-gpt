@@ -1,17 +1,11 @@
 import { Toaster } from "@/components/ui/sonner"
 import { GlobalState } from "@/components/utility/global-state"
 import { Providers } from "@/components/utility/providers"
-import TranslationsProvider from "@/components/utility/translations-provider"
-import initTranslations from "@/lib/i18n"
-import { Database } from "@/supabase/types"
-import { createServerClient } from "@supabase/ssr"
 import { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
-import { cookies } from "next/headers"
 import { ReactNode } from "react"
 import "./globals.css"
-import { getServerUser } from "@/server/auth"
-import { headers } from "next/headers"
+import { getServerUser } from "@/lib/server/auth"
 
 const inter = Inter({ subsets: ["latin"] })
 const APP_NAME = "Chatbot UI"
@@ -66,43 +60,8 @@ export const viewport: Viewport = {
   themeColor: "#000000"
 }
 
-const i18nNamespaces = ["translation"]
-
-export default async function RootLayout({
-  children,
-  params: { locale }
-}: RootLayoutProps) {
-  const cookieStore = cookies()
-  // const supabase = createServerClient<Database>(
-  //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  //   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  //   {
-  //     cookies: {
-  //       get(name: string) {
-  //         return cookieStore.get(name)?.value
-  //       }
-  //     }
-  //   }
-  // )
-
-  //Changes Euricom to adapt Azure (give user to GlobalState)
-  const headersList = headers()
-  const path = headersList.get("referer") || ""
-
-  const isLogin = path.toLowerCase().includes("signin") || path.endsWith("/")
-  console.log("Root Layout", isLogin, path)
-
+export default async function RootLayout({ children }: RootLayoutProps) {
   const user = await getServerUser()
-  const inputUser = {
-    email: user.email,
-    id: user.id,
-    isAuthenticated: user.isAuthenticated,
-    // isInRole: user.isInRole,
-    name: user.name,
-    roles: user.roles
-  }
-
-  // const { t, resources } = await initTranslations(locale, i18nNamespaces)
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -110,12 +69,7 @@ export default async function RootLayout({
         <Providers attribute="class" defaultTheme="dark">
           <Toaster richColors position="top-center" duration={3000} />
           <div className="bg-background text-foreground flex h-dvh flex-col items-center overflow-x-auto">
-            {/* {!isLogin ? (
-              <GlobalState inputUser={inputUser}>{children}</GlobalState>
-            ) : (
-              children
-            )} */}
-            <GlobalState inputUser={inputUser}>{children}</GlobalState>
+            <GlobalState user={user}>{children}</GlobalState>
           </div>
         </Providers>
       </body>

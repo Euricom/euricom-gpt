@@ -115,6 +115,14 @@ type RefreshTokenPayload =
       error_uri: string
     }
 
+export type User = {
+  id: string
+  name: string
+  email: string
+  roles: string[]
+  isAuthenticated: boolean
+}
+
 /*
  * Takes a token, and returns a new token with updated
  * `accessToken` and `expiresAt`.
@@ -274,10 +282,7 @@ export const getServerAuthSession = () => getServerSession(authOptions)
  *
  * @returns true when the user has the given role or one of the roles
  */
-export const isInRole = (
-  user: Session["user"] | undefined,
-  role: Role | Role[]
-) => {
+export const isInRole = (user: User, role: Role | Role[]) => {
   const userRoles = user?.roles || []
   if (Array.isArray(role)) {
     return role.some(r => userRoles.includes(r))
@@ -299,43 +304,22 @@ export const getServerUser = async () => {
 }
 
 /**
- * User class with some helper methods to easy check roles and authentication.
- */
-export class User {
-  id: string
-  name: string
-  email: string
-  roles: string[]
-
-  constructor(data: Session["user"]) {
-    this.id = data.id
-    this.name = data.name
-    this.email = data.email
-    this.roles = data.roles
-  }
-
-  isInRole(role: Role | Role[]) {
-    return isInRole(this, role)
-  }
-
-  get isAuthenticated() {
-    return !!this.id
-  }
-}
-
-/**
  * Get a user from the session or return the anonymous user.
  * Simplifies the usage of the user object (never null)
  * @param session
  */
-export const getUser = (session: Session | null) => {
-  return new User(
-    session?.user || {
-      // anonymous user
+export const getUser = (session: Session | null): User => {
+  if (!session?.user) {
+    return {
       id: "",
       name: "anonymous",
       email: "",
-      roles: []
+      roles: [],
+      isAuthenticated: false
     }
-  )
+  }
+  return {
+    ...session?.user,
+    isAuthenticated: !!session?.user.id
+  }
 }

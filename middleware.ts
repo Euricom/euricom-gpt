@@ -50,7 +50,7 @@
 //   matcher: "/((?!api|static|.*\\..*|_next|auth).*)"
 // }
 
-import { withAuthentication, withI18n, chain } from "./server/middlewares"
+import { withAuthentication, chain } from "./lib/middlewares"
 
 export default chain([
   // withI18n,
