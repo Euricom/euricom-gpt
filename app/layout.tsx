@@ -73,23 +73,24 @@ export default async function RootLayout({
   params: { locale }
 }: RootLayoutProps) {
   const cookieStore = cookies()
-  const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
-        }
-      }
-    }
-  )
+  // const supabase = createServerClient<Database>(
+  //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  //   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  //   {
+  //     cookies: {
+  //       get(name: string) {
+  //         return cookieStore.get(name)?.value
+  //       }
+  //     }
+  //   }
+  // )
 
   //Changes Euricom to adapt Azure (give user to GlobalState)
   const headersList = headers()
   const path = headersList.get("referer") || ""
 
-  const isLogin = path.includes("login")
+  const isLogin = path.toLowerCase().includes("signin") || path.endsWith("/")
+  console.log("Root Layout", isLogin, path)
 
   const user = await getServerUser()
   const inputUser = {
@@ -101,26 +102,21 @@ export default async function RootLayout({
     roles: user.roles
   }
 
-  const { t, resources } = await initTranslations(locale, i18nNamespaces)
+  // const { t, resources } = await initTranslations(locale, i18nNamespaces)
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers attribute="class" defaultTheme="dark">
-          <TranslationsProvider
-            namespaces={i18nNamespaces}
-            locale={locale}
-            resources={resources}
-          >
-            <Toaster richColors position="top-center" duration={3000} />
-            <div className="bg-background text-foreground flex h-dvh flex-col items-center overflow-x-auto">
-              {!isLogin && inputUser.isAuthenticated ? (
-                <GlobalState inputUser={inputUser}>{children}</GlobalState>
-              ) : (
-                children
-              )}
-            </div>
-          </TranslationsProvider>
+          <Toaster richColors position="top-center" duration={3000} />
+          <div className="bg-background text-foreground flex h-dvh flex-col items-center overflow-x-auto">
+            {/* {!isLogin ? (
+              <GlobalState inputUser={inputUser}>{children}</GlobalState>
+            ) : (
+              children
+            )} */}
+            <GlobalState inputUser={inputUser}>{children}</GlobalState>
+          </div>
         </Providers>
       </body>
     </html>

@@ -1,4 +1,4 @@
-import Loading from "@/app/[locale]/loading"
+import Loading from "@/app/loading"
 import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
 import { ChatbotUIContext } from "@/context/context"
 import { getAssistantToolsByAssistantId } from "@/db/assistant-tools"
@@ -222,7 +222,7 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
         <ChatInput />
       </div>
 
-      {/* 
+      {/*
       //Changes Euricom to adapt Azure (remove help component)
       <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
         <ChatHelp />

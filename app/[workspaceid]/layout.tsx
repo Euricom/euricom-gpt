@@ -64,9 +64,12 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     ;(async () => {
       session = (await supabase.auth.getSession()).data.session
       if (!session) {
+        console.log(process.env.NEXT_PUBLIC_SUPABASE_EMAIL)
+        console.log(process.env.NEXT_PUBLIC_SUPABASE_PASSWORD)
+
         const { data, error } = await supabase.auth.signInWithPassword({
-          email: "kobe.dehandschutter@euri.com",
-          password: "18d332af-2d5b-49e5-8c42-9168b3910f97"
+          email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
+          password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
         })
 
         if (error) {

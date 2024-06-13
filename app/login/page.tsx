@@ -42,8 +42,8 @@ export default async function Login({
 
   if (!session) {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: process.env.SUPABASE_EMAIL!,
-      password: process.env.SUPABASE_PASSWORD!
+      email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
+      password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
     })
     if (error) {
       console.error("Sign in error:", error.message)
@@ -54,17 +54,13 @@ export default async function Login({
   }
 
   if (session) {
-    console.log("in de sessie")
-
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("*")
       .eq("user_id", user.id)
       .single()
-    console.log("in de sessie2")
 
     if (!profile) {
-      console.log("in de geen profile")
       const newProfile: TablesInsert<"profiles"> = {
         user_id: user.id,
         username: user.name,
@@ -82,12 +78,6 @@ export default async function Login({
         .select("*")
         .eq("user_id", user.id)
         .single()
-      console.log(
-        "als hij hier bestaat moet hij bij de volgende ook echt bestaan"
-      )
-
-      console.log(newProf)
-      console.log(prof)
 
       const newHomeWorkspace: TablesInsert<"workspaces"> = {
         default_context_length: 4096,
