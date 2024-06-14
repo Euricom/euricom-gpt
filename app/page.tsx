@@ -11,6 +11,14 @@ export default async function HomePage() {
   // login to supabase (user/passw)
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
+
+  // const { error: errorSignUp } = await supabase.auth.signUp({
+  //   email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
+  //   password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
+  // })
+
+  // return
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
     password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
