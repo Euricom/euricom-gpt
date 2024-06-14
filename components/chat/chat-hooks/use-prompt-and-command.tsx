@@ -39,12 +39,11 @@ export const usePromptAndCommand = () => {
     const hashtagMatch = value.match(hashtagTextRegex)
     const toolMatch = value.match(toolTextRegex)
 
-    //Changes Euricom to adapt Azure (remove @ and !)
-    // if (atMatch) {
-    //   setIsAssistantPickerOpen(true)
-    //   setAtCommand(atMatch[1])
-    // } else
-    if (slashMatch) {
+    //Changes Euricom to adapt Azure (remove !)
+    if (atMatch) {
+      setIsAssistantPickerOpen(true)
+      setAtCommand(atMatch[1])
+    } else if (slashMatch) {
       setIsPromptPickerOpen(true)
       setSlashCommand(slashMatch[1])
     } else if (hashtagMatch) {

@@ -165,7 +165,10 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   return (
     <>
       <div className="flex flex-col flex-wrap justify-center gap-2">
-        <ChatFilesDisplay />
+        {
+          //Changes Euricom to adapt Azure (dont show the files when talking to assistant)
+          !selectedAssistant && <ChatFilesDisplay />
+        }
 
         {selectedTools &&
           selectedTools.map((tool, index) => (
@@ -240,8 +243,8 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
           textareaRef={chatInputRef}
           className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-14 py-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
           placeholder={t(
-            //Changes Euricom to adapt Azure (removed @ and !)
-            `Ask anything. Type "/" for prompts and "#" for files.`
+            //Changes Euricom to adapt Azure (removed !)
+            `Ask anything. Type "@" for assistants, "/" for prompts and "#" for files.`
             // `Ask anything. Type @  /  #  !`
           )}
           onValueChange={handleInputChange}

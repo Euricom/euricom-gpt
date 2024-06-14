@@ -9,11 +9,13 @@ import {
   IconRobotFace,
   IconSparkles
 } from "@tabler/icons-react"
-import { FC } from "react"
+import { FC, useContext } from "react"
 import { TabsList } from "../ui/tabs"
 import { WithTooltip } from "../ui/with-tooltip"
 import { ProfileSettings } from "../utility/profile-settings"
 import { SidebarSwitchItem } from "./sidebar-switch-item"
+import { ChatbotUIContext } from "@/context/context"
+import { Divider } from "@nextui-org/react"
 
 export const SIDEBAR_ICON_SIZE = 28
 
@@ -24,6 +26,10 @@ interface SidebarSwitcherProps {
 export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
   onContentTypeChange
 }) => {
+  //Changes Euricom to adapt Azure (TODO: Admin system for now)
+  const { user } = useContext(ChatbotUIContext)
+  const admin = user?.email === "kobe.dehandschutter@euri.com"
+
   return (
     <div className="flex flex-col justify-between border-r-2 pb-5 bg-primaryEuricom-900">
       <TabsList className="bg-primaryEuricom-900 grid h-[440px] grid-rows-7">
@@ -61,20 +67,25 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           contentType="files"
           onContentTypeChange={onContentTypeChange}
         />
-        {/* 
-        <SidebarSwitchItem
+
+        {/* <SidebarSwitchItem
           icon={<IconBooks size={SIDEBAR_ICON_SIZE} />}
           contentType="collections"
           onContentTypeChange={onContentTypeChange}
-        />
+        /> */}
 
-        <SidebarSwitchItem
-          icon={<IconRobotFace size={SIDEBAR_ICON_SIZE} />}
-          contentType="assistants"
-          onContentTypeChange={onContentTypeChange}
-        />
+        {admin && (
+          <>
+            <div>-------</div>
+            <SidebarSwitchItem
+              icon={<IconRobotFace size={SIDEBAR_ICON_SIZE} />}
+              contentType="assistants"
+              onContentTypeChange={onContentTypeChange}
+            />
+          </>
+        )}
 
-        <SidebarSwitchItem
+        {/* <SidebarSwitchItem
           icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
           contentType="tools"
           onContentTypeChange={onContentTypeChange}

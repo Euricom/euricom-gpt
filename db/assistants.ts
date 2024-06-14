@@ -15,6 +15,19 @@ export const getAssistantById = async (assistantId: string) => {
   return assistant
 }
 
+//Changes Euricom to adapt Azure (everyone needs to access the euricom assistant)
+export const getAllAssistants = async () => {
+  const { data: assistants, error } = await supabase
+    .from("assistants")
+    .select("*")
+
+  if (!assistants) {
+    throw new Error(error.message)
+  }
+
+  return assistants
+}
+
 export const getAssistantWorkspacesByWorkspaceId = async (
   workspaceId: string
 ) => {
