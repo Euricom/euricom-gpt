@@ -38,6 +38,19 @@ export const getFileWorkspacesByWorkspaceId = async (workspaceId: string) => {
   return workspace
 }
 
+//Changes Euricom (add getAdminFiles + change creates to make a public one)
+export const getAdminFiles = async () => {
+  const { data: files, error } = await supabase
+    .from("files")
+    .select("*")
+    .eq("sharing", "public")
+
+  if (!files) {
+    throw new Error(error.message)
+  }
+  return files
+}
+
 export const getFileWorkspacesByFileId = async (fileId: string) => {
   const { data: file, error } = await supabase
     .from("files")
@@ -61,10 +74,11 @@ export const getFileWorkspacesByFileId = async (fileId: string) => {
 export const createFileBasedOnExtension = async (
   file: File,
   fileRecord: TablesInsert<"files">,
-  workspace_id: string,
+  workspace_id: string | null,
   embeddingsProvider: "openai" | "local"
 ) => {
   const fileExtension = file.name.split(".").pop()
+  if (!workspace_id) fileRecord.sharing = "public"
 
   if (fileExtension === "docx") {
     const arrayBuffer = await file.arrayBuffer()
@@ -88,12 +102,14 @@ export const createFileBasedOnExtension = async (
 export const createFile = async (
   file: File,
   fileRecord: TablesInsert<"files">,
-  workspace_id: string,
+  workspace_id: string | null,
   embeddingsProvider: "openai" | "local"
 ) => {
   let validFilename = fileRecord.name.replace(/[^a-z0-9.]/gi, "_").toLowerCase()
   const extension = file.name.split(".").pop()
-  const baseName = validFilename.substring(0, validFilename.lastIndexOf("."))
+  const baseName = validFilename.includes(".")
+    ? validFilename.substring(0, validFilename.lastIndexOf("."))
+    : validFilename
   const maxBaseNameLength = 100 - (extension?.length || 0) - 1
   if (baseName.length > maxBaseNameLength) {
     fileRecord.name = baseName.substring(0, maxBaseNameLength) + "." + extension
@@ -109,12 +125,13 @@ export const createFile = async (
   if (error) {
     throw new Error(error.message)
   }
-
-  await createFileWorkspace({
-    user_id: createdFile.user_id,
-    file_id: createdFile.id,
-    workspace_id
-  })
+  if (workspace_id) {
+    await createFileWorkspace({
+      user_id: createdFile.user_id,
+      file_id: createdFile.id,
+      workspace_id
+    })
+  }
 
   const filePath = await uploadFile(file, {
     name: createdFile.name,
@@ -157,7 +174,7 @@ export const createDocXFile = async (
   text: string,
   file: File,
   fileRecord: TablesInsert<"files">,
-  workspace_id: string,
+  workspace_id: string | null,
   embeddingsProvider: "openai" | "local"
 ) => {
   const { data: createdFile, error } = await supabase
@@ -169,12 +186,13 @@ export const createDocXFile = async (
   if (error) {
     throw new Error(error.message)
   }
-
-  await createFileWorkspace({
-    user_id: createdFile.user_id,
-    file_id: createdFile.id,
-    workspace_id
-  })
+  if (workspace_id) {
+    await createFileWorkspace({
+      user_id: createdFile.user_id,
+      file_id: createdFile.id,
+      workspace_id
+    })
+  }
 
   const filePath = await uploadFile(file, {
     name: createdFile.name,

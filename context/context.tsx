@@ -40,6 +40,9 @@ interface ChatbotUIContext {
   setTools: Dispatch<SetStateAction<Tables<"tools">[]>>
   workspaces: Tables<"workspaces">[]
   setWorkspaces: Dispatch<SetStateAction<Tables<"workspaces">[]>>
+  //Changes Euricom (add admin files)
+  adminFiles: Tables<"files">[]
+  setAdminFiles: Dispatch<SetStateAction<Tables<"files">[]>>
 
   // MODELS STORE
   envKeyMap: Record<string, VALID_ENV_KEYS>
@@ -167,6 +170,8 @@ export const ChatbotUIContext = createContext<ChatbotUIContext>({
   setTools: () => {},
   workspaces: [],
   setWorkspaces: () => {},
+  adminFiles: [],
+  setAdminFiles: () => {},
 
   // MODELS STORE
   envKeyMap: {},

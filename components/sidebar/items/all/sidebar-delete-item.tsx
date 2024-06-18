@@ -39,7 +39,8 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     setCollections,
     setAssistants,
     setTools,
-    setModels
+    setModels,
+    setAdminFiles
   } = useContext(ChatbotUIContext)
 
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -57,6 +58,11 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
       await deletePrompt(prompt.id)
     },
     files: async (file: Tables<"files">) => {
+      await deleteFileFromStorage(file.file_path)
+      await deleteFile(file.id)
+    },
+    //Changes Euricom (add admin files)
+    adminFiles: async (file: Tables<"files">) => {
       await deleteFileFromStorage(file.file_path)
       await deleteFile(file.id)
     },
@@ -85,7 +91,8 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     collections: setCollections,
     assistants: setAssistants,
     tools: setTools,
-    models: setModels
+    models: setModels,
+    adminFiles: setAdminFiles
   }
 
   const handleDelete = async () => {

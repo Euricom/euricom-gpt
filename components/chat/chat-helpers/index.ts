@@ -55,7 +55,6 @@ export const handleRetrieval = async (
   userInput: string,
   newMessageFiles: ChatFile[],
   chatFiles: ChatFile[],
-  fileIds: string[],
   embeddingsProvider: "openai" | "local",
   sourceCount: number
 ) => {

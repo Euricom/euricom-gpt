@@ -189,7 +189,9 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
             />
           </div>
 
-          {checkIfModelIsToolCompatible() ? (
+          {
+            //Changes Euricom (remove assistant tools)
+            /* {checkIfModelIsToolCompatible() ? (
             <div className="space-y-1">
               <Label>Tools</Label>
 
@@ -202,7 +204,8 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
             <div className="pt-1 font-semibold">
               Model is not compatible with tools.
             </div>
-          )}
+          )} */
+          }
         </>
       )}
       onOpenChange={onOpenChange}

@@ -74,16 +74,25 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           onContentTypeChange={onContentTypeChange}
         /> */}
 
-        {admin && (
-          <>
-            <div>-------</div>
-            <SidebarSwitchItem
-              icon={<IconRobotFace size={SIDEBAR_ICON_SIZE} />}
-              contentType="assistants"
-              onContentTypeChange={onContentTypeChange}
-            />
-          </>
-        )}
+        {
+          //Changes Euricom (add admin sidebar)
+          admin && (
+            <>
+              <hr className="border-2 border-secondaryEuricom rounded" />
+              <SidebarSwitchItem
+                icon={<IconRobotFace size={SIDEBAR_ICON_SIZE} />}
+                contentType="assistants"
+                onContentTypeChange={onContentTypeChange}
+              />
+
+              <SidebarSwitchItem
+                icon={<IconFile size={SIDEBAR_ICON_SIZE} />}
+                contentType="adminFiles"
+                onContentTypeChange={onContentTypeChange}
+              />
+            </>
+          )
+        }
 
         {/* <SidebarSwitchItem
           icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}

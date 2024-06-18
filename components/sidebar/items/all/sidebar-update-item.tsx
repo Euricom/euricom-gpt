@@ -113,6 +113,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     setAssistants,
     setTools,
     setModels,
+    setAdminFiles,
     setAssistantImages
   } = useContext(ChatbotUIContext)
 
@@ -175,6 +176,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     presets: null,
     prompts: null,
     files: null,
+    adminFiles: null,
     collections: {
       startingCollectionFiles,
       setStartingCollectionFiles,
@@ -204,6 +206,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     presets: null,
     prompts: null,
     files: null,
+    adminFiles: null,
     collections: async (collectionId: string) => {
       const collectionFiles =
         await getCollectionFilesByCollectionId(collectionId)
@@ -243,6 +246,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
       const item = await getFileWorkspacesByFileId(fileId)
       return item.workspaces
     },
+    adminFiles: null,
     collections: async (collectionId: string) => {
       const item = await getCollectionWorkspacesByCollectionId(collectionId)
       return item.workspaces
@@ -356,6 +360,21 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
       return updatedPrompt
     },
     files: async (fileId: string, updateState: TablesUpdate<"files">) => {
+      const updatedFile = await updateFile(fileId, updateState)
+
+      await handleWorkspaceUpdates(
+        startingWorkspaces,
+        selectedWorkspaces,
+        fileId,
+        deleteFileWorkspace,
+        createFileWorkspaces as any,
+        "file_id"
+      )
+
+      return updatedFile
+    },
+    //Changes Euricom (add admin files)
+    adminFiles: async (fileId: string, updateState: TablesUpdate<"files">) => {
       const updatedFile = await updateFile(fileId, updateState)
 
       await handleWorkspaceUpdates(
@@ -579,7 +598,8 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     collections: setCollections,
     assistants: setAssistants,
     tools: setTools,
-    models: setModels
+    models: setModels,
+    adminFiles: setAdminFiles
   }
 
   const handleUpdate = async () => {

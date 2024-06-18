@@ -32,6 +32,7 @@ export const DeleteFolder: FC<DeleteFolderProps> = ({
     setPresets,
     setPrompts,
     setFiles,
+    setAdminFiles,
     setCollections,
     setAssistants,
     setTools,
@@ -41,12 +42,13 @@ export const DeleteFolder: FC<DeleteFolderProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const [showFolderDialog, setShowFolderDialog] = useState(false)
-
+  //Changes Euricom (add admin files)
   const stateUpdateFunctions = {
     chats: setChats,
     presets: setPresets,
     prompts: setPrompts,
     files: setFiles,
+    adminFiles: setAdminFiles,
     collections: setCollections,
     assistants: setAssistants,
     tools: setTools,

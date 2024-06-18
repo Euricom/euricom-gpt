@@ -12,6 +12,7 @@ import { CreateModel } from "./items/models/create-model"
 import { CreatePreset } from "./items/presets/create-preset"
 import { CreatePrompt } from "./items/prompts/create-prompt"
 import { CreateTool } from "./items/tools/create-tool"
+import { CreateAdminFile } from "./items/adminFiles/create-admin-file"
 
 interface SidebarCreateButtonsProps {
   contentType: ContentType
@@ -29,6 +30,7 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   const [isCreatingPrompt, setIsCreatingPrompt] = useState(false)
   const [isCreatingPreset, setIsCreatingPreset] = useState(false)
   const [isCreatingFile, setIsCreatingFile] = useState(false)
+  const [isCreatingAdminFile, setIsCreatingAdminFile] = useState(false)
   const [isCreatingCollection, setIsCreatingCollection] = useState(false)
   const [isCreatingAssistant, setIsCreatingAssistant] = useState(false)
   const [isCreatingTool, setIsCreatingTool] = useState(false)
@@ -68,6 +70,10 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
       case "files":
         return async () => {
           setIsCreatingFile(true)
+        }
+      case "adminFiles":
+        return async () => {
+          setIsCreatingAdminFile(true)
         }
 
       case "collections":
@@ -127,6 +133,16 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
       {isCreatingFile && (
         <CreateFile isOpen={isCreatingFile} onOpenChange={setIsCreatingFile} />
       )}
+
+      {
+        //Changes Euricom (add admin files)
+        isCreatingAdminFile && (
+          <CreateAdminFile
+            isOpen={isCreatingAdminFile}
+            onOpenChange={setIsCreatingAdminFile}
+          />
+        )
+      }
 
       {isCreatingCollection && (
         <CreateCollection

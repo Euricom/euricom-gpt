@@ -21,6 +21,8 @@ import { ModelItem } from "./items/models/model-item"
 import { PresetItem } from "./items/presets/preset-item"
 import { PromptItem } from "./items/prompts/prompt-item"
 import { ToolItem } from "./items/tools/tool-item"
+import { AdminFileItem } from "./items/adminFiles/admin-file-item"
+import { AdminFolder } from "./items/folders/admin-folder-item"
 
 interface SidebarDataListProps {
   contentType: ContentType
@@ -38,6 +40,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     setPresets,
     setPrompts,
     setFiles,
+    setAdminFiles,
     setCollections,
     setAssistants,
     setTools,
@@ -65,6 +68,15 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
 
       case "files":
         return <FileItem key={item.id} file={item as Tables<"files">} />
+
+      case "adminFiles":
+        return (
+          <AdminFileItem
+            key={item.id}
+            file={item as Tables<"files">}
+            isAdmin={true}
+          />
+        )
 
       case "collections":
         return (
@@ -137,6 +149,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     presets: updatePreset,
     prompts: updatePrompt,
     files: updateFile,
+    adminFiles: updateFile,
     collections: updateCollection,
     assistants: updateAssistant,
     tools: updateTool,
@@ -148,6 +161,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     presets: setPresets,
     prompts: setPrompts,
     files: setFiles,
+    adminFiles: setAdminFiles,
     collections: setCollections,
     assistants: setAssistants,
     tools: setTools,
@@ -213,9 +227,24 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
       )
     }
   }, [data])
+  //Changes Euricom (add public items)
+  const publicItemsWithFolders = data.filter(
+    item => item.folder_id && item.sharing === "public"
+  )
+  const publicItemsWithoutFolders = data.filter(
+    item => item.folder_id === null && item.sharing === "public"
+  )
+  const dataWithFolders =
+    contentType === "adminFiles"
+      ? data.filter(item => item.folder_id)
+      : data.filter(item => item.folder_id && item.sharing !== "public")
 
-  const dataWithFolders = data.filter(item => item.folder_id)
-  const dataWithoutFolders = data.filter(item => item.folder_id === null)
+  const dataWithoutFolders =
+    contentType === "adminFiles"
+      ? data.filter(item => item.folder_id === null)
+      : data.filter(
+          item => item.folder_id === null && item.sharing !== "public"
+        )
 
   return (
     <>
@@ -238,26 +267,28 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
               isOverflowing ? "w-[calc(100%-8px)]" : "w-full"
             } space-y-2 pt-2 ${isOverflowing ? "mr-2" : ""}`}
           >
-            {folders.map(folder => (
-              <Folder
-                key={folder.id}
-                folder={folder}
-                onUpdateFolder={updateFolder}
-                contentType={contentType}
-              >
-                {dataWithFolders
-                  .filter(item => item.folder_id === folder.id)
-                  .map(item => (
-                    <div
-                      key={item.id}
-                      draggable
-                      onDragStart={e => handleDragStart(e, item.id)}
-                    >
-                      {getDataListComponent(contentType, item)}
-                    </div>
-                  ))}
-              </Folder>
-            ))}
+            {folders
+              .filter(folder => folder.type === contentType)
+              .map(folder => (
+                <Folder
+                  key={folder.id}
+                  folder={folder}
+                  onUpdateFolder={updateFolder}
+                  contentType={contentType}
+                >
+                  {dataWithFolders
+                    .filter(item => item.folder_id === folder.id)
+                    .map(item => (
+                      <div
+                        key={item.id}
+                        draggable
+                        onDragStart={e => handleDragStart(e, item.id)}
+                      >
+                        {getDataListComponent(contentType, item)}
+                      </div>
+                    ))}
+                </Folder>
+              ))}
 
             {folders.length > 0 && <Separator />}
 
@@ -330,6 +361,70 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
             )}
           </div>
         )}
+
+        {
+          //Changes Euricom (add publid items)
+          contentType !== "adminFiles" &&
+            (publicItemsWithFolders.length > 0 ||
+              publicItemsWithoutFolders.length > 0) && (
+              <>
+                <div className="pt-10"></div>
+                <Separator />
+                <div className="pt-10"></div>
+                <AdminFolder key="admin" folderName="Admin Files">
+                  <div
+                    className={`h-full ${
+                      isOverflowing ? "w-[calc(100%-8px)]" : "w-full"
+                    } space-y-2 pt-2 ${isOverflowing ? "mr-2" : ""}`}
+                  >
+                    {folders
+                      .filter(folder => folder.type === "adminFiles")
+                      .map(folder => (
+                        <AdminFolder key={folder.id} folderName={folder.name}>
+                          {publicItemsWithFolders
+                            .filter(item => item.folder_id === folder.id)
+                            .map(item => (
+                              <div key={item.id}>
+                                <AdminFileItem
+                                  key={item.id}
+                                  file={item as Tables<"files">}
+                                />
+                              </div>
+                            ))}
+                        </AdminFolder>
+                      ))}
+
+                    {folders.length > 0 && <Separator />}
+                    <div
+                      className={cn(
+                        "flex grow flex-col",
+                        isDragOver && "bg-accent"
+                      )}
+                      onDrop={handleDrop}
+                      onDragEnter={handleDragEnter}
+                      onDragLeave={handleDragLeave}
+                      onDragOver={handleDragOver}
+                    >
+                      {publicItemsWithoutFolders.map(item => {
+                        return (
+                          <div
+                            key={item.id}
+                            draggable
+                            onDragStart={e => handleDragStart(e, item.id)}
+                          >
+                            <AdminFileItem
+                              key={item.id}
+                              file={item as Tables<"files">}
+                            />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </AdminFolder>
+              </>
+            )
+        }
       </div>
 
       <div

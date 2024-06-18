@@ -2,6 +2,7 @@ import { ChatbotUIContext } from "@/context/context"
 import { createDocXFile, createFile } from "@/db/files"
 import { LLM_LIST } from "@/lib/models/llm/llm-list"
 import mammoth from "mammoth"
+import { useSearchParams } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -23,10 +24,13 @@ export const useSelectFileHandler = () => {
     setNewMessageFiles,
     setShowFilesDisplay,
     setFiles,
+    adminFiles,
+    setAdminFiles,
     setUseRetrieval
   } = useContext(ChatbotUIContext)
 
   const [filesToAccept, setFilesToAccept] = useState(ACCEPTED_FILE_TYPES)
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     handleFilesToAccept()
@@ -46,6 +50,9 @@ export const useSelectFileHandler = () => {
   }
 
   const handleSelectDeviceFile = async (file: File) => {
+    const path = searchParams.get("tab")
+    const isAdmin = path === "adminFiles"
+
     if (!profile || !selectedWorkspace || !chatSettings) return
 
     setShowFilesDisplay(true)
@@ -91,7 +98,7 @@ export const useSelectFileHandler = () => {
           const result = await mammoth.extractRawText({
             arrayBuffer
           })
-
+          //Changes Euricom (create file with public sharing)
           const createdFile = await createDocXFile(
             result.value,
             file,
@@ -102,13 +109,16 @@ export const useSelectFileHandler = () => {
               name: file.name,
               size: file.size,
               tokens: 0,
-              type: simplifiedFileType
+              type: simplifiedFileType,
+              sharing: isAdmin ? "public" : "private"
             },
             selectedWorkspace.id,
             chatSettings.embeddingsProvider
           )
-
-          setFiles(prev => [...prev, createdFile])
+          //Changes Euricom
+          isAdmin
+            ? setAdminFiles(prev => [...prev, createdFile])
+            : setFiles(prev => [...prev, createdFile])
 
           setNewMessageFiles(prev =>
             prev.map(item =>
@@ -163,13 +173,16 @@ export const useSelectFileHandler = () => {
                 name: file.name,
                 size: file.size,
                 tokens: 0,
-                type: simplifiedFileType
+                type: simplifiedFileType,
+                sharing: isAdmin ? "public" : "private"
               },
               selectedWorkspace.id,
               chatSettings.embeddingsProvider
             )
 
-            setFiles(prev => [...prev, createdFile])
+            isAdmin
+              ? setAdminFiles(prev => [...prev, createdFile])
+              : setFiles(prev => [...prev, createdFile])
 
             setNewMessageFiles(prev =>
               prev.map(item =>

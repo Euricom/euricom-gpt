@@ -21,14 +21,14 @@
 ## Based on Chatbot UI
 
 - [ ] Versie 1.0
-  - [ ] Active directory login, met long live sessions (zie desk reservation)
-  - [ ] User profile, Hide API keys
-  - [ ] API key via env variable
-  - [ ] Hide Collections, Tools, Assistants, Models, Workspaces, Help
-  - [ ] Deployment naar Vercel
+  - [x] Active directory login, met long live sessions (zie desk reservation)
+  - [x] User profile, Hide API keys
+  - [x] API key via env variable
+  - [x] Hide Collections, Tools, Assistants, Models, Workspaces, Help
+  - [x] Deployment naar Vercel
 - [ ] Versie 1.1
-  - [ ] Admin kan doc voor iedereen beschikbaar toevoegen
-  - [ ] Admin kan Assistents toevoegen die kunnen gebruikt worden door alle gebruikers.
+  - [x] Admin kan doc voor iedereen beschikbaar toevoegen
+  - [x] Admin kan Assistents toevoegen die kunnen gebruikt worden door alle gebruikers.
 
 # Chatbot UI
 

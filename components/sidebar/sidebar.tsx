@@ -23,13 +23,17 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
     collections,
     assistants,
     tools,
-    models
+    models,
+    adminFiles
   } = useContext(ChatbotUIContext)
 
   const chatFolders = folders.filter(folder => folder.type === "chats")
   const presetFolders = folders.filter(folder => folder.type === "presets")
   const promptFolders = folders.filter(folder => folder.type === "prompts")
   const filesFolders = folders.filter(folder => folder.type === "files")
+  const adminFilesFolders = folders.filter(
+    folder => folder.type === "adminFiles"
+  )
   const collectionFolders = folders.filter(
     folder => folder.type === "collections"
   )
@@ -77,9 +81,19 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
 
             case "prompts":
               return renderSidebarContent("prompts", prompts, promptFolders)
-
+            //Changes Euricom (add admin files)
             case "files":
-              return renderSidebarContent("files", files, filesFolders)
+              return renderSidebarContent(
+                "files",
+                files.concat(adminFiles),
+                filesFolders.concat(adminFilesFolders)
+              )
+            case "adminFiles":
+              return renderSidebarContent(
+                "adminFiles",
+                adminFiles,
+                adminFilesFolders
+              )
 
             case "collections":
               return renderSidebarContent(

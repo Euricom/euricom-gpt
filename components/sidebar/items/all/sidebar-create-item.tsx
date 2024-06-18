@@ -56,7 +56,8 @@ export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
     setAssistants,
     setAssistantImages,
     setTools,
-    setModels
+    setModels,
+    setAdminFiles
   } = useContext(ChatbotUIContext)
 
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -79,6 +80,21 @@ export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
         file,
         rest,
         workspaceId,
+        selectedWorkspace.embeddings_provider as "openai" | "local"
+      )
+
+      return createdFile
+    },
+    //Changes Euricom (add admin files)
+    adminFiles: async (createState: { file: File } & TablesInsert<"files">) => {
+      if (!selectedWorkspace) return
+
+      const { file, ...rest } = createState
+
+      const createdFile = await createFileBasedOnExtension(
+        file,
+        rest,
+        null,
         selectedWorkspace.embeddings_provider as "openai" | "local"
       )
 
@@ -181,7 +197,8 @@ export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
     collections: setCollections,
     assistants: setAssistants,
     tools: setTools,
-    models: setModels
+    models: setModels,
+    adminFiles: setAdminFiles
   }
 
   const handleCreate = async () => {

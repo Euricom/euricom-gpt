@@ -8,7 +8,7 @@ import {
 } from "@/db/assistants"
 import { getChatsByWorkspaceId } from "@/db/chats"
 import { getCollectionWorkspacesByWorkspaceId } from "@/db/collections"
-import { getFileWorkspacesByWorkspaceId } from "@/db/files"
+import { getAdminFiles, getFileWorkspacesByWorkspaceId } from "@/db/files"
 import { getFoldersByWorkspaceId } from "@/db/folders"
 import { getModelWorkspacesByWorkspaceId } from "@/db/models"
 import { getPresetWorkspacesByWorkspaceId } from "@/db/presets"
@@ -45,6 +45,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setPrompts,
     setTools,
     setModels,
+    setAdminFiles,
     selectedWorkspace,
     setSelectedWorkspace,
     setSelectedChat,
@@ -67,9 +68,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     ;(async () => {
       session = (await supabase.auth.getSession()).data.session
       if (!session) {
-        console.log(process.env.NEXT_PUBLIC_SUPABASE_EMAIL)
-        console.log(process.env.NEXT_PUBLIC_SUPABASE_PASSWORD)
-
         const { data, error } = await supabase.auth.signInWithPassword({
           email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
           password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
@@ -161,8 +159,15 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     const folders = await getFoldersByWorkspaceId(workspaceId)
     setFolders(folders)
 
+    //Changes Euricom (add adminFiles)
     const fileData = await getFileWorkspacesByWorkspaceId(workspaceId)
-    setFiles(fileData.files)
+    setFiles(fileData.files.filter(file => file.sharing !== "public"))
+
+    const adminFileData = await getAdminFiles()
+    setAdminFiles(adminFileData)
+
+    console.log(fileData)
+    console.log(adminFileData)
 
     const presetData = await getPresetWorkspacesByWorkspaceId(workspaceId)
     setPresets(presetData.presets)

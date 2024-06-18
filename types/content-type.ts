@@ -1,3 +1,4 @@
+//Changes Euricom (add admin files)
 export type ContentType =
   | "chats"
   | "presets"
@@ -7,3 +8,4 @@ export type ContentType =
   | "assistants"
   | "tools"
   | "models"
+  | "adminFiles"

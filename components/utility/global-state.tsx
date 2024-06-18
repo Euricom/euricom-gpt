@@ -59,6 +59,8 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, user }) => {
   const [collections, setCollections] = useState<Tables<"collections">[]>([])
   const [chats, setChats] = useState<Tables<"chats">[]>([])
   const [files, setFiles] = useState<Tables<"files">[]>([])
+  //Changes Euricom (add admin files)
+  const [adminFiles, setAdminFiles] = useState<Tables<"files">[]>([])
 
   const [folders, setFolders] = useState<Tables<"folders">[]>([])
   const [models, setModels] = useState<Tables<"models">[]>([])
@@ -256,6 +258,8 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, user }) => {
         setTools,
         workspaces,
         setWorkspaces,
+        adminFiles,
+        setAdminFiles,
 
         // MODELS STORE
         envKeyMap,

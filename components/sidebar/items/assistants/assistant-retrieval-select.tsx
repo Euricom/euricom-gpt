@@ -26,7 +26,7 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
   selectedAssistantRetrievalItems,
   onAssistantRetrievalItemsSelect
 }) => {
-  const { files, collections } = useContext(ChatbotUIContext)
+  const { files, adminFiles, collections } = useContext(ChatbotUIContext)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -107,26 +107,29 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
             />
           ))}
 
-        {files
-          .filter(
-            file =>
-              !selectedAssistantRetrievalItems.some(
-                selectedAssistantRetrieval =>
-                  selectedAssistantRetrieval.id === file.id
-              ) && file.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map(file => (
-            <AssistantRetrievalItemOption
-              key={file.id}
-              item={file}
-              contentType="files"
-              selected={selectedAssistantRetrievalItems.some(
-                selectedAssistantRetrieval =>
-                  selectedAssistantRetrieval.id === file.id
-              )}
-              onSelect={handleItemSelect}
-            />
-          ))}
+        {
+          //Changes Euricom (change files to admin files)
+          adminFiles
+            .filter(
+              file =>
+                !selectedAssistantRetrievalItems.some(
+                  selectedAssistantRetrieval =>
+                    selectedAssistantRetrieval.id === file.id
+                ) && file.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map(file => (
+              <AssistantRetrievalItemOption
+                key={file.id}
+                item={file}
+                contentType="files"
+                selected={selectedAssistantRetrievalItems.some(
+                  selectedAssistantRetrieval =>
+                    selectedAssistantRetrieval.id === file.id
+                )}
+                onSelect={handleItemSelect}
+              />
+            ))
+        }
 
         {collections
           .filter(
