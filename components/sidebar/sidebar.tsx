@@ -83,11 +83,7 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
               return renderSidebarContent("prompts", prompts, promptFolders)
             //Changes Euricom (add admin files)
             case "files":
-              return renderSidebarContent(
-                "files",
-                files.concat(adminFiles),
-                filesFolders.concat(adminFilesFolders)
-              )
+              return renderSidebarContent("files", files, filesFolders)
             case "adminFiles":
               return renderSidebarContent(
                 "adminFiles",

@@ -228,23 +228,15 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     }
   }, [data])
   //Changes Euricom (add public items)
-  const publicItemsWithFolders = data.filter(
-    item => item.folder_id && item.sharing === "public"
-  )
-  const publicItemsWithoutFolders = data.filter(
-    item => item.folder_id === null && item.sharing === "public"
-  )
-  const dataWithFolders =
-    contentType === "adminFiles"
-      ? data.filter(item => item.folder_id)
-      : data.filter(item => item.folder_id && item.sharing !== "public")
+  // const publicItemsWithFolders = data.filter(
+  //   item => item.folder_id && item.sharing === "public"
+  // )
+  // const publicItemsWithoutFolders = data.filter(
+  //   item => item.folder_id === null && item.sharing === "public"
+  // )
+  const dataWithFolders = data.filter(item => item.folder_id)
 
-  const dataWithoutFolders =
-    contentType === "adminFiles"
-      ? data.filter(item => item.folder_id === null)
-      : data.filter(
-          item => item.folder_id === null && item.sharing !== "public"
-        )
+  const dataWithoutFolders = data.filter(item => item.folder_id === null)
 
   return (
     <>
@@ -362,7 +354,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
           </div>
         )}
 
-        {
+        {/*
           //Changes Euricom (add publid items)
           contentType !== "adminFiles" &&
             (publicItemsWithFolders.length > 0 ||
@@ -419,8 +411,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                   </div>
                 </AdminFolder>
               </>
-            )
-        }
+            ) */}
       </div>
 
       <div
