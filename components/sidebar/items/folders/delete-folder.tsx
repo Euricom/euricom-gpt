@@ -84,9 +84,9 @@ export const DeleteFolder: FC<DeleteFolderProps> = ({
     const setStateFunction = stateUpdateFunctions[contentType]
 
     if (!setStateFunction) return
-
+    //changes euricom (add adminFiles)
     const { error } = await supabase
-      .from(contentType)
+      .from(contentType === "adminFiles" ? "files" : contentType)
       .delete()
       .eq("folder_id", folder.id)
 

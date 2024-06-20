@@ -32,7 +32,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
 
   return (
     <div className="flex flex-col justify-between border-r-2 pb-5 bg-primaryEuricom-900">
-      <TabsList className="bg-primaryEuricom-900 grid h-[440px] grid-rows-7">
+      <TabsList className="bg-primaryEuricom-900 grid h-[480px] grid-rows-9">
         <div className=" inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm">
           <img src="/euricom_logo_small.png" className="h-6 w-6" />
         </div>
@@ -55,7 +55,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           onContentTypeChange={onContentTypeChange}
         />
         {/* 
-        //Changes Euricom to adapt Azure (remove models, collections, assistants, tools)
+        //Changes Euricom to adapt Azure (remove models, collections)
         <SidebarSwitchItem
           icon={<IconSparkles size={SIDEBAR_ICON_SIZE} />}
           contentType="models"
@@ -90,15 +90,14 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
                 contentType="adminFiles"
                 onContentTypeChange={onContentTypeChange}
               />
+              <SidebarSwitchItem
+                icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
+                contentType="tools"
+                onContentTypeChange={onContentTypeChange}
+              />
             </>
           )
         }
-
-        {/* <SidebarSwitchItem
-          icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
-          contentType="tools"
-          onContentTypeChange={onContentTypeChange}
-        /> */}
       </TabsList>
 
       <div className="flex flex-col items-center space-y-4 text-secondaryEuricom-300">

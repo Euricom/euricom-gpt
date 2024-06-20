@@ -1,0 +1,1707 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('euricom.sharepoint.com%2Cf7f41bd5-d192-4a3f-aed3-52f69b021224%2C9c644b71-f2b7-4af3-8fc7-b12615162907')/pages('a7e23c78-b05a-4c1b-8555-5508d032bdff')/microsoft.graph.sitePage/webParts",
+  "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET sites('<key>')/pages('<guid>')/microsoft.graph.sitePage/webParts?$select=id",
+  "value": [
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "e8d3d130-9e55-4e98-bbbb-f00ec3c5001c",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "i:0#.f|membership|wim.vanhoye@euri.com",
+              "role": "General Manager",
+              "firstName": "",
+              "lastName": "",
+              "upn": "",
+              "phone": "",
+              "sip": "",
+              "department": ""
+            },
+            {
+              "id": "kim.dufraing@euri.com",
+              "role": "Office & Operations Manager",
+              "department": "",
+              "aadObjectId": "b3859788-62e8-478c-81cc-c1678c477d8a"
+            },
+            {
+              "id": "sonja.buts@euri.com",
+              "role": "Finance & Admin Officer",
+              "department": "",
+              "aadObjectId": "96f9d38d-0695-460d-a832-c1d289f4521a"
+            },
+            {
+              "id": "jo.sterckx@euri.com",
+              "role": "Office Coördinator",
+              "department": "",
+              "aadObjectId": "2d82a697-e23d-4105-a42e-16632d1aa80d"
+            },
+            {
+              "id": "brit.seghers@euri.com",
+              "role": "Jr. HR Officer",
+              "department": "",
+              "aadObjectId": "52e5318a-df4f-453b-97e6-0f822258a4c7"
+            },
+            {
+              "id": "mayte.vandevelde@euri.com",
+              "role": "Internal Recruiter",
+              "department": "",
+              "aadObjectId": "3e77d9c2-7b25-4407-b02d-e3eca6779319"
+            },
+            {
+              "id": "luk.vanderstraeten@euri.com",
+              "role": "Practice Manager",
+              "department": "",
+              "aadObjectId": "381f36f0-08ea-44d9-b4d6-f1eed84f48da"
+            },
+            {
+              "id": "gilles.plaetinck@euri.com",
+              "role": "Practice Manager",
+              "department": "",
+              "aadObjectId": "a19c5290-d59a-467d-925e-fe0a7c7a8871"
+            },
+            {
+              "id": "ellen.debaeck@euri.com",
+              "role": "Practice Manager",
+              "department": "",
+              "aadObjectId": "c9945e77-14b5-4c28-8f6c-1bbf1c810728"
+            },
+            {
+              "id": "bo.rosseel@euri.com",
+              "role": "Practice Manager",
+              "department": "",
+              "aadObjectId": "56575e06-1bd3-4445-8cd1-f9731e31325c"
+            },
+            {
+              "id": "wouter.gillekens@euri.com",
+              "role": "Finance",
+              "department": "",
+              "aadObjectId": "bde04181-04b8-484d-925b-3443d5a3827a"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Staff" },
+            { "key": "persons[0].name", "value": "Wim Van Hoye" },
+            { "key": "persons[1].name", "value": "Kim Dufraing" },
+            { "key": "persons[2].name", "value": "Sonja Buts" },
+            { "key": "persons[3].name", "value": "Jo Sterckx" },
+            { "key": "persons[4].name", "value": "Brit Seghers" },
+            { "key": "persons[5].name", "value": "Mayte Van de Velde" },
+            { "key": "persons[6].name", "value": "Luk Vanderstraeten" },
+            { "key": "persons[7].name", "value": "Gilles Plaetinck" },
+            { "key": "persons[8].name", "value": "Ellen De Baeck" },
+            { "key": "persons[9].name", "value": "Bo Rosseel" },
+            { "key": "persons[10].name", "value": "Wouter Gillekens" },
+            { "key": "persons[0].email", "value": "wim.vanhoye@euri.com" },
+            { "key": "persons[1].email", "value": "kim.dufraing@euri.com" },
+            { "key": "persons[2].email", "value": "sonja.buts@euri.com" },
+            { "key": "persons[3].email", "value": "jo.sterckx@euri.com" },
+            { "key": "persons[4].email", "value": "brit.seghers@euri.com" },
+            { "key": "persons[5].email", "value": "mayte.vandevelde@euri.com" },
+            {
+              "key": "persons[6].email",
+              "value": "luk.vanderstraeten@euri.com"
+            },
+            { "key": "persons[7].email", "value": "gilles.plaetinck@euri.com" },
+            { "key": "persons[8].email", "value": "ellen.debaeck@euri.com" },
+            { "key": "persons[9].email", "value": "bo.rosseel@euri.com" },
+            { "key": "persons[10].email", "value": "wouter.gillekens@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "74efdace-5000-4fbd-a408-69bd5ec2fc0a",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "arne.goolaerts@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "a0d21659-137d-404a-ad41-697e26854ae4"
+            },
+            {
+              "id": "yorne.thys@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "683b9437-b3c2-4cfa-9266-bae7275c088f"
+            },
+            {
+              "id": "steven.dekeuster@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "77054c0a-1b56-4331-8ddc-16cb37b5eb24"
+            },
+            {
+              "id": "seppe.marien@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "63d40b79-d180-494a-b4ca-58b9fa7ad620"
+            },
+            {
+              "id": "chiel.bleyenbergh@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "f0075422-d310-4bd0-939a-e34bf30676b2"
+            },
+            {
+              "id": "michiel.olijslagers@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "33c4b23a-4383-468d-b2bb-fd24f7653ed1"
+            },
+            {
+              "id": "koen.morren@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "a33c754e-e37e-417a-bed8-8eae8108ab67"
+            },
+            {
+              "id": "kobe.brants@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "481c6e44-000b-4c21-9098-7b7620683076"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Bench" },
+            { "key": "persons[1].name", "value": "Arne Goolaerts" },
+            { "key": "persons[2].name", "value": "Yorne Thys" },
+            { "key": "persons[3].name", "value": "Steven De Keuster" },
+            { "key": "persons[4].name", "value": "Seppe Mari\u00ebn" },
+            { "key": "persons[5].name", "value": "Chiel Bleyenbergh" },
+            { "key": "persons[6].name", "value": "Michiel Olijslagers" },
+            { "key": "persons[7].name", "value": "Koen Morren" },
+            { "key": "persons[8].name", "value": "Kobe Brants" },
+            { "key": "persons[1].email", "value": "arne.goolaerts@euri.com" },
+            { "key": "persons[2].email", "value": "yorne.thys@euri.com" },
+            { "key": "persons[3].email", "value": "steven.dekeuster@euri.com" },
+            { "key": "persons[4].email", "value": "seppe.marien@euri.com" },
+            {
+              "key": "persons[5].email",
+              "value": "chiel.bleyenbergh@euri.com"
+            },
+            {
+              "key": "persons[6].email",
+              "value": "michiel.olijslagers@euri.com"
+            },
+            { "key": "persons[7].email", "value": "koen.morren@euri.com" },
+            { "key": "persons[8].email", "value": "kobe.brants@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "1747093c-d459-4836-8218-b9ce752f83ff",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "wim.vandenbroeck@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "326eaf9d-baf7-4f72-830a-2b0e25ec9926"
+            },
+            {
+              "id": "i:0#.f|membership|maarten.salien@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "firstName": "",
+              "lastName": "",
+              "upn": "",
+              "phone": "",
+              "sip": "",
+              "department": ""
+            },
+            {
+              "id": "kevin.danckaerts@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "e87ac55a-9506-41fd-ae7c-a83f4efab1ba"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Acerta" },
+            { "key": "persons[0].name", "value": "Wim Vanden Broeck" },
+            { "key": "persons[1].name", "value": "Maarten Salien" },
+            { "key": "persons[2].name", "value": "Kevin Danckaerts" },
+            { "key": "persons[0].email", "value": "wim.vandenbroeck@euri.com" },
+            { "key": "persons[1].email", "value": "maarten.salien@euri.com" },
+            { "key": "persons[2].email", "value": "kevin.danckaerts@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "a8a4657d-202b-412c-bd80-52cc12a14eda",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "Bart.Debeuckelaere@euri.com",
+              "role": "Backend .NET Consultant",
+              "department": "",
+              "aadObjectId": "fdabfe1e-7670-4db2-bb62-a921b7289fa6"
+            },
+            {
+              "id": "wannes.gennar@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "4c4cc472-8475-4fa2-8851-54f138037fdb"
+            },
+            {
+              "id": "thomas.vangheluwe@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "1c285baf-f4da-4b38-b026-96cd0bac4dd1"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Agilitas" },
+            { "key": "persons[0].name", "value": "Bart Debeuckelaere" },
+            { "key": "persons[1].name", "value": "Wannes Gennar" },
+            { "key": "persons[2].name", "value": "Thomas Van Gheluwe" },
+            {
+              "key": "persons[0].email",
+              "value": "Bart.Debeuckelaere@euri.com"
+            },
+            { "key": "persons[1].email", "value": "wannes.gennar@euri.com" },
+            { "key": "persons[2].email", "value": "thomas.vangheluwe@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "db8e6f9b-7b06-4158-8325-e090681b98c3",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "lise.bauveroy@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "e969891b-3b8f-4e8a-86a1-626fb59ce5f8"
+            },
+            {
+              "id": "lennart.vandamme@euri.com",
+              "role": "Full Stack .NET Developer",
+              "department": "",
+              "aadObjectId": "5f936a34-eb7e-4909-b8a3-4fa82595d5c6"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "ArcelorMittal" },
+            { "key": "persons[0].name", "value": "Lise Bauveroy" },
+            { "key": "persons[1].name", "value": "Lennart Van Damme" },
+            { "key": "persons[0].email", "value": "lise.bauveroy@euri.com" },
+            { "key": "persons[1].email", "value": "lennart.vandamme@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "fb9ebf0b-27e6-4137-afda-173979d02d0d",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "allison.vandenbergh@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "2164f020-049a-4a03-8492-a6ab31968e84"
+            },
+            {
+              "id": "matthias.ooye@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "8636eae7-1c03-4145-9058-327d47d8628b"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Artoos" },
+            { "key": "persons[0].name", "value": "Allison Van den Bergh" },
+            { "key": "persons[1].name", "value": "Matthias Ooye" },
+            {
+              "key": "persons[0].email",
+              "value": "allison.vandenbergh@euri.com"
+            },
+            { "key": "persons[1].email", "value": "matthias.ooye@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "439adeed-518e-4dce-9086-d761394fdf8f",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "yannick.dejonghe@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "5e1378cf-21d2-425d-97f2-f5cf91d9c0c2"
+            },
+            {
+              "id": "davy.loose@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "8c5818b7-3de7-4e7c-846a-158a2e14045f"
+            },
+            {
+              "id": "Jeff.liekens@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "4083f91b-b217-4cf6-abd8-bae8df01fd15"
+            },
+            {
+              "id": "michiel.vanhecke@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "5c6d75c4-6897-4ebf-9ec9-53e1cf07de28"
+            },
+            {
+              "id": "niels.stassijns@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "8b043f4e-8c2a-4677-8d53-65d1f8209d93"
+            },
+            {
+              "id": "bjorn.felix@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "653b1941-f9f1-4087-9b10-6e8d232f52a6"
+            },
+            {
+              "id": "Vincent.vanherreweghe@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "697a0554-d307-41d0-8c4c-82c81bde1f31"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Attentia" },
+            { "key": "persons[0].name", "value": "Yannick De Jonghe" },
+            { "key": "persons[1].name", "value": "Davy Loose" },
+            { "key": "persons[2].name", "value": "Jeff Liekens" },
+            { "key": "persons[3].name", "value": "Michiel van Hecke" },
+            { "key": "persons[4].name", "value": "Niels Stassijns" },
+            { "key": "persons[5].name", "value": "Bjorn Felix" },
+            { "key": "persons[6].name", "value": "Vincent Van Herreweghe" },
+            { "key": "persons[0].email", "value": "yannick.dejonghe@euri.com" },
+            { "key": "persons[1].email", "value": "davy.loose@euri.com" },
+            { "key": "persons[2].email", "value": "Jeff.liekens@euri.com" },
+            { "key": "persons[3].email", "value": "michiel.vanhecke@euri.com" },
+            { "key": "persons[4].email", "value": "niels.stassijns@euri.com" },
+            { "key": "persons[5].email", "value": "bjorn.felix@euri.com" },
+            {
+              "key": "persons[6].email",
+              "value": "Vincent.vanherreweghe@euri.com"
+            }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "fa1c3933-d11b-48eb-a81b-4c2bbbd73689",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "Kristof.Degrave@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "4019df80-efea-4350-b9af-9988af89aaec"
+            },
+            {
+              "id": "nils.goovaerts@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "e879446d-0ab5-47a8-88e1-cf86c70fe161"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Bank Van Breda" },
+            { "key": "persons[0].name", "value": "Kristof Degrave" },
+            { "key": "persons[1].name", "value": "Nils Goovaerts" },
+            { "key": "persons[0].email", "value": "Kristof.Degrave@euri.com" },
+            { "key": "persons[1].email", "value": "nils.goovaerts@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "db8c7424-a96b-4503-a9fc-ddacf74f117c",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "jana.vangoethem@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "77da23cf-8146-4415-b6a3-6b3f874d7615"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Circl" },
+            { "key": "persons[0].name", "value": "Jana Van Goethem" },
+            { "key": "persons[0].email", "value": "jana.vangoethem@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "340ad574-60b1-4db6-8889-73a4f00c82da",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "roel.taelemans@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "3986bd3d-7b53-43c3-a974-f921bc981eb0"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Cochlear" },
+            { "key": "persons[0].name", "value": "Roel Taelemans" },
+            { "key": "persons[0].email", "value": "roel.taelemans@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "dd5fc70e-7b69-4924-b521-18cbaa3384c3",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "mathias.derijke@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "8c3950f3-fdee-4d44-a988-4ccfa836717c"
+            },
+            {
+              "id": "joren.verbesselt@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "63061de7-0a1f-471f-b9bd-5db02536157b"
+            },
+            {
+              "id": "joeri.druyts@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "10cf2820-128d-4398-9f48-f649c7e8c048"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Conneqtr" },
+            { "key": "persons[0].name", "value": "Mathias De Rijke" },
+            { "key": "persons[1].name", "value": "Joren Verbesselt" },
+            { "key": "persons[2].name", "value": "Joeri Druyts" },
+            { "key": "persons[0].email", "value": "mathias.derijke@euri.com" },
+            { "key": "persons[1].email", "value": "joren.verbesselt@euri.com" },
+            { "key": "persons[2].email", "value": "joeri.druyts@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "7b227531-ee38-4eed-b0f4-bffc0f4982cc",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "linda.siekiel@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "82cc074f-0e85-4663-9f2b-d7a1c99e03ab"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Eneco" },
+            { "key": "persons[0].name", "value": "Linda Siekiel" },
+            { "key": "persons[0].email", "value": "linda.siekiel@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "2041487f-43e7-4173-8285-fb2a17d3f887",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "evert.devos@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "7db3a9b0-3e0a-4c8b-968b-e16dc92e8033"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Farmad" },
+            { "key": "persons[0].name", "value": "Evert De Vos" },
+            { "key": "persons[0].email", "value": "evert.devos@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "172fb310-c06a-4b54-a639-e49e8149ca9d",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "enrico.hageman@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "78f28ebd-9033-4496-b2b0-6de55ae527fe"
+            },
+            {
+              "id": "guy.vandennieuwenhof@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "52ba1d6a-6a22-47e3-b054-ee49b0a8ca26"
+            },
+            {
+              "id": "kurt.torfs@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "6bb639f0-a467-4ded-a6bd-70b349f7a9c0"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Gosselin" },
+            { "key": "persons[0].name", "value": "Enrico Hageman" },
+            { "key": "persons[1].name", "value": "Guy Van den Nieuwenhof" },
+            { "key": "persons[2].name", "value": "Kurt Torfs" },
+            { "key": "persons[0].email", "value": "enrico.hageman@euri.com" },
+            {
+              "key": "persons[1].email",
+              "value": "guy.vandennieuwenhof@euri.com"
+            },
+            { "key": "persons[2].email", "value": "kurt.torfs@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "428b309c-60bc-4e35-a093-c55ad4637bf4",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "wart.claes@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "0058bbd4-7489-43fb-97e1-bd981cd8e3dc"
+            },
+            {
+              "id": "robbie.pyckhout@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "31cde0b5-aa5e-464e-983e-17c3118d6c30"
+            },
+            {
+              "id": "Tom.Marien@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "2994418f-47bd-4bad-b394-1f50f6850799"
+            },
+            {
+              "id": "giel.dewit@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "aca44316-16a6-4d41-a035-c830b24101e2"
+            },
+            {
+              "id": "jonas.vaneeckhout@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "8f36865b-6992-4607-9c9c-8af7fdf7f5ac"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Immoscoop" },
+            { "key": "persons[0].name", "value": "Wart Claes" },
+            { "key": "persons[1].name", "value": "Robbie Pyckhout" },
+            { "key": "persons[2].name", "value": "Tom Marien" },
+            { "key": "persons[3].name", "value": "Giel De Wit" },
+            { "key": "persons[4].name", "value": "Jonas Van Eeckhout" },
+            { "key": "persons[0].email", "value": "wart.claes@euri.com" },
+            { "key": "persons[1].email", "value": "robbie.pyckhout@euri.com" },
+            { "key": "persons[2].email", "value": "Tom.Marien@euri.com" },
+            { "key": "persons[3].email", "value": "giel.dewit@euri.com" },
+            { "key": "persons[4].email", "value": "jonas.vaneeckhout@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "064ded9a-e712-4507-b382-ee5900c00269",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "thomas.godon@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "59a748ac-8562-4500-ac62-e24bb6876e8b"
+            },
+            {
+              "id": "lukas.depauw@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "dbb87a66-b140-42a3-a233-ca0d4e6fdc80"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Inimco" },
+            { "key": "persons[0].name", "value": "Thomas Godon" },
+            { "key": "persons[1].name", "value": "Lukas De Pauw" },
+            { "key": "persons[0].email", "value": "thomas.godon@euri.com" },
+            { "key": "persons[1].email", "value": "lukas.depauw@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "d2e80d9b-c81d-45b7-b258-cba3403711de",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "nils.jondral@euri.com",
+              "upn": "",
+              "role": "",
+              "department": "",
+              "phone": "",
+              "sip": "",
+              "aadObjectId": "2ac05cd5-5080-46d6-b2dd-f95e37d656cb"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "InviteDesk" },
+            { "key": "persons[0].name", "value": "Nils Jondral" },
+            { "key": "persons[0].email", "value": "nils.jondral@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "831736f4-f9d1-4c8a-83e9-6b2771f1fff3",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "koen.vercauteren@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "5579ba09-264c-43b7-9d25-f6340c524d09"
+            },
+            {
+              "id": "sander.sennesael@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "6db89e50-6e18-4827-aeb8-aa7f496158ff"
+            },
+            {
+              "id": "jonan.debielde@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "344bb301-a54e-4cd1-9332-493aad48c102"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Katoen Natie" },
+            { "key": "persons[0].name", "value": "Koen Vercauteren" },
+            { "key": "persons[1].name", "value": "Sander Sennesael" },
+            { "key": "persons[2].name", "value": "Jonan De Bielde" },
+            { "key": "persons[0].email", "value": "koen.vercauteren@euri.com" },
+            { "key": "persons[1].email", "value": "sander.sennesael@euri.com" },
+            { "key": "persons[2].email", "value": "jonan.debielde@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "2c367c3c-f3dd-4a70-82e3-bb4593f11dc6",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "Gerben.Schepers@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "6054a84a-a8cf-49b1-a658-c3fab15e522c"
+            },
+            {
+              "id": "cedric.vanopstal@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "d4efbaf3-8b37-4119-aeb4-10f790d06f76"
+            },
+            {
+              "id": "arnaud.claes@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "dc86f110-244f-4469-8a30-8685a4d5523b"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "KBC" },
+            { "key": "persons[0].name", "value": "Gerben Schepers" },
+            { "key": "persons[1].name", "value": "Cedric Van Opstal" },
+            { "key": "persons[2].name", "value": "Arnaud Claes" },
+            { "key": "persons[0].email", "value": "Gerben.Schepers@euri.com" },
+            { "key": "persons[1].email", "value": "cedric.vanopstal@euri.com" },
+            { "key": "persons[2].email", "value": "arnaud.claes@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "fc6bdbbd-7a9f-4583-ad8b-2f14c7178441",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "robin.schuerewegen@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "a94738f8-0818-4ca4-90a4-28cf1da280e7"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Nike" },
+            { "key": "persons[0].name", "value": "Robin Schuerewegen" },
+            {
+              "key": "persons[0].email",
+              "value": "robin.schuerewegen@euri.com"
+            }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "53d2714b-30aa-4d07-b7b3-e2940381e668",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "yves.beeckmans@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "2f66d763-e4b9-42b3-8a9f-63b5e330b175"
+            },
+            {
+              "id": "arren.vandosselaer@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "757244c5-b91d-4490-a3a5-6087666b6382"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "NIKO" },
+            { "key": "persons[0].name", "value": "Yves Beeckmans" },
+            { "key": "persons[1].name", "value": "Arren Van Dosselaer" },
+            { "key": "persons[0].email", "value": "yves.beeckmans@euri.com" },
+            {
+              "key": "persons[1].email",
+              "value": "arren.vandosselaer@euri.com"
+            }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "43ea758c-7f35-4f53-aace-63a1150453d1",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "jordy.rymenants@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "8264b7c2-6eff-4660-8f10-d328637f587f"
+            },
+            {
+              "id": "kristof.buts@euri.com",
+              "role": "Full Stack .NET Consultant",
+              "department": "",
+              "aadObjectId": "0ec1719c-04bf-4efa-a2b2-11f8de1588ef"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "OPENLANE" },
+            { "key": "persons[0].name", "value": "Jordy Rymenants" },
+            { "key": "persons[1].name", "value": "Kristof Buts" },
+            { "key": "persons[0].email", "value": "jordy.rymenants@euri.com" },
+            { "key": "persons[1].email", "value": "kristof.buts@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "f841e7e4-b6aa-4d08-b1de-916b362331ff",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "tim.francois@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "e1d5e4d8-1ee4-402b-92a9-c89632216b19"
+            },
+            {
+              "id": "honkuan.chan@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "98ec1002-ae93-4cd4-a0cc-e76046baf8e1"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Pelckmans" },
+            { "key": "persons[0].name", "value": "Tim Fran\u00e7ois" },
+            { "key": "persons[1].name", "value": "Hon Kuan Chan" },
+            { "key": "persons[0].email", "value": "tim.francois@euri.com" },
+            { "key": "persons[1].email", "value": "honkuan.chan@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "09c03167-0b05-4410-8c6b-05ba216ebc35",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "stijn.dams@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "8102f2a0-e1cc-4a61-9a24-8e6da622255e"
+            },
+            {
+              "id": "dirk.maegh@euri.com",
+              "role": "Backend .NET Consultant",
+              "department": "",
+              "aadObjectId": "a2e96214-3829-4abd-b98f-7bdd6d4f59b9"
+            },
+            {
+              "id": "i:0#.f|membership|liese.cordeyn@euri.com",
+              "role": "Fullstack JS Consultant",
+              "firstName": "",
+              "lastName": "",
+              "upn": "",
+              "phone": "",
+              "sip": "",
+              "department": ""
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Portima" },
+            { "key": "persons[0].name", "value": "Stijn Dams" },
+            { "key": "persons[1].name", "value": "Dirk Maegh" },
+            { "key": "persons[2].name", "value": "Liese Cordeyn" },
+            { "key": "persons[0].email", "value": "stijn.dams@euri.com" },
+            { "key": "persons[1].email", "value": "dirk.maegh@euri.com" },
+            { "key": "persons[2].email", "value": "liese.cordeyn@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "d099f67b-7945-432e-bf2b-7bd28b797851",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(String)",
+          "persons": []
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [{ "key": "title", "value": "Protime" }],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "3025d7ea-7e35-4c28-8685-0d28be12b01d",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "Christophe.Geers@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "b4c599a2-4f00-4e88-8ea3-51a974a2e69a"
+            },
+            {
+              "id": "lorenz.reweghs@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "a0971c65-82cc-4a96-8d90-24d3fdbd080b"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Qover" },
+            { "key": "persons[0].name", "value": "Christophe Geers" },
+            { "key": "persons[1].name", "value": "Lorenz Reweghs" },
+            { "key": "persons[0].email", "value": "Christophe.Geers@euri.com" },
+            { "key": "persons[1].email", "value": "lorenz.reweghs@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "cc2f4ab2-389b-41a1-925a-e731b68b5a69",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "joy.janssen@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "6150674b-3219-4719-8e55-1102b6e69198"
+            },
+            {
+              "id": "yanik.ceulemans@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "1353a9f6-7553-4451-98fe-daa5025377fe"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Reynaers Aluminium" },
+            { "key": "persons[0].name", "value": "Joy Janssen" },
+            { "key": "persons[1].name", "value": "Yanik Ceulemans" },
+            { "key": "persons[0].email", "value": "joy.janssen@euri.com" },
+            { "key": "persons[1].email", "value": "yanik.ceulemans@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "1fba5f77-8cc3-4a03-a56a-da0b5bea22bb",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "thibault.lesuisse@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "71b647ed-ecfd-4578-8720-c5288fce54fd"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "RIZIV" },
+            { "key": "persons[0].name", "value": "Thibault Lesuisse" },
+            { "key": "persons[0].email", "value": "thibault.lesuisse@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "ded6db64-21f1-44ed-92b7-a6587bbbb04b",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "thijs.crombeen@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "a7ade73a-bddb-42f7-964b-5f91a6dc0824"
+            },
+            {
+              "id": "Thomas.Kegelaers@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "8f129970-3db7-4d65-981f-653f59e95062"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Samenferm" },
+            { "key": "persons[0].name", "value": "Thijs Crombeen" },
+            { "key": "persons[1].name", "value": "Thomas Kegelaers" },
+            { "key": "persons[0].email", "value": "thijs.crombeen@euri.com" },
+            { "key": "persons[1].email", "value": "Thomas.Kegelaers@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "f3c9b1ee-6b6f-464d-b702-3d5d115a0889",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "cedric.labache@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "c800e13a-32a5-44b7-b3bf-9297ba00c2ff"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Sioen" },
+            { "key": "persons[0].name", "value": "Cedric Labache" },
+            { "key": "persons[0].email", "value": "cedric.labache@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "672ca7ba-ac6d-457b-96ed-c85a4bd66682",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "stijn.geens@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "3668fd1b-7f68-4e3c-bc8b-7bc448770da9"
+            },
+            {
+              "id": "jan.milants@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "601253e2-bf2b-4e81-8458-db5b3392d5dc"
+            },
+            {
+              "id": "jan.vanhoye@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "972aa964-33d8-4d70-bfd4-a5067bbbfe90"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Teal" },
+            { "key": "persons[0].name", "value": "Stijn Geens" },
+            { "key": "persons[1].name", "value": "Jan Milants" },
+            { "key": "persons[2].name", "value": "Jan Van Hoye" },
+            { "key": "persons[0].email", "value": "stijn.geens@euri.com" },
+            { "key": "persons[1].email", "value": "jan.milants@euri.com" },
+            { "key": "persons[2].email", "value": "jan.vanhoye@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "88aa85b8-38c2-478a-89f2-4ccc3da76c9f",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "Kristof.Pipers@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "698d252f-3554-470d-9650-d2204f7a61ac"
+            },
+            {
+              "id": "arnout.born@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "9c2dd83c-6d37-4c8a-8f12-183072a10dc5"
+            },
+            {
+              "id": "toon.vanhoye@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "252e08bd-6549-42ff-98df-b24417fe38c8"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Tailormade" },
+            { "key": "persons[0].name", "value": "Kristof Pipers" },
+            { "key": "persons[1].name", "value": "Arnout Born" },
+            { "key": "persons[2].name", "value": "Toon  Van Hoye" },
+            { "key": "persons[0].email", "value": "Kristof.Pipers@euri.com" },
+            { "key": "persons[1].email", "value": "arnout.born@euri.com" },
+            { "key": "persons[2].email", "value": "toon.vanhoye@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "80ceb23d-00e3-47e3-beb1-e885cda52ce9",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "stefano.peeters@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "0943c5de-5fed-4ad4-96bb-1f59ccebe4c6"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Wolters Kluwer" },
+            { "key": "persons[0].name", "value": "Stefano Peeters" },
+            { "key": "persons[0].email", "value": "stefano.peeters@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "a21a6ee6-1a22-4cb1-95ee-e0a25bcd6614",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "mario.fatone@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "9fcda4f6-0e68-4da4-9710-bae5b0a02ddd"
+            },
+            {
+              "id": "bryce.vandenbrande@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "b2fe916e-d61c-45a9-83ff-c4788e6f0519"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Wonen in Vlaanderen" },
+            { "key": "persons[0].name", "value": "Mario Fatone" },
+            { "key": "persons[1].name", "value": "Bryce Van den Brande" },
+            { "key": "persons[0].email", "value": "mario.fatone@euri.com" },
+            {
+              "key": "persons[1].email",
+              "value": "bryce.vandenbrande@euri.com"
+            }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "65a02052-03ed-4b9d-8fcc-b33379ba4349",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "Bruno.Wouters@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "b7e7f2c0-4d5b-4df1-9275-6d921428b81a"
+            },
+            {
+              "id": "Sybren.willemot@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "0c29b706-659f-41e9-8846-977c34b04979"
+            },
+            {
+              "id": "thomas.depauw@euri.com",
+              "role": "Fullstack .NET Consultant",
+              "department": "",
+              "aadObjectId": "bbb28dcf-7c9c-4570-bb33-8249914be886"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Xerius" },
+            { "key": "persons[0].name", "value": "Bruno Wouters" },
+            { "key": "persons[1].name", "value": "Sybren  Willemot" },
+            { "key": "persons[2].name", "value": "Thomas De Pauw" },
+            { "key": "persons[0].email", "value": "Bruno.Wouters@euri.com" },
+            { "key": "persons[1].email", "value": "Sybren.willemot@euri.com" },
+            { "key": "persons[2].email", "value": "thomas.depauw@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "df0f1f24-f612-4a86-9a00-26f26ab30d4a",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "christopher.rupprecht@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "f7b2ad18-5e55-4c00-b7fc-2ee394bf6fb9"
+            },
+            {
+              "id": "mathijs.knoops@euri.com",
+              "role": "Business Consultant",
+              "department": "",
+              "aadObjectId": "1a8d0775-c254-44c4-9c8e-6879162393ec"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Ypto" },
+            { "key": "persons[0].name", "value": "Christopher Rupprecht" },
+            { "key": "persons[1].name", "value": "Mathijs Knoops" },
+            {
+              "key": "persons[0].email",
+              "value": "christopher.rupprecht@euri.com"
+            },
+            { "key": "persons[1].email", "value": "mathijs.knoops@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    },
+    {
+      "@odata.type": "#microsoft.graph.standardWebPart",
+      "id": "b87e28cd-3398-4222-b673-7a9f9fdfc4ef",
+      "webPartType": "7f718435-ee4d-431c-bdbf-9c4ff326f46e",
+      "data": {
+        "dataVersion": "1.4",
+        "description": "Display selected people and their profiles",
+        "title": "People",
+        "properties": {
+          "layout": 1,
+          "persons@odata.type": "#Collection(graph.Json)",
+          "persons": [
+            {
+              "id": "jari.thiels@euri.com",
+              "role": "Frontend JS Consultant",
+              "department": "",
+              "aadObjectId": "be199190-ea73-44d8-95b1-38aa9419d49b"
+            },
+            {
+              "id": "grace.bulckens@euri.com",
+              "role": "Fullstack JS Consultant",
+              "department": "",
+              "aadObjectId": "3ca13975-efa5-4888-aa53-96e1edfa2473"
+            }
+          ]
+        },
+        "serverProcessedContent": {
+          "htmlStrings": [],
+          "searchablePlainTexts": [
+            { "key": "title", "value": "Zimmo" },
+            { "key": "persons[0].name", "value": "Jari Thiels" },
+            { "key": "persons[1].name", "value": "Grace Bulckens" },
+            { "key": "persons[0].email", "value": "jari.thiels@euri.com" },
+            { "key": "persons[1].email", "value": "grace.bulckens@euri.com" }
+          ],
+          "links": [],
+          "imageSources": []
+        }
+      }
+    }
+  ]
+}

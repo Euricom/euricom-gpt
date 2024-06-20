@@ -269,9 +269,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
             />
           </div>
 
-          {
-            //Changes Euricom (remove assistant tools)
-            /* <div className="space-y-1">
+          <div className="space-y-1">
             <Label>Tools</Label>
 
             <AssistantToolSelect
@@ -297,8 +295,7 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
                 handleToolSelect(tool, renderState.setSelectedAssistantTools)
               }
             />
-          </div> */
-          }
+          </div>
         </>
       )}
     />

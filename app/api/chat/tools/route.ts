@@ -64,6 +64,7 @@ export async function POST(request: Request) {
       messages,
       tools: allTools.length > 0 ? allTools : undefined
     })
+    console.log(firstResponse.choices[0].message)
 
     const message = firstResponse.choices[0].message
     messages.push(message)
@@ -88,7 +89,6 @@ export async function POST(request: Request) {
         const schemaDetail = schemaDetails.find(detail =>
           Object.values(detail.routeMap).includes(functionName)
         )
-
         if (!schemaDetail) {
           throw new Error(`Function ${functionName} not found in any schema`)
         }
@@ -147,7 +147,7 @@ export async function POST(request: Request) {
           const requestInit = {
             method: "POST",
             headers,
-            body: JSON.stringify(bodyContent) // Use the extracted requestBody or the entire parsedArgs
+            body: JSON.stringify(bodyContent)
           }
 
           const response = await fetch(fullUrl, requestInit)
@@ -175,9 +175,11 @@ export async function POST(request: Request) {
             headers = JSON.parse(customHeaders)
           }
 
+          //changes Euricom (add function name in request)
           const response = await fetch(fullUrl, {
-            method: "GET",
-            headers: headers
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({ title: schemaDetail.title })
           })
 
           if (!response.ok) {
@@ -186,6 +188,7 @@ export async function POST(request: Request) {
             }
           } else {
             data = await response.json()
+            console.log(data)
           }
         }
 

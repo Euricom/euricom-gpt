@@ -166,11 +166,12 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     <>
       <div className="flex flex-col flex-wrap justify-center gap-2">
         {
-          //Changes Euricom to adapt Azure (dont show the files when talking to assistant)
+          //Changes Euricom to adapt Azure (dont show the files or assistants when talking to assistant)
           !selectedAssistant && <ChatFilesDisplay />
         }
 
         {selectedTools &&
+          !selectedAssistant &&
           selectedTools.map((tool, index) => (
             <div
               key={index}

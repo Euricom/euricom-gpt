@@ -1,0 +1,18 @@
+curl 'https://graph.microsoft.com/v1.0/sites/euricom.sharepoint.com,f7f41bd5-d192-4a3f-aed3-52f69b021224,9c644b71-f2b7-4af3-8fc7-b12615162907/pages/a7e23c78-b05a-4c1b-8555-5508d032bdff/microsoft.graph.sitepage/webparts' \
+  -H 'accept: */*' \
+  -H 'accept-language: nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7' \
+  -H 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJub25jZSI6Iml4RlROZG5JdkRuZC14ZkVsMXl6SUxmZTVndVhDSGkzMEtienN2bU9yUXciLCJhbGciOiJSUzI1NiIsIng1dCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8wYjUzZDJjMS1iYzU1LTRhYjMtYTE2MS05MjdkMjg5MjU3ZjIvIiwiaWF0IjoxNzE4NzE0NjA4LCJuYmYiOjE3MTg3MTQ2MDgsImV4cCI6MTcxODcxODUwOCwiYWlvIjoiRTJkZ1lGQ2JPeVY0NmsvTlRmYWw5cUpDTFBJRkFBPT0iLCJhcHBfZGlzcGxheW5hbWUiOiJldXJpLWNoYXRncHQiLCJhcHBpZCI6IjE1MTk0ZTc3LThjZmMtNDRhOC04NDgyLTg0ODhlYjEyNDljYSIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzBiNTNkMmMxLWJjNTUtNGFiMy1hMTYxLTkyN2QyODkyNTdmMi8iLCJpZHR5cCI6ImFwcCIsIm9pZCI6ImUwMGM0ZjdlLTJjMDMtNDk5MC1hNTNlLTUzNjJlYWY4MWJmMSIsInJoIjoiMC5BVHdBd2RKVEMxVzhzMHFoWVpKOUtKSlg4Z01BQUFBQUFBQUF3QUFBQUFBQUFBQThBQUEuIiwicm9sZXMiOlsiU2l0ZXMuUmVhZC5BbGwiXSwic3ViIjoiZTAwYzRmN2UtMmMwMy00OTkwLWE1M2UtNTM2MmVhZjgxYmYxIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6IkVVIiwidGlkIjoiMGI1M2QyYzEtYmM1NS00YWIzLWExNjEtOTI3ZDI4OTI1N2YyIiwidXRpIjoiQlBCOEg4SEo0a2VOTVF2Qm1mdGJBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiMDk5N2ExZDAtMGQxZC00YWNiLWI0MDgtZDVjYTczMTIxZTkwIl0sInhtc19pZHJlbCI6IjcgMjgiLCJ4bXNfdGNkdCI6MTM1ODE3MDE4NiwieG1zX3RkYnIiOiJFVSJ9.BgVIN92dL6zfORnL-dBtZkcfkPAUptpuOtHRieiUabrpnLv3jxfREPt_xEZ_pvi7WWAYHUVSn2HvLFhRvnEq6tvpBotAm07uwjtwEuWacCkNdwUWBZhEMkOhWqBo-7BkJP6QBvhfQ2ZfUy0y_TGnYkCrLHeGJrPQtebb6C2l9crLtlbSI2UlPjD9zAukVztl17MxEuMPXao6qHJ98Wfix4NL7GK-AY8FvJ36eiiE1cTmEkK-NfT8dy0bVWF7uKQVajtdTGyCH0Df6zLofdaFYpT9ZFPYaQ1jBBRsDSMD2NPFRP_T6eC3_U0XRlMPxCocbc24OxsOjXMlfSRbVYPAbw' \
+  -H 'cache-control: no-cache' \
+  -H 'client-request-id: 0c444de4-1c6a-7311-7b71-c0b31d6a4cc9' \
+  -H 'origin: https://developer.microsoft.com' \
+  -H 'pragma: no-cache' \
+  -H 'prefer: ms-graph-dev-mode' \
+  -H 'referer: https://developer.microsoft.com/' \
+  -H 'sdkversion: GraphExplorer/4.0, graph-js/3.0.7 (featureUsage=6)' \
+  -H 'sec-ch-ua: "Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-site' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'

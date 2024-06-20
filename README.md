@@ -30,6 +30,37 @@
   - [x] Admin kan doc voor iedereen beschikbaar toevoegen
   - [x] Admin kan Assistents toevoegen die kunnen gebruikt worden door alle gebruikers.
 
+Tool example:
+{
+"openapi": "3.1.0",
+"info": {
+"title": "getEuricomSmoelenboek",
+"description": "Retrieves overview of all consultants of Euricom.",
+"version": "v1.0.0"
+},
+"servers": [
+{
+"url": "http://localhost:3000/api"
+}
+],
+"paths": {
+"/tools": {
+"get": {
+"description": "Get overview of all consultants of Euricom.",
+"operationId": "getEuricomSmoelenboek",
+"deprecated": false
+}
+}
+},
+"components": {
+"schemas": {}
+}
+}
+
+Billing:
+
+- 20/06/2024: $497.04
+
 # Chatbot UI
 
 The open-source AI chat app for everyone.

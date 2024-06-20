@@ -166,9 +166,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     const adminFileData = await getAdminFiles()
     setAdminFiles(adminFileData)
 
-    console.log(fileData)
-    console.log(adminFileData)
-
     const presetData = await getPresetWorkspacesByWorkspaceId(workspaceId)
     setPresets(presetData.presets)
 

@@ -210,7 +210,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt({ token, account, user, profile }) {
-      // log.debug('jwt: %o', { token });
+      // console.log("jwt", { token })
       // Initial sign in
       if (profile && account) {
         delete user?.image // lets keep auth cookie small
@@ -322,4 +322,28 @@ export const getUser = (session: Session | null): User => {
     ...session?.user,
     isAuthenticated: !!session?.user.id
   }
+}
+
+export const getApplicationAccessToken = async (): Promise<JWT> => {
+  const tenantId = process.env.AZURE_AD_TENANT_ID
+  const clientId = process.env.AZURE_AD_CLIENT_ID
+  const clientSecret = process.env.AZURE_AD_CLIENT_SECRET
+
+  const response = await fetch(
+    `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        client_id: clientId!,
+        scope: "https://graph.microsoft.com/.default",
+        client_secret: clientSecret!,
+        grant_type: "client_credentials"
+      })
+    }
+  )
+  const data = await response.json()
+  return data
 }
