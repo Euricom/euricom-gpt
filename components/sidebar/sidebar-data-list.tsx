@@ -407,11 +407,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                     >
                       {publicItemsWithoutFolders.map(item => {
                         return (
-                          <div
-                            key={item.id}
-                            draggable
-                            onDragStart={e => handleDragStart(e, item.id)}
-                          >
+                          <div key={item.id}>
                             <AdminFileItem
                               key={item.id}
                               file={item as Tables<"files">}
