@@ -16,6 +16,7 @@ import { ProfileSettings } from "../utility/profile-settings"
 import { SidebarSwitchItem } from "./sidebar-switch-item"
 import { ChatbotUIContext } from "@/context/context"
 import { Divider } from "@nextui-org/react"
+import { isInRole } from "@/lib/server/auth"
 
 export const SIDEBAR_ICON_SIZE = 28
 
@@ -26,9 +27,12 @@ interface SidebarSwitcherProps {
 export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
   onContentTypeChange
 }) => {
-  //Changes Euricom to adapt Azure (TODO: Admin system for now)
+  //Changes Euricom to adapt Azure (Admin check)
   const { user } = useContext(ChatbotUIContext)
-  const admin = user?.email === "kobe.dehandschutter@euri.com"
+  let admin = false
+  if (user) {
+    admin = isInRole(user, "admin")
+  }
 
   return (
     <div className="flex flex-col justify-between border-r-2 pb-5 bg-primaryEuricom-900">

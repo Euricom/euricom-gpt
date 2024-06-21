@@ -9,9 +9,11 @@ import { cn } from "@/lib/utils"
 import { ContentType } from "@/types"
 import { IconChevronCompactRight } from "@tabler/icons-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { FC, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { useSelectFileHandler } from "../chat/chat-hooks/use-select-file-handler"
 import { CommandK } from "../utility/command-k"
+import { ChatbotUIContext } from "@/context/context"
+import { isInRole } from "@/lib/server/auth"
 
 export const SIDEBAR_WIDTH = 350
 
@@ -25,7 +27,18 @@ export const Dashboard: FC<DashboardProps> = ({ children }) => {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const tabValue = searchParams.get("tab") || "chats"
+  let tabValue = searchParams.get("tab") || "chats"
+
+  //change Euricom (shiled admin pages)
+  const { user } = useContext(ChatbotUIContext)
+
+  if (
+    ["assistants", "adminFiles", "tools"].includes(tabValue) &&
+    user &&
+    !isInRole(user, "admin")
+  ) {
+    router.replace(`${pathname}?tab=chats`)
+  }
 
   const { handleSelectDeviceFile } = useSelectFileHandler()
 
