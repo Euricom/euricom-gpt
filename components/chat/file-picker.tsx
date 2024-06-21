@@ -25,7 +25,7 @@ export const FilePicker: FC<FilePickerProps> = ({
   onSelectCollection,
   isFocused
 }) => {
-  const { files, adminFiles, collections, setIsFilePickerOpen } =
+  const { files, collections, setIsFilePickerOpen } =
     useContext(ChatbotUIContext)
 
   const itemsRef = useRef<(HTMLDivElement | null)[]>([])
@@ -36,14 +36,11 @@ export const FilePicker: FC<FilePickerProps> = ({
     }
   }, [isFocused])
 
-  //Changes Euricom (add adminfiles to file picker)
-  const filteredFiles = files
-    .concat(adminFiles)
-    .filter(
-      file =>
-        file.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        !selectedFileIds.includes(file.id)
-    )
+  const filteredFiles = files.filter(
+    file =>
+      file.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !selectedFileIds.includes(file.id)
+  )
 
   const filteredCollections = collections.filter(
     collection =>
