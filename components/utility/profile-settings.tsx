@@ -21,7 +21,6 @@ import {
   IconLogout,
   IconUser
 } from "@tabler/icons-react"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { FC, useCallback, useContext, useRef, useState } from "react"
 import { toast } from "sonner"
@@ -300,9 +299,10 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         {profile.image_url ? (
-          <Image
+          //changes Euricom (change Image to img and remove query)
+          <img
             className="mt-2 size-[34px] cursor-pointer rounded hover:opacity-50"
-            src={profile.image_url + "?" + new Date().getTime()}
+            src={profile.image_url}
             height={34}
             width={34}
             alt={"Image"}

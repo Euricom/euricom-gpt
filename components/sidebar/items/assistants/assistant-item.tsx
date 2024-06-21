@@ -6,7 +6,6 @@ import { ChatbotUIContext } from "@/context/context"
 import { ASSISTANT_DESCRIPTION_MAX, ASSISTANT_NAME_MAX } from "@/db/limits"
 import { Tables } from "@/supabase/types"
 import { IconRobotFace } from "@tabler/icons-react"
-import Image from "next/image"
 import { FC, useContext, useEffect, useState } from "react"
 import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { SidebarItem } from "../all/sidebar-display-item"
@@ -110,7 +109,8 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
       isTyping={isTyping}
       icon={
         imageLink ? (
-          <Image
+          //changes Euricom (change Image to img)
+          <img
             style={{ width: "30px", height: "30px" }}
             className="rounded"
             src={imageLink}

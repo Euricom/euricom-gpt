@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils"
 import { Tables } from "@/supabase/types"
 import { ChatFile, MessageImage } from "@/types"
 import { IconFileFilled } from "@tabler/icons-react"
-import Image from "next/image"
 import { FC } from "react"
 import { DrawingCanvas } from "../utility/drawing-canvas"
 import { Dialog, DialogContent } from "./dialog"
@@ -35,7 +34,8 @@ export const FilePreview: FC<FilePreviewProps> = ({
             return imageItem.file ? (
               <DrawingCanvas imageItem={imageItem} />
             ) : (
-              <Image
+              //changes Euricom (change Image to img)
+              <img
                 className="rounded"
                 src={imageItem.base64 || imageItem.url}
                 alt="File image"

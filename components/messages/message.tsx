@@ -13,7 +13,6 @@ import {
   IconMoodSmile,
   IconPencil
 } from "@tabler/icons-react"
-import Image from "next/image"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import { ModelIcon } from "../models/model-icon"
 import { Button } from "../ui/button"
@@ -215,7 +214,8 @@ export const Message: FC<MessageProps> = ({
             <div className="flex items-center space-x-3">
               {message.role === "assistant" ? (
                 messageAssistantImage ? (
-                  <Image
+                  //changes Euricom (change Image to img)
+                  <img
                     style={{
                       width: `${ICON_SIZE}px`,
                       height: `${ICON_SIZE}px`
@@ -239,7 +239,7 @@ export const Message: FC<MessageProps> = ({
                   />
                 )
               ) : profile?.image_url ? (
-                <Image
+                <img
                   className={`size-[32px] rounded`}
                   src={profile?.image_url}
                   height={32}
@@ -360,7 +360,7 @@ export const Message: FC<MessageProps> = ({
             const item = chatImages.find(image => image.path === path)
 
             return (
-              <Image
+              <img
                 key={index}
                 className="cursor-pointer rounded hover:opacity-50"
                 src={path.startsWith("data") ? path : item?.base64}

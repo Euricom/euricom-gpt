@@ -8,7 +8,6 @@ import { LLM_LIST } from "@/lib/models/llm/llm-list"
 import { Tables } from "@/supabase/types"
 import { LLMID } from "@/types"
 import { IconChevronDown, IconRobotFace } from "@tabler/icons-react"
-import Image from "next/image"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { ModelIcon } from "../models/model-icon"
@@ -202,7 +201,8 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
 
           {selectedAssistant &&
             (selectedAssistantImage ? (
-              <Image
+              //changes Euricom (change Image to img)
+              <img
                 className="rounded"
                 src={selectedAssistantImage}
                 alt="Assistant"

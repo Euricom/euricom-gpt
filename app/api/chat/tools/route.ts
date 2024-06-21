@@ -30,9 +30,12 @@ export async function POST(request: Request) {
 
     for (const selectedTool of selectedTools) {
       try {
+        console.time("openapiToFunctions")
         const convertedSchema = await openapiToFunctions(
           JSON.parse(selectedTool.schema as string)
         )
+        console.timeEnd("openapiToFunctions")
+        console.time("schemaDetails.push")
         const tools = convertedSchema.functions || []
         allTools = allTools.concat(tools)
 
@@ -54,17 +57,19 @@ export async function POST(request: Request) {
           routeMap,
           requestInBody: convertedSchema.routes[0].requestInBody
         })
+        console.timeEnd("schemaDetails.push")
       } catch (error: any) {
         console.error("Error converting schema", error)
       }
     }
 
+    console.time("chat.completions.create")
     const firstResponse = await openai.chat.completions.create({
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
       messages,
       tools: allTools.length > 0 ? allTools : undefined
     })
-    console.log(firstResponse.choices[0].message)
+    console.timeEnd("chat.completions.create")
 
     const message = firstResponse.choices[0].message
     messages.push(message)
@@ -175,6 +180,7 @@ export async function POST(request: Request) {
             headers = JSON.parse(customHeaders)
           }
 
+          console.time("onze tool call")
           //changes Euricom (add function name in request)
           const response = await fetch(fullUrl, {
             method: "POST",
@@ -182,13 +188,13 @@ export async function POST(request: Request) {
             body: JSON.stringify({ title: schemaDetail.title })
           })
 
+          console.timeEnd("onze tool call")
           if (!response.ok) {
             data = {
               error: response.statusText
             }
           } else {
             data = await response.json()
-            console.log(data)
           }
         }
 
@@ -201,11 +207,13 @@ export async function POST(request: Request) {
       }
     }
 
+    console.time("secondresponse")
     const secondResponse = await openai.chat.completions.create({
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
       messages,
       stream: true
     })
+    console.timeEnd("secondresponse")
 
     const stream = OpenAIStream(secondResponse)
 

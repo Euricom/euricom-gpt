@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 import { Tables } from "@/supabase/types"
 import { LLM } from "@/types"
 import { IconRobotFace } from "@tabler/icons-react"
-import Image from "next/image"
 import { useParams, useRouter } from "next/navigation"
 import { FC, useContext, useRef } from "react"
 import { DeleteChat } from "./delete-chat"
@@ -66,7 +65,8 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
     >
       {chat.assistant_id ? (
         assistantImage ? (
-          <Image
+          //changes Euricom (change Image to img)
+          <img
             style={{ width: "30px", height: "30px" }}
             className="rounded"
             src={assistantImage}

@@ -14,12 +14,13 @@ export async function POST(request: Request) {
   }
 
   const uniqueFileIds = [...new Set(fileIds)]
-
   try {
+    console.time("CreateClient")
     const supabaseAdmin = createClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     )
+    console.timeEnd("CreateClient")
 
     const profile = await getServerProfile()
 
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
 
     let chunks: any[] = []
 
+    console.time("Createopenai")
     let openai
     if (profile.use_azure_openai) {
       openai = new OpenAI({
@@ -47,21 +49,26 @@ export async function POST(request: Request) {
         organization: profile.openai_organization_id
       })
     }
+    console.timeEnd("Createopenai")
 
     if (embeddingsProvider === "openai") {
+      console.time("create embeddings")
       const response = await openai.embeddings.create({
         model: "text-embedding-3-small",
         input: userInput
       })
+      console.timeEnd("create embeddings")
 
       const openaiEmbedding = response.data.map(item => item.embedding)[0]
 
+      console.time("supabase")
       const { data: openaiFileItems, error: openaiError } =
         await supabaseAdmin.rpc("match_file_items_openai", {
           query_embedding: openaiEmbedding as any,
           match_count: sourceCount,
           file_ids: uniqueFileIds
         })
+      console.timeEnd("supabase")
 
       if (openaiError) {
         throw openaiError
@@ -84,10 +91,11 @@ export async function POST(request: Request) {
 
       chunks = localFileItems
     }
-
+    console.time("sort")
     const mostSimilarChunks = chunks?.sort(
       (a, b) => b.similarity - a.similarity
     )
+    console.timeEnd("sort")
 
     return new Response(JSON.stringify({ results: mostSimilarChunks }), {
       status: 200

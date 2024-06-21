@@ -15,7 +15,6 @@ import {
   IconMarkdown,
   IconX
 } from "@tabler/icons-react"
-import Image from "next/image"
 import { FC, useContext, useState } from "react"
 import { Button } from "../ui/button"
 import { FilePreview } from "../ui/file-preview"
@@ -121,7 +120,10 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
                 key={index}
                 className="relative flex h-[64px] cursor-pointer items-center space-x-4 rounded-xl hover:opacity-50"
               >
-                <Image
+                {
+                  //changes Euricom (change Image to img)
+                }
+                <img
                   className="rounded"
                   // Force the image to be 56px by 56px
                   style={{

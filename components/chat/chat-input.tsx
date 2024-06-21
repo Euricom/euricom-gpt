@@ -8,7 +8,6 @@ import {
   IconPlayerStopFilled,
   IconSend
 } from "@tabler/icons-react"
-import Image from "next/image"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
@@ -195,7 +194,8 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         {selectedAssistant && (
           <div className="border-primary mx-auto flex w-fit items-center space-x-2 rounded-lg border p-1.5">
             {selectedAssistant.image_path && (
-              <Image
+              //changes Euricom (change Image to img)
+              <img
                 className="rounded"
                 src={
                   assistantImages.find(

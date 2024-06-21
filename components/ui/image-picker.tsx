@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { ChangeEvent, FC, useState } from "react"
 import { toast } from "sonner"
 import { Input } from "./input"
@@ -75,7 +74,8 @@ const ImagePicker: FC<ImagePickerProps> = ({
   return (
     <div>
       {previewSrc && (
-        <Image
+        //changes Euricom (change Image to img)
+        <img
           style={{ width: `${width}px`, height: `${width}px` }}
           className="rounded"
           height={width}

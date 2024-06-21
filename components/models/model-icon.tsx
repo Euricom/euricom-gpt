@@ -5,7 +5,6 @@ import perplexity from "@/public/providers/perplexity.png"
 import { ModelProvider } from "@/types"
 import { IconSparkles } from "@tabler/icons-react"
 import { useTheme } from "next-themes"
-import Image from "next/image"
 import { FC, HTMLAttributes } from "react"
 import { AnthropicSVG } from "../icons/anthropic-svg"
 import { GoogleSVG } from "../icons/google-svg"
@@ -40,7 +39,8 @@ export const ModelIcon: FC<ModelIconProps> = ({
       )
     case "mistral":
       return (
-        <Image
+        //changes Euricom (change Image to img)
+        <img
           className={cn(
             "rounded-sm p-1",
             theme === "dark" ? "bg-white" : "border-DEFAULT border-black"
@@ -53,7 +53,7 @@ export const ModelIcon: FC<ModelIconProps> = ({
       )
     case "groq":
       return (
-        <Image
+        <img
           className={cn(
             "rounded-sm p-0",
             theme === "dark" ? "bg-white" : "border-DEFAULT border-black"
@@ -90,7 +90,7 @@ export const ModelIcon: FC<ModelIconProps> = ({
       )
     case "perplexity":
       return (
-        <Image
+        <img
           className={cn(
             "rounded-sm p-1",
             theme === "dark" ? "bg-white" : "border-DEFAULT border-black"

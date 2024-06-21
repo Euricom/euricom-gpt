@@ -11,7 +11,6 @@ import { createWorkspace } from "@/db/workspaces"
 import useHotkey from "@/lib/hooks/use-hotkey"
 import { IconBuilding, IconHome, IconPlus } from "@tabler/icons-react"
 import { ChevronsUpDown } from "lucide-react"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { FC, useContext, useEffect, useState } from "react"
 import { Button } from "../ui/button"
@@ -110,7 +109,8 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
         {selectedWorkspace && (
           <div className="flex items-center">
             {workspaceImage ? (
-              <Image
+              //changes Euricom (change Image to img)
+              <img
                 style={{ width: "22px", height: "22px" }}
                 className="mr-2 rounded"
                 src={imageSrc}
@@ -163,7 +163,7 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
                     onClick={() => handleSelect(workspace.id)}
                   >
                     {image ? (
-                      <Image
+                      <img
                         style={{ width: "28px", height: "28px" }}
                         className="mr-3 rounded"
                         src={image.url || ""}
@@ -202,7 +202,7 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
                     onClick={() => handleSelect(workspace.id)}
                   >
                     {image ? (
-                      <Image
+                      <img
                         style={{ width: "28px", height: "28px" }}
                         className="mr-3 rounded"
                         src={image.url || ""}

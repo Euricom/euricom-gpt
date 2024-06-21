@@ -1,7 +1,6 @@
 import { ChatbotUIContext } from "@/context/context"
 import { Tables } from "@/supabase/types"
 import { IconRobotFace } from "@tabler/icons-react"
-import Image from "next/image"
 import { FC, useContext, useEffect, useRef } from "react"
 import { usePromptAndCommand } from "./chat-hooks/use-prompt-and-command"
 
@@ -95,7 +94,8 @@ export const AssistantPicker: FC<AssistantPickerProps> = ({}) => {
                   onKeyDown={getKeyDownHandler(index)}
                 >
                   {item.image_path ? (
-                    <Image
+//changes Euricom (change Image to img)
+                    <img
                       src={
                         assistantImages.find(
                           image => image.path === item.image_path
