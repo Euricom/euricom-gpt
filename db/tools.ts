@@ -1,5 +1,7 @@
 import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib"
+import { createFile } from "./files"
 
 export const getToolById = async (toolId: string) => {
   const { data: tool, error } = await supabase
@@ -174,4 +176,19 @@ export const deleteToolWorkspace = async (
   if (error) throw new Error(error.message)
 
   return true
+}
+
+export const runTool = async (title: string) => {
+  const res = await fetch("/api/tools", {
+    method: "POST",
+    body: JSON.stringify({ title: title })
+  })
+  const tool = await res.json()
+
+  const pdf = await PDFDocument.create()
+  const page = pdf.addPage()
+  page.drawText(tool.toString())
+  const pdfBytes = await pdf.save()
+  const blob = new Blob([pdfBytes], { type: "files" })
+  return tool
 }

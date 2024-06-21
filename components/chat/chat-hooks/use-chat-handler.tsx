@@ -195,6 +195,9 @@ export const useChatHandler = () => {
     isRegeneration: boolean
   ) => {
     const startingInput = messageContent
+    console.log(chatFiles.length)
+
+    console.log("hiere")
 
     try {
       setUserInput("")
@@ -238,15 +241,21 @@ export const useChatHandler = () => {
         useRetrieval
       ) {
         setToolInUse("retrieval")
+        console.time("handle retrieve")
+        console.log("sourceCount")
+        console.log(sourceCount)
 
         retrievedFileItems = await handleRetrieval(
           userInput,
           newMessageFiles,
           chatFiles,
           chatSettings!.embeddingsProvider,
-          sourceCount
+          2
         )
       }
+      console.timeEnd("handle retrieve")
+      console.log(retrievedFileItems)
+      console.log(retrievedFileItems.length)
 
       const { tempUserChatMessage, tempAssistantChatMessage } =
         createTempMessages(
