@@ -120,8 +120,14 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
-    //Changes Euricom to adapt Azure (add Azure signOut)
-    signOut({ callbackUrl: "/" })
+
+    // Changes Euricom to adapt Azure (add Azure signOut)
+    signOut({ callbackUrl: "/" }).then(x => {
+      router.push(
+        // federated logout (Azure AD)
+        `https://login.microsoftonline.com/0b53d2c1-bc55-4ab3-a161-927d289257f2/oauth2/v2.0/logout?post_logout_redirect_uri=${window.location.origin}/signIn`
+      )
+    })
     // router.push("/login")
     router.refresh()
     return
@@ -432,7 +438,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
           </div>
           {/* </TabsContent> */}
 
-          {/* 
+          {/*
 //Original code ChatBot UI - 16/05/2024 - d60e1f3ee9d2caf8c9aab659791b841690183b2d
           <TabsContent className="mt-4 space-y-4" value="keys">
               <div className="mt-5 space-y-2">
