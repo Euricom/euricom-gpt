@@ -5,10 +5,12 @@ import { TOOL_DESCRIPTION_MAX, TOOL_NAME_MAX } from "@/db/limits"
 import { validateOpenAPI } from "@/lib/openapi-conversion"
 import { Tables } from "@/supabase/types"
 import { IconBolt } from "@tabler/icons-react"
-import { FC, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { SidebarItem } from "../all/sidebar-display-item"
 import { cn } from "@/lib/utils"
 import { runTool } from "@/db/tools"
+import { ChatbotUIContext } from "@/context/context"
+import { getAdminFiles } from "@/db/files"
 
 interface ToolItemProps {
   tool: Tables<"tools">
@@ -24,11 +26,11 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
   )
   const [schema, setSchema] = useState(tool.schema as string)
   const [schemaError, setSchemaError] = useState("")
+  const { setAdminFiles } = useContext(ChatbotUIContext)
   const updateTool = async (e: React.MouseEvent) => {
     e.preventDefault()
-    console.log(tool.name)
-    const res = await runTool(tool.name)
-    console.log(res)
+    const createdFile = await runTool(tool.name)
+    setAdminFiles(prev => [...prev, createdFile])
   }
   return (
     <div onClick={updateTool}>
@@ -78,7 +80,7 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
                 onChange={e => setDescription(e.target.value)}
                 maxLength={TOOL_DESCRIPTION_MAX}
               />
-            </div> */}
+            </div> 
 
       {/* <div className="space-y-1">
             <Label>URL</Label>

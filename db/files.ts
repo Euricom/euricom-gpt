@@ -308,8 +308,12 @@ export const updateFile = async (
 }
 
 export const deleteFile = async (fileId: string) => {
-  const { error } = await supabase.from("files").delete().eq("id", fileId)
+  console.log("in delete")
 
+  const { error } = await supabase.from("files").delete().eq("id", fileId)
+  console.log(error)
+
+  console.log("na delete")
   if (error) {
     throw new Error(error.message)
   }

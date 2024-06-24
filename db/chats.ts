@@ -56,7 +56,7 @@ export const updateChat = async (
   chatId: string,
   chat: TablesUpdate<"chats">
 ) => {
-  const { data: updatedChat, error } = await supabase
+  const { data: updatedChat, error } = await supabase  
     .from("chats")
     .update(chat)
     .eq("id", chatId)
