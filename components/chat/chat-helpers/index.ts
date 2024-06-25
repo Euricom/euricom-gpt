@@ -281,10 +281,10 @@ export const fetchChatResponse = async (
   return response
 }
 
-function extractStringWithDoubleUnderscores(input: string) {
+function extractFooter(input: string) {
   const regex = /__(.*?)__/
   const match = input.match(regex)
-  return match ? match[0].substring(2, match[0].length - 2) : null
+  return match ? match[0] : null
 }
 
 export const processResponse = async (
@@ -308,13 +308,16 @@ export const processResponse = async (
         setToolInUse("none")
 
         // Extract usage data from the chunk
-        const usage = extractStringWithDoubleUnderscores(chunk)
-        if (usage) {
-          console.log("[peter] Usage:", JSON.parse(usage))
+        let usage = null
+        const footer = extractFooter(chunk)
+        if (footer) {
+          const usageText = footer.substring(2, footer.length - 2)
+          usage = JSON.parse(usageText)
+          console.log("[peter] Usage:", JSON.parse(usageText))
 
-          // Remove usage data from the chunk
+          // Remove footer from the chunk
           // so it doesn't get added to the chat
-          chunk = chunk.replace(usage, "")
+          chunk = chunk.replace(footer, "")
         }
 
         try {
@@ -343,6 +346,8 @@ export const processResponse = async (
                 message: {
                   ...chatMessage.message,
                   content: fullText
+                  // TODO: [peter] add usage to the message
+                  // usage,
                 },
                 fileItems: chatMessage.fileItems
               }
