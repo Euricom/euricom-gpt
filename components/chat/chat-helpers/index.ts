@@ -335,6 +335,7 @@ export const processResponse = async (
                   ""
                 )
           fullText += contentToAdd
+          // console.log("🚀 ~ fullText:", fullText.split("2:"))
         } catch (error) {
           console.error("Error parsing JSON:", error)
         }
