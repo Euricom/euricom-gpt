@@ -195,9 +195,6 @@ export const useChatHandler = () => {
     isRegeneration: boolean
   ) => {
     const startingInput = messageContent
-    console.log(chatFiles.length)
-
-    console.log("hiere")
 
     try {
       setUserInput("")
@@ -234,6 +231,17 @@ export const useChatHandler = () => {
       let currentChat = selectedChat ? { ...selectedChat } : null
 
       const b64Images = newMessageImages.map(image => image.base64)
+      const { tempUserChatMessage, tempAssistantChatMessage } =
+        createTempMessages(
+          messageContent,
+          chatMessages,
+          chatSettings!,
+          b64Images,
+          isRegeneration,
+          setChatMessages,
+          selectedAssistant
+        )
+      setIsGenerating(true)
 
       let retrievedFileItems: Tables<"file_items">[] = []
       if (
@@ -250,17 +258,6 @@ export const useChatHandler = () => {
           sourceCount
         )
       }
-
-      const { tempUserChatMessage, tempAssistantChatMessage } =
-        createTempMessages(
-          messageContent,
-          chatMessages,
-          chatSettings!,
-          b64Images,
-          isRegeneration,
-          setChatMessages,
-          selectedAssistant
-        )
 
       let payload: ChatPayload = {
         chatSettings: chatSettings!,
