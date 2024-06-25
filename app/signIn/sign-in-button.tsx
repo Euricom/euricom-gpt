@@ -3,9 +3,11 @@
 import { Button } from "@nextui-org/react"
 import { signIn, useSession } from "next-auth/react"
 import { useSearchParams } from "next/navigation"
+import { useEffect } from "react"
 
 const SignInButton = () => {
   const searchParams = useSearchParams()
+
   const handleSignIn = async () => {
     await signIn("azure-ad", {
       redirect: true,
