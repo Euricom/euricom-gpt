@@ -11,7 +11,6 @@ export async function consumeReadableStream(
   try {
     while (true) {
       const { done, value } = await reader.read()
-      console.log("🚀 ~ value:", decoder.decode(value))
 
       if (done) {
         break
