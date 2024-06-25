@@ -297,6 +297,7 @@ export const processResponse = async (
     await consumeReadableStream(
       response.body,
       chunk => {
+        console.log("🚀 ~ chunk:", chunk)
         setFirstTokenReceived(true)
         setToolInUse("none")
 
@@ -315,6 +316,7 @@ export const processResponse = async (
                   ""
                 )
           fullText += contentToAdd
+          // console.log("🚀 ~ fullText:", fullText.split("2:"))
         } catch (error) {
           console.error("Error parsing JSON:", error)
         }

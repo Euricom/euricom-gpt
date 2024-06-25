@@ -1,14 +1,20 @@
+import { pipeline } from "@xenova/transformers"
 import { checkApiKey, getServerProfile } from "@/lib/server/server-chat-helpers"
 import { ChatSettings } from "@/types"
 import { OpenAIStream, StreamingTextResponse } from "ai"
-import { ServerRuntime } from "next"
 import OpenAI from "openai"
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions.mjs"
+import { getUsageStreamData } from "@/lib/models/get-usage-stream-data"
 
 //Changes Euricom to adapt Azure (this line gives error)
 // export const runtime: ServerRuntime = "edge"
 
 export async function POST(request: Request) {
+  let resolveFinishPromise: (finishReason: string) => void
+  const finishPromise = new Promise(resolve => {
+    resolveFinishPromise = resolve
+  })
+
   const json = await request.json()
   const { chatSettings, messages } = json as {
     chatSettings: ChatSettings
@@ -34,12 +40,17 @@ export async function POST(request: Request) {
         chatSettings.model === "gpt-4o"
           ? 4096
           : null, // TODO: Fix
-      stream: true
+      stream: true,
+      stream_options: { include_usage: true }
     })
 
-    const stream = OpenAIStream(response)
+    const [stream, streamCopy] = response.tee()
 
-    return new StreamingTextResponse(stream)
+    return new StreamingTextResponse(
+      OpenAIStream(stream),
+      undefined,
+      getUsageStreamData(streamCopy)
+    )
   } catch (error: any) {
     let errorMessage = error.message || "An unexpected error occurred"
     const errorCode = error.status || 500
