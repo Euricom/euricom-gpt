@@ -27,6 +27,7 @@ const ICON_SIZE = 32
 
 interface MessageProps {
   message: Tables<"messages">
+  usage?: any // TODO: [peter] Fix this type
   fileItems: Tables<"file_items">[]
   isEditing: boolean
   isLast: boolean
@@ -37,6 +38,7 @@ interface MessageProps {
 
 export const Message: FC<MessageProps> = ({
   message,
+  usage,
   fileItems,
   isEditing,
   isLast,
@@ -60,6 +62,9 @@ export const Message: FC<MessageProps> = ({
     files,
     models
   } = useContext(ChatbotUIContext)
+
+  // TODO: [peter] display usage
+  // console.log("message usage", usage)
 
   const { handleSendMessage } = useChatHandler()
 
@@ -287,7 +292,7 @@ export const Message: FC<MessageProps> = ({
             <MessageMarkdown content={message.content} />
           )}
         </div>
-        {/* 
+        {/*
         {fileItems.length > 0 && (
           <div className="border-primary mt-6 border-t pt-4 font-bold">
             {!viewSources ? (

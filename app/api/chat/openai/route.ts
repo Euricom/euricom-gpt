@@ -1,6 +1,7 @@
 import { checkApiKey, getServerProfile } from "@/lib/server/server-chat-helpers"
 import { ChatSettings } from "@/types"
 import { OpenAIStream, StreamingTextResponse } from "ai"
+import { OpenAIStreamEx } from "./openAIStream"
 import { ServerRuntime } from "next"
 import OpenAI from "openai"
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions.mjs"
@@ -25,6 +26,8 @@ export async function POST(request: Request) {
       organization: profile.openai_organization_id
     })
 
+    // console.log("messages", messages)
+
     const response = await openai.chat.completions.create({
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
       messages: messages as ChatCompletionCreateParamsBase["messages"],
@@ -34,10 +37,12 @@ export async function POST(request: Request) {
         chatSettings.model === "gpt-4o"
           ? 4096
           : null, // TODO: Fix
-      stream: true
+      stream: true,
+      stream_options: { include_usage: true }
     })
 
-    const stream = OpenAIStream(response)
+    // const stream = OpenAIStream(response)
+    const stream = OpenAIStreamEx(response as any)
 
     return new StreamingTextResponse(stream)
   } catch (error: any) {

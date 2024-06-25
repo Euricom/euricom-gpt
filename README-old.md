@@ -1,50 +1,149 @@
-# EuriBot UI
+# EuriGPT
 
-The Euricom AI chat app for all your Euricom needs.
+## Features:
+
+- Login met langdurige sessie.
+- CV's moeten accessable zijn.
+- Sharepoint/Euricom documenten => documenten zijn: PDF, Word, Txt, md, Json
+- Eigen documenten toevoegen
+- Historiek bijhouden
+- Meerdere chats, historiek per chat
+- Presets
+- Prompt library
+- Code syntax highlighting
+- Auto update documents
+- GraphApi smoelenboek/Sharepoint docs ophalen
+- Collectie Euricom maken: gebruiker kiest of hij de collectie gebruikt of niet. => kiest of hij de extra doc gebruikt of enkel het gpt-4 model.
+  - Eventueel meerdere collecties maken
+
+## Tech Stack: JS, Next
+
+## Based on Chatbot UI
+
+- [ ] Versie 1.0
+  - [x] Active directory login, met long live sessions (zie desk reservation)
+  - [x] User profile, Hide API keys
+  - [x] API key via env variable
+  - [x] Hide Collections, Tools, Assistants, Models, Workspaces, Help
+  - [x] Deployment naar Vercel
+- [ ] Versie 1.1
+  - [x] Admin kan doc voor iedereen beschikbaar toevoegen
+  - [x] Admin kan Assistents toevoegen die kunnen gebruikt worden door alle gebruikers.
+
+Tool example:
+{
+"openapi": "3.1.0",
+"info": {
+"title": "getEuricomSmoelenboek",
+"description": "Retrieves overview of all consultants of Euricom.",
+"version": "v1.0.0"
+},
+"servers": [
+{
+"url": "http://localhost:3000/api"
+}
+],
+"paths": {
+"/tools": {
+"get": {
+"description": "Get overview of all consultants of Euricom.",
+"operationId": "getEuricomSmoelenboek",
+"deprecated": false
+}
+}
+},
+"components": {
+"schemas": {}
+}
+}
+
+Billing:
+
+- 20/06/2024: $497.04
+
+# Chatbot UI
+
+The open-source AI chat app for everyone.
 
 <img src="./public/readme/screenshot.png" alt="Chatbot UI" width="600">
 
-## Quick Start
+## Demo
 
-Follow these steps to get your own Euricom Chatbot UI instance running locally.
+View the latest demo [here](https://x.com/mckaywrigley/status/1738273242283151777?s=20).
 
-```bash
-# install dependencies
-npm install
+## Updates
 
-# start the app locally (development)
-npm run dev
+Hey everyone! I've heard your feedback and am working hard on a big update.
 
-# db handling
-npm run db-reset  
-npm run db-migrate
-npm run db-types,
-npm run db-pull
-npm run db-push
-```
+Things like simpler deployment, better backend compatibility, and improved mobile layouts are on their way.
 
-## Chatbot UI - Original version
+Be back soon.
 
-This is a fork of the original Chatbot UI project. The original project can be found [here](https://github.com/mckaywrigley/chatbot-ui).
+-- Mckay
+
+## Official Hosted Version
 
 Use Chatbot UI without having to host it yourself!
 
 Find the official hosted version of Chatbot UI [here](https://chatbotui.com).
 
+## Sponsor
 
-### Local Quickstart
+If you find Chatbot UI useful, please consider [sponsoring](https://github.com/sponsors/mckaywrigley) me to support my open-source work :)
+
+## Issues
+
+We restrict "Issues" to actual issues related to the codebase.
+
+We're getting excessive amounts of issues that amount to things like feature requests, cloud provider issues, etc.
+
+If you are having issues with things like setup, please refer to the "Help" section in the "Discussions" tab above.
+
+Issues unrelated to the codebase will likely be closed immediately.
+
+## Discussions
+
+We highly encourage you to participate in the "Discussions" tab above!
+
+Discussions are a great place to ask questions, share ideas, and get help.
+
+Odds are if you have a question, someone else has the same question.
+
+## Legacy Code
+
+Chatbot UI was recently updated to its 2.0 version.
+
+The code for 1.0 can be found on the `legacy` branch.
+
+## Updating
+
+In your terminal at the root of your local Chatbot UI repository, run:
+
+```bash
+npm run update
+```
+
+If you run a hosted instance you'll also need to run:
+
+```bash
+npm run db-push
+```
+
+to apply the latest migrations to your live database.
+
+## Local Quickstart
 
 Follow these steps to get your own Chatbot UI instance running locally.
 
 You can watch the full video tutorial [here](https://www.youtube.com/watch?v=9Qq3-7-HNgw).
 
-#### 1. Clone the Repo
+### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/Euricom/euricom-gpt.git
+git clone https://github.com/mckaywrigley/chatbot-ui.git
 ```
 
-#### 2. Install Dependencies
+### 2. Install Dependencies
 
 Open a terminal in the root directory of your local Chatbot UI repository and run:
 
@@ -52,9 +151,9 @@ Open a terminal in the root directory of your local Chatbot UI repository and ru
 npm install
 ```
 
-#### 3. Install Supabase & Run Locally
+### 3. Install Supabase & Run Locally
 
-##### Why Supabase?
+#### Why Supabase?
 
 Previously, we used local browser storage to store data. However, this was not a good solution for a few reasons:
 
@@ -66,11 +165,11 @@ We now use Supabase because it's easy to use, it's open-source, it's Postgres, a
 
 We will support other providers in the future to give you more options.
 
-##### 1. Install Docker
+#### 1. Install Docker
 
 You will need to install Docker to run Supabase locally. You can download it [here](https://docs.docker.com/get-docker) for free.
 
-##### 2. Install Supabase CLI
+#### 2. Install Supabase CLI
 
 **MacOS/Linux**
 
@@ -85,7 +184,7 @@ scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
 scoop install supabase
 ```
 
-##### 3. Start Supabase
+#### 3. Start Supabase
 
 In your terminal at the root of your local Chatbot UI repository, run:
 
@@ -93,9 +192,9 @@ In your terminal at the root of your local Chatbot UI repository, run:
 supabase start
 ```
 
-#### 4. Fill in Secrets
+### 4. Fill in Secrets
 
-##### 1. Environment Variables
+#### 1. Environment Variables
 
 In your terminal at the root of your local Chatbot UI repository, run:
 
@@ -115,7 +214,7 @@ Now go to your `.env.local` file and fill in the values.
 
 If the environment variable is set, it will disable the input in the user settings.
 
-##### 2. SQL Setup
+#### 2. SQL Setup
 
 In the 1st migration file `supabase/migrations/20240108234540_setup.sql` you will need to replace 2 values with the values you got above:
 
@@ -124,11 +223,11 @@ In the 1st migration file `supabase/migrations/20240108234540_setup.sql` you wil
 
 This prevents issues with storage files not being deleted properly.
 
-#### 5. Install Ollama (optional for local models)
+### 5. Install Ollama (optional for local models)
 
 Follow the instructions [here](https://github.com/jmorganca/ollama#macos).
 
-#### 6. Run app locally
+### 6. Run app locally
 
 In your terminal at the root of your local Chatbot UI repository, run:
 
@@ -140,13 +239,13 @@ Your local instance of Chatbot UI should now be running at [http://localhost:300
 
 You can view your backend GUI at [http://localhost:54323/project/default/editor](http://localhost:54323/project/default/editor).
 
-### Hosted Quickstart
+## Hosted Quickstart
 
 Follow these steps to get your own Chatbot UI instance running in the cloud.
 
 Video tutorial coming soon.
 
-#### 1. Follow Local Quickstart
+### 1. Follow Local Quickstart
 
 Repeat steps 1-4 in "Local Quickstart" above.
 
@@ -154,13 +253,13 @@ You will want separate repositories for your local and hosted instances.
 
 Create a new repository for your hosted instance of Chatbot UI on GitHub and push your code to it.
 
-#### 2. Setup Backend with Supabase
+### 2. Setup Backend with Supabase
 
-##### 1. Create a new project
+#### 1. Create a new project
 
 Go to [Supabase](https://supabase.com/) and create a new project.
 
-##### 2. Get Project Values
+#### 2. Get Project Values
 
 Once you are in the project dashboard, click on the "Project Settings" icon tab on the far bottom left.
 
@@ -180,7 +279,7 @@ Here you will get the values for the following environment variables:
 
 - `Service role key`: Found in "Project API keys" as "service_role" (Reminder: Treat this like a password!)
 
-##### 3. Configure Auth
+#### 3. Configure Auth
 
 Next, click on the "Authentication" icon tab on the far left.
 
@@ -188,7 +287,7 @@ In the text tabs, click on "Providers" and make sure "Email" is enabled.
 
 We recommend turning off "Confirm email" for your own personal instance.
 
-##### 4. Connect to Hosted DB
+#### 4. Connect to Hosted DB
 
 Open up your repository for your hosted instance of Chatbot UI.
 
@@ -221,7 +320,7 @@ supabase db push
 
 Your hosted database should now be set up!
 
-#### 3. Setup Frontend with Vercel
+### 3. Setup Frontend with Vercel
 
 Go to [Vercel](https://vercel.com/) and create a new project.
 
@@ -247,3 +346,10 @@ Click "Deploy" and wait for your frontend to deploy.
 
 Once deployed, you should be able to use your hosted instance of Chatbot UI via the URL Vercel gives you.
 
+## Contributing
+
+We are working on a guide for contributing.
+
+## Contact
+
+Message Mckay on [Twitter/X](https://twitter.com/mckaywrigley)

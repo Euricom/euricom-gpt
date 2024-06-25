@@ -281,6 +281,12 @@ export const fetchChatResponse = async (
   return response
 }
 
+function extractFooter(input: string) {
+  const regex = /__(.*?)__/
+  const match = input.match(regex)
+  return match ? match[0] : null
+}
+
 export const processResponse = async (
   response: Response,
   lastChatMessage: ChatMessage,
@@ -297,8 +303,22 @@ export const processResponse = async (
     await consumeReadableStream(
       response.body,
       chunk => {
+        // console.log("[peter] Chunk:", chunk)
         setFirstTokenReceived(true)
         setToolInUse("none")
+
+        // Extract usage data from the chunk
+        let usage = null
+        const footer = extractFooter(chunk)
+        if (footer) {
+          const usageText = footer.substring(2, footer.length - 2)
+          usage = JSON.parse(usageText)
+          console.log("[peter] Usage:", JSON.parse(usageText))
+
+          // Remove footer from the chunk
+          // so it doesn't get added to the chat
+          chunk = chunk.replace(footer, "")
+        }
 
         try {
           contentToAdd = isHosted
@@ -326,6 +346,8 @@ export const processResponse = async (
                 message: {
                   ...chatMessage.message,
                   content: fullText
+                  // TODO: [peter] add usage to the message
+                  // usage,
                 },
                 fileItems: chatMessage.fileItems
               }
