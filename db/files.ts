@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
 import mammoth from "mammoth"
 import { toast } from "sonner"
-import { uploadFile } from "./storage/files"
+import { deleteFileFromStorage, uploadFile } from "./storage/files"
 
 export const getFileById = async (fileId: string) => {
   const { data: file, error } = await supabase
@@ -287,6 +287,69 @@ export const createFileWorkspaces = async (
   if (error) throw new Error(error.message)
 
   return createdFileWorkspaces
+}
+
+// changes euricom (add function to generate JSON file)
+export const generateJsonFile = async (json: any, fileName: string) => {
+  const files = await getAdminFiles()
+  let name = fileName
+  let validFilename = name.replace(/[^a-z0-9.]/gi, "_").toLowerCase()
+  const extension = "json"
+  const baseName = validFilename.includes(".")
+    ? validFilename.substring(0, validFilename.lastIndexOf("."))
+    : validFilename
+  const maxBaseNameLength = 100 - (extension?.length || 0) - 1
+  if (baseName.length > maxBaseNameLength) {
+    name = baseName.substring(0, maxBaseNameLength) + "." + extension
+  } else {
+    name = baseName + "." + extension
+  }
+
+  const existingFile = files.find(file => {
+    return file.name === name
+  })
+
+  const jsonBlob = new Blob([JSON.stringify(json)], {
+    type: "application/json"
+  })
+
+  const file = new File([jsonBlob], name + ".json", {
+    type: "application/json"
+  })
+
+  const fileRecord = {
+    user_id: "18d332af-2d5b-49e5-8c42-9168b3910f97",
+    description: "",
+    file_path: "",
+    name: name,
+    size: file.size,
+    tokens: 0,
+    type: "json",
+    sharing: "public"
+  } as TablesInsert<"files">
+
+  if (existingFile) {
+    await deleteFileFromStorage(existingFile.file_path)
+    const filePath = await uploadFile(file, {
+      name: fileRecord.name,
+      user_id: fileRecord.user_id,
+      file_id: fileRecord.name
+    })
+
+    await updateFile(existingFile.id, {
+      file_path: filePath
+    })
+    return
+  }
+
+  const createdFile = await createFileBasedOnExtension(
+    file,
+    fileRecord,
+    null,
+    "openai"
+  )
+
+  return createdFile
 }
 
 export const updateFile = async (

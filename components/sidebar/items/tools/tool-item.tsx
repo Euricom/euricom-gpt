@@ -8,9 +8,7 @@ import { IconBolt } from "@tabler/icons-react"
 import { FC, useContext, useState } from "react"
 import { SidebarItem } from "../all/sidebar-display-item"
 import { cn } from "@/lib/utils"
-import { runTool } from "@/db/tools"
 import { ChatbotUIContext } from "@/context/context"
-import { getAdminFiles } from "@/db/files"
 
 interface ToolItemProps {
   tool: Tables<"tools">
@@ -26,63 +24,45 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
   )
   const [schema, setSchema] = useState(tool.schema as string)
   const [schemaError, setSchemaError] = useState("")
-  const { setAdminFiles } = useContext(ChatbotUIContext)
-  const updateTool = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    const createdFile = await runTool(tool.name)
-    setAdminFiles(prev => [...prev, createdFile])
-  }
+
   return (
-    <div onClick={updateTool}>
-      <div
-        className={cn(
-          "hover:bg-accent flex w-full cursor-pointer items-center rounded p-2 hover:opacity-50 focus:outline-none"
-        )}
-        tabIndex={0}
-      >
-        {<IconBolt size={30} />}
+    <SidebarItem
+      item={tool}
+      isTyping={isTyping}
+      contentType="tools"
+      icon={<IconBolt size={30} />}
+      updateState={{
+        name,
+        description,
+        url,
+        custom_headers: customHeaders,
+        schema
+      }}
+      renderInputs={() => (
+        <>
+          <div className="space-y-1">
+            <Label>Name</Label>
 
-        <div className="ml-3 flex-1 truncate text-sm font-semibold">
-          {tool.name}
-        </div>
-      </div>
-      {/* <SidebarItem
-        item={tool}
-        isTyping={isTyping}
-        contentType="tools"
-        icon={<IconBolt size={30} />}
-        updateState={{
-          name,
-          description,
-          url,
-          custom_headers: customHeaders,
-          schema
-        }}
-        renderInputs={() => (
-          <>
-            <div className="space-y-1">
-              <Label>Name</Label>
+            <Input
+              placeholder="Tool name..."
+              value={name}
+              onChange={e => setName(e.target.value)}
+              maxLength={TOOL_NAME_MAX}
+            />
+          </div>
 
-              <Input
-                placeholder="Tool name..."
-                value={name}
-                onChange={e => setName(e.target.value)}
-                maxLength={TOOL_NAME_MAX}
-              />
-            </div>
+          <div className="space-y-1">
+            <Label>Description</Label>
 
-            <div className="space-y-1">
-              <Label>Description</Label>
+            <Input
+              placeholder="Tool description..."
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              maxLength={TOOL_DESCRIPTION_MAX}
+            />
+          </div>
 
-              <Input
-                placeholder="Tool description..."
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                maxLength={TOOL_DESCRIPTION_MAX}
-              />
-            </div> 
-
-      {/* <div className="space-y-1">
+          {/* <div className="space-y-1">
             <Label>URL</Label>
 
             <Input
@@ -92,7 +72,7 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
             />
           </div> */}
 
-      {/* <div className="space-y-3 pt-4 pb-3">
+          {/* <div className="space-y-3 pt-4 pb-3">
             <div className="space-x-2 flex items-center">
               <Checkbox />
 
@@ -112,22 +92,22 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
             </div>
           </div> */}
 
-      {/* <div className="space-y-1">
-              <Label>Custom Headers</Label>
+          <div className="space-y-1">
+            <Label>Custom Headers</Label>
 
-              <TextareaAutosize
-                placeholder={`{"X-api-key": "1234567890"}`}
-                value={customHeaders}
-                onValueChange={setCustomHeaders}
-                minRows={1}
-              />
-            </div>
+            <TextareaAutosize
+              placeholder={`{"X-api-key": "1234567890"}`}
+              value={customHeaders}
+              onValueChange={setCustomHeaders}
+              minRows={1}
+            />
+          </div>
 
-            <div className="space-y-1">
-              <Label>Schema</Label>
+          <div className="space-y-1">
+            <Label>Schema</Label>
 
-              <TextareaAutosize
-                placeholder={`{
+            <TextareaAutosize
+              placeholder={`{
                 "openapi": "3.1.0",
                 "info": {
                   "title": "Get weather data",
@@ -163,27 +143,26 @@ export const ToolItem: FC<ToolItemProps> = ({ tool }) => {
                   "schemas": {}
                 }
               }`}
-                value={schema}
-                onValueChange={value => {
-                  setSchema(value)
+              value={schema}
+              onValueChange={value => {
+                setSchema(value)
 
-                  try {
-                    const parsedSchema = JSON.parse(value)
-                    validateOpenAPI(parsedSchema)
-                      .then(() => setSchemaError("")) // Clear error if validation is successful
-                      .catch(error => setSchemaError(error.message)) // Set specific validation error message
-                  } catch (error) {
-                    setSchemaError("Invalid JSON format") // Set error for invalid JSON format
-                  }
-                }}
-                minRows={15}
-              />
+                try {
+                  const parsedSchema = JSON.parse(value)
+                  validateOpenAPI(parsedSchema)
+                    .then(() => setSchemaError("")) // Clear error if validation is successful
+                    .catch(error => setSchemaError(error.message)) // Set specific validation error message
+                } catch (error) {
+                  setSchemaError("Invalid JSON format") // Set error for invalid JSON format
+                }
+              }}
+              minRows={15}
+            />
 
-              <div className="text-xs text-red-500">{schemaError}</div>
-            </div>
-          </> */}
-      {/* )} */}
-      {/* /> */}
-    </div>
+            <div className="text-xs text-red-500">{schemaError}</div>
+          </div>
+        </>
+      )}
+    />
   )
 }

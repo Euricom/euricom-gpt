@@ -241,21 +241,15 @@ export const useChatHandler = () => {
         useRetrieval
       ) {
         setToolInUse("retrieval")
-        console.time("handle retrieve")
-        console.log("sourceCount")
-        console.log(sourceCount)
 
         retrievedFileItems = await handleRetrieval(
           userInput,
           newMessageFiles,
           chatFiles,
           chatSettings!.embeddingsProvider,
-          2
+          sourceCount
         )
       }
-      console.timeEnd("handle retrieve")
-      console.log(retrievedFileItems)
-      console.log(retrievedFileItems.length)
 
       const { tempUserChatMessage, tempAssistantChatMessage } =
         createTempMessages(

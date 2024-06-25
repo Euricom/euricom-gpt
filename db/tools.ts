@@ -1,19 +1,5 @@
 import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib"
-import {
-  createFile,
-  createFileBasedOnExtension,
-  deleteFile,
-  deleteFileWorkspace,
-  getAdminFiles,
-  updateFile
-} from "./files"
-import { getServerUser } from "@/lib/server/auth"
-import { useContext } from "react"
-import { ChatbotUIContext } from "@/context/context"
-import { getFile } from "@xenova/transformers/types/utils/hub"
-import { deleteFileFromStorage } from "./storage/files"
 
 export const getToolById = async (toolId: string) => {
   const { data: tool, error } = await supabase
@@ -188,45 +174,4 @@ export const deleteToolWorkspace = async (
   if (error) throw new Error(error.message)
 
   return true
-}
-
-export const runTool = async (title: string) => {
-  const files = await getAdminFiles()
-  console.log(files)
-
-  const existingFile = files.find(
-    file => file.name === title && file.type === "json"
-  )
-  console.log(existingFile)
-
-  if (existingFile) {
-    await deleteFileFromStorage(existingFile.file_path)
-    await deleteFile(existingFile.id)
-  }
-
-  const res = await fetch("/api/tools", {
-    method: "POST",
-    body: JSON.stringify({ title: title })
-  })
-  const tool = await res.json()
-  const jsonBlob = new Blob([JSON.stringify(tool)], {
-    type: "application/json"
-  })
-
-  const file = new File([jsonBlob], title + ".json", {
-    type: "application/json"
-  })
-
-  const fileRecord = {
-    user_id: "18d332af-2d5b-49e5-8c42-9168b3910f97",
-    description: "",
-    file_path: "",
-    name: title,
-    size: file.size,
-    tokens: 0,
-    type: "json",
-    sharing: "public"
-  } as TablesInsert<"files">
-
-  return createFileBasedOnExtension(file, fileRecord, null, "openai")
 }
