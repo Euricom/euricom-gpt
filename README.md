@@ -1,6 +1,6 @@
 # EuriBot UI
 
-The Euricom AI chat app for everyone.
+The Euricom AI chat app for all your Euricom needs.
 
 <img src="./public/readme/screenshot.png" alt="Chatbot UI" width="600">
 
