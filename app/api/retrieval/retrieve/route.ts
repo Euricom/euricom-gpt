@@ -62,6 +62,10 @@ export async function POST(request: Request) {
       const openaiEmbedding = response.data.map(item => item.embedding)[0]
 
       console.time("supabase")
+      console.log(openaiEmbedding)
+      console.log(sourceCount)
+      console.log(uniqueFileIds)
+
       const { data: openaiFileItems, error: openaiError } =
         await supabaseAdmin.rpc("match_file_items_openai", {
           query_embedding: openaiEmbedding as any,
@@ -69,6 +73,7 @@ export async function POST(request: Request) {
           file_ids: uniqueFileIds
         })
       console.timeEnd("supabase")
+      console.log(openaiFileItems)
 
       if (openaiError) {
         throw openaiError

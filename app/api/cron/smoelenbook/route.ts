@@ -3,6 +3,7 @@
 import { generateJsonFile } from "@/db/files"
 import { getApplicationAccessToken } from "@/lib/server/auth"
 import { NextRequest } from "next/server"
+import smoelenboek from "../../../../smoelenboek.json"
 
 export async function GET(request: NextRequest) {
   // const json = await request.json()
@@ -47,24 +48,6 @@ export async function GET(request: NextRequest) {
 
   const sm = await s.json()
   const smoelenbook = sm
-  const bench = smoelenbook.value.find(
-    (value: any) =>
-      value.data.serverProcessedContent.searchablePlainTexts[0].value ===
-      "Bench"
-  )
-  const staff = smoelenbook.value.find(
-    (value: any) =>
-      value.data.serverProcessedContent.searchablePlainTexts[0].value ===
-      "Staff"
-  )
-  if (bench) {
-    bench.data.serverProcessedContent.searchablePlainTexts[0].value =
-      "Consultants on the bench for Euricom"
-  }
-  if (staff) {
-    staff.data.serverProcessedContent.searchablePlainTexts[0].value =
-      "Staff employees for Euricom"
-  }
 
   const formattedsmoelenbook = smoelenbook.value.map((group: any) => {
     return {
@@ -80,8 +63,30 @@ export async function GET(request: NextRequest) {
       })
     }
   })
+  let text =
+    "Dit is een overzicht van alle werknemers van euricom. Dit overzicht bevat de staff members, de bench en alle klanten waar euricom consultants momenteel aan het werk zijn:\n"
+  formattedsmoelenbook.forEach((value: any) => {
+    switch (value.company) {
+      case "Bench": {
+        text +=
+          "Deze consultants zitten momenteel op de bench (ookwel bank genoemd) voor Euricom. Dit betekent dat ze even geen klant hebben en dus bezig zijn met interne projecten voor euricom of met bijstuderen:\n"
+        break
+      }
+      case "Staff": {
+        text += "Dit zijn alle staff members van Euricom:\n"
+        break
+      }
+      default:
+        text += `Dit zijn alle euricom consultants die momenteel bij ${value.company} aan het werk zijn:\n`
+    }
 
-  generateJsonFile(formattedsmoelenbook, "smoelenboek")
+    value.people.forEach(
+      (person: any) =>
+        (text += `\t- ${person.name}: Dit is een ${person.role} en deze persoon is contacteerbaar via ${person.mail}\n`)
+    )
+  })
+
+  generateJsonFile(text, "smoelenboek")
 
   return new Response(JSON.stringify("success"), {
     status: 200

@@ -3,6 +3,7 @@ import { TablesInsert, TablesUpdate } from "@/supabase/types"
 import mammoth from "mammoth"
 import { toast } from "sonner"
 import { deleteFileFromStorage, uploadFile } from "./storage/files"
+import { jsPDF } from "jspdf"
 
 export const getFileById = async (fileId: string) => {
   const { data: file, error } = await supabase
@@ -290,11 +291,10 @@ export const createFileWorkspaces = async (
 }
 
 // changes euricom (add function to generate JSON file)
-export const generateJsonFile = async (json: any, fileName: string) => {
-  const files = await getAdminFiles()
+export const generateJsonFile = async (text: any, fileName: string) => {
   let name = fileName
   let validFilename = name.replace(/[^a-z0-9.]/gi, "_").toLowerCase()
-  const extension = "json"
+  const extension = "pdf"
   const baseName = validFilename.includes(".")
     ? validFilename.substring(0, validFilename.lastIndexOf("."))
     : validFilename
@@ -305,16 +305,32 @@ export const generateJsonFile = async (json: any, fileName: string) => {
     name = baseName + "." + extension
   }
 
-  const existingFile = files.find(file => {
-    return file.name === name
+  const doc = new jsPDF()
+  doc.setFontSize(8)
+  const marginLeft = 10
+  const marginTop = 10
+  const pageHeight = doc.internal.pageSize.height
+  let yPosition = marginTop
+
+  // Deel de tekst op basis van de newline karakters om rekening te houden met handmatige regelovergangen
+  const lines = doc.splitTextToSize(text, 180) // 180 is de breedte van de tekst op de pagina, pas dit aan naar wens
+
+  // Loop door de regels en voeg een nieuwe pagina toe indien nodig
+  lines.forEach((line: any, index: number) => {
+    if (yPosition + 10 > pageHeight) {
+      // Check of de volgende regel buiten de pagina valt, pas 10 aan op basis van je regelhoogte
+      doc.addPage() // Voeg een nieuwe pagina toe
+      yPosition = marginTop // Reset de yPosition voor de nieuwe pagina
+    }
+    doc.text(line, marginLeft, yPosition) // Voeg de tekst toe op de huidige positie
+    yPosition += 7 // Verhoog de yPosition voor de volgende regel, pas dit aan op basis van je regelhoogte
+  })
+  const jsonBlob = new Blob([doc.output("blob")], {
+    type: "application/pdf"
   })
 
-  const jsonBlob = new Blob([JSON.stringify(json)], {
-    type: "application/json"
-  })
-
-  const file = new File([jsonBlob], name + ".json", {
-    type: "application/json"
+  const file = new File([jsonBlob], name + ".pdf", {
+    type: "application/pdf"
   })
 
   const fileRecord = {
@@ -324,10 +340,14 @@ export const generateJsonFile = async (json: any, fileName: string) => {
     name: name,
     size: file.size,
     tokens: 0,
-    type: "json",
+    type: "pdf",
     sharing: "public"
   } as TablesInsert<"files">
 
+  const files = await getAdminFiles()
+  const existingFile = files.find(file => {
+    return file.name === name
+  })
   if (existingFile) {
     await deleteFileFromStorage(existingFile.file_path)
     const filePath = await uploadFile(file, {
