@@ -10,11 +10,6 @@ import { getUsageStreamData } from "@/lib/models/get-usage-stream-data"
 // export const runtime: ServerRuntime = "edge"
 
 export async function POST(request: Request) {
-  let resolveFinishPromise: (finishReason: string) => void
-  const finishPromise = new Promise(resolve => {
-    resolveFinishPromise = resolve
-  })
-
   const json = await request.json()
   const { chatSettings, messages } = json as {
     chatSettings: ChatSettings
@@ -47,9 +42,10 @@ export async function POST(request: Request) {
     })
 
     const [stream, streamCopy] = response.tee()
+    const readableStream = OpenAIStream(stream)
 
     return new StreamingTextResponse(
-      OpenAIStream(stream),
+      readableStream,
       undefined,
       getUsageStreamData(streamCopy)
     )
