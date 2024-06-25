@@ -281,6 +281,12 @@ export const fetchChatResponse = async (
   return response
 }
 
+function extractStringWithDoubleUnderscores(input: string) {
+  const regex = /__(.*?)__/
+  const match = input.match(regex)
+  return match ? match[0].substring(2, match[0].length - 2) : null
+}
+
 export const processResponse = async (
   response: Response,
   lastChatMessage: ChatMessage,
@@ -297,8 +303,19 @@ export const processResponse = async (
     await consumeReadableStream(
       response.body,
       chunk => {
+        // console.log("[peter] Chunk:", chunk)
         setFirstTokenReceived(true)
         setToolInUse("none")
+
+        // Extract usage data from the chunk
+        const usage = extractStringWithDoubleUnderscores(chunk)
+        if (usage) {
+          console.log("[peter] Usage:", JSON.parse(usage))
+
+          // Remove usage data from the chunk
+          // so it doesn't get added to the chat
+          chunk = chunk.replace(usage, "")
+        }
 
         try {
           contentToAdd = isHosted
