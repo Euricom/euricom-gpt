@@ -94,11 +94,11 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
                 contentType="adminFiles"
                 onContentTypeChange={onContentTypeChange}
               />
-              <SidebarSwitchItem
+              {/* <SidebarSwitchItem
                 icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
                 contentType="tools"
                 onContentTypeChange={onContentTypeChange}
-              />
+              /> */}
             </>
           )
         }

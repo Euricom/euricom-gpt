@@ -26,7 +26,7 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
   selectedAssistantRetrievalItems,
   onAssistantRetrievalItemsSelect
 }) => {
-  const { files, adminFiles, collections } = useContext(ChatbotUIContext)
+  const { adminFiles, collections } = useContext(ChatbotUIContext)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -46,7 +46,7 @@ export const AssistantRetrievalSelect: FC<AssistantRetrievalSelectProps> = ({
     onAssistantRetrievalItemsSelect(item)
   }
 
-  if (!files || !collections) return null
+  if (!adminFiles || !collections) return null
 
   return (
     <DropdownMenu
