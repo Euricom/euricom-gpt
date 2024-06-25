@@ -8,9 +8,7 @@ interface ChatMessagesProps {}
 
 export const ChatMessages: FC<ChatMessagesProps> = ({}) => {
   const { chatMessages, chatFileItems } = useContext(ChatbotUIContext)
-
   const { handleSendEdit } = useChatHandler()
-
   const [editingMessage, setEditingMessage] = useState<Tables<"messages">>()
 
   return chatMessages
