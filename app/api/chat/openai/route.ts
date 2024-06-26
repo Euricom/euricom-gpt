@@ -5,6 +5,7 @@ import { OpenAIStreamEx } from "./openAIStream"
 import { ServerRuntime } from "next"
 import OpenAI from "openai"
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions.mjs"
+import { getUsageStreamData } from "@/lib/models/get-usage-stream-data"
 
 //Changes Euricom to adapt Azure (this line gives error)
 // export const runtime: ServerRuntime = "edge"
@@ -42,13 +43,10 @@ export async function POST(request: Request) {
     })
 
     const [stream, streamCopy] = response.tee()
-    const readableStream = OpenAIStream(response)
+    const readableStream = OpenAIStream(stream)
+    const usageStreamDate = getUsageStreamData(streamCopy)
 
-    return new StreamingTextResponse(
-      readableStream,
-      undefined,
-      getUsageStreamData(streamCopy)
-    )
+    return new StreamingTextResponse(readableStream, undefined, usageStreamDate)
   } catch (error: any) {
     let errorMessage = error.message || "An unexpected error occurred"
     const errorCode = error.status || 500
