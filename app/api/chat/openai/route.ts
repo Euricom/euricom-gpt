@@ -41,10 +41,14 @@ export async function POST(request: Request) {
       stream_options: { include_usage: true }
     })
 
-    // const stream = OpenAIStream(response)
-    const stream = OpenAIStreamEx(response as any)
+    const [stream, streamCopy] = response.tee()
+    const readableStream = OpenAIStream(response)
 
-    return new StreamingTextResponse(stream)
+    return new StreamingTextResponse(
+      readableStream,
+      undefined,
+      getUsageStreamData(streamCopy)
+    )
   } catch (error: any) {
     let errorMessage = error.message || "An unexpected error occurred"
     const errorCode = error.status || 500
