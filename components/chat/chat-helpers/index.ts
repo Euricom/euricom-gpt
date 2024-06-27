@@ -281,10 +281,36 @@ export const fetchChatResponse = async (
   return response
 }
 
-function extractFooter(input: string) {
-  const regex = /__(.*?)__/
-  const match = input.match(regex)
-  return match ? match[0] : null
+// function extractFooter(input: string) {
+//   const regex = /__(.*?)__/
+//   const match = input.match(regex)
+//   return match ? match[0] : null
+// }
+
+const mapUsage = (input: string) => {
+  // let usage: { [x: string]: string };
+  // console.log("🚀 ~ mapUsage ~ usage:", usage)
+
+  if (input.includes("2:[")) {
+    const usageString = input.split("2:").pop()
+    return usageString
+      ?.replace(/[{}\[\]\n"]/g, "")
+      .split(",")
+      .map(usage => {
+        const [key, value] = usage.split(":")
+        return { [key]: value }
+      })
+    // .forEach(u => {
+    //   console.log("🚀 ~ mapUsage ~ usage:", u)
+    //   const [key, value] = u.split(":")
+    //   console.log("🚀 ~ mapUsage ~ value:", value)
+    //   console.log("🚀 ~ mapUsage ~ key:", key)
+    //   usage[key] = value
+    // })
+  }
+
+  // console.log("🚀 ~ mapUsage ~ usage:", usage)
+  return undefined
 }
 
 export const processResponse = async (
@@ -306,19 +332,21 @@ export const processResponse = async (
         // console.log("[peter] Chunk:", chunk)
         setFirstTokenReceived(true)
         setToolInUse("none")
+        const usage = mapUsage(chunk)
+        console.log("🚀 ~ usage:", usage)
 
         // Extract usage data from the chunk
-        let usage = null
-        const footer = extractFooter(chunk)
-        if (footer) {
-          const usageText = footer.substring(2, footer.length - 2)
-          usage = JSON.parse(usageText)
-          console.log("[peter] Usage:", JSON.parse(usageText))
+        // let usage = null
+        // const footer = extractFooter(chunk)
+        // if (footer) {
+        //   const usageText = footer.substring(2, footer.length - 2)
+        //   usage = JSON.parse(usageText)
+        //   console.log("[peter] Usage:", JSON.parse(usageText))
 
-          // Remove footer from the chunk
-          // so it doesn't get added to the chat
-          chunk = chunk.replace(footer, "")
-        }
+        //   // Remove footer from the chunk
+        //   // so it doesn't get added to the chat
+        //   chunk = chunk.replace(footer, "")
+        // }
 
         try {
           contentToAdd = isHosted
@@ -345,12 +373,13 @@ export const processResponse = async (
               const updatedChatMessage: ChatMessage = {
                 message: {
                   ...chatMessage.message,
-                  content: fullText
+                  content: fullText,
                   // TODO: [peter] add usage to the message
-                  // usage,
+                  ...usage
                 },
                 fileItems: chatMessage.fileItems
               }
+              console.log("🚀 ~ updatedChatMessage:", updatedChatMessage)
 
               return updatedChatMessage
             }
