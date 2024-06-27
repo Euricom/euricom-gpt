@@ -27,7 +27,6 @@ const ICON_SIZE = 32
 
 interface MessageProps {
   message: Tables<"messages">
-  usage?: any // TODO: [peter] Fix this type
   fileItems: Tables<"file_items">[]
   isEditing: boolean
   isLast: boolean
@@ -38,7 +37,6 @@ interface MessageProps {
 
 export const Message: FC<MessageProps> = ({
   message,
-  usage,
   fileItems,
   isEditing,
   isLast,
@@ -258,7 +256,7 @@ export const Message: FC<MessageProps> = ({
                 />
               )}
 
-              <div className="font-semibold">
+              <div className="font-semibold flex flex-col">
                 {message.role === "assistant"
                   ? message.assistant_id
                     ? assistants.find(
@@ -268,6 +266,10 @@ export const Message: FC<MessageProps> = ({
                       ? selectedAssistant?.name
                       : MODEL_DATA?.modelName
                   : profile?.display_name ?? profile?.username}
+                <span className="w-fit border-gray-300 border px-2 text-xs font-normal rounded-full">
+                  {/* TODO: [Chiel] Fill with correct data form "message" in-output_price */}
+                  €0.99
+                </span>
               </div>
             </div>
           )}
@@ -289,7 +291,13 @@ export const Message: FC<MessageProps> = ({
               maxRows={20}
             />
           ) : (
-            <MessageMarkdown content={message.content} />
+            <>
+              <MessageMarkdown content={message.content} />
+              <span className="text-xs font-thin text-gray-300">
+                {/* TODO: [Chiel] Fill with correct data form "message" in-output_token */}
+                ( 0,00008 tokens )
+              </span>
+            </>
           )}
         </div>
         {/*

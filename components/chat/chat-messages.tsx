@@ -8,7 +8,6 @@ interface ChatMessagesProps {}
 
 export const ChatMessages: FC<ChatMessagesProps> = ({}) => {
   const { chatMessages, chatFileItems } = useContext(ChatbotUIContext)
-  console.log("🚀 ~ chatMessages:", chatMessages)
 
   const { handleSendEdit } = useChatHandler()
 
