@@ -296,19 +296,15 @@ export const fetchChatResponse = async (
 //   return match ? match[0] : null
 // }
 
-const getUsage = (input: string) => {
+const getUsage = (usageString?: string) => {
   const usage = {
     input_token: 0,
     output_token: 0
   }
 
-  /*
-    Hello! How can I assist you today?2:[{"prompt_tokens":34,"completion_tokens":9,"total_tokens":43}]
-  */
-  const usageValue = input.includes("2:[") && input.split("2:").pop()
-  if (!usageValue) return usage
+  if (!usageString) return usage
 
-  usageValue
+  usageString
     ?.replace(/[{}\[\]\n"]/g, "")
     .split(",")
     .forEach(input => {
@@ -340,21 +336,14 @@ export const processResponse = async (
         // console.log("[peter] Chunk:", chunk)
         setFirstTokenReceived(true)
         setToolInUse("none")
-        const { input_token, output_token } = getUsage(chunk)
-        console.log("🚀 ~ OPENAI_LLM_LIST:", OPENAI_LLM_LIST)
 
-        // Extract usage data from the chunk
-        // let usage = null
-        // const footer = extractFooter(chunk)
-        // if (footer) {
-        //   const usageText = footer.substring(2, footer.length - 2)
-        //   usage = JSON.parse(usageText)
-        //   console.log("[peter] Usage:", JSON.parse(usageText))
-
-        //   // Remove footer from the chunk
-        //   // so it doesn't get added to the chat
-        //   chunk = chunk.replace(footer, "")
-        // }
+        /*
+          ex.: Hello! How can I assist you today?2:[{"prompt_tokens":34,"completion_tokens":9,"total_tokens":43}]
+        */
+        const usageSeparator = "2:"
+        const usageString = chunk.split(usageSeparator).pop() || ""
+        const { input_token, output_token } = getUsage(usageString)
+        chunk = chunk.replace(usageSeparator + usageString, "")
 
         try {
           contentToAdd = isHosted
@@ -393,7 +382,6 @@ export const processResponse = async (
                 },
                 fileItems: chatMessage.fileItems
               }
-              console.log("🚀 ~ updatedChatMessage:", updatedChatMessage)
 
               return updatedChatMessage
             }
