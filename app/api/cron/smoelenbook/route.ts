@@ -1,6 +1,6 @@
 // changes euricom (add endpoint to get smoelenboek)
 
-import { generateJsonFile } from "@/db/files"
+import { generateOwnFile } from "@/db/files"
 import { getApplicationAccessToken } from "@/lib/server/auth"
 import { NextRequest } from "next/server"
 import smoelenboek from "../../../../smoelenboek.json"
@@ -86,7 +86,9 @@ export async function GET(request: NextRequest) {
     )
   })
 
-  generateJsonFile(text, "smoelenboek")
+  await generateOwnFile(formattedsmoelenbook, "smoelenboek", "json")
+  await generateOwnFile(text, "smoelenboek", "pdf")
+  await generateOwnFile(text, "smoelenboek", "txt")
 
   return new Response(JSON.stringify("success"), {
     status: 200
