@@ -61,9 +61,6 @@ export const Message: FC<MessageProps> = ({
     models
   } = useContext(ChatbotUIContext)
 
-  // TODO: [peter] display usage
-  // console.log("message usage", usage)
-
   const { handleSendMessage } = useChatHandler()
 
   const editInputRef = useRef<HTMLTextAreaElement>(null)
@@ -266,10 +263,14 @@ export const Message: FC<MessageProps> = ({
                       ? selectedAssistant?.name
                       : MODEL_DATA?.modelName
                   : profile?.display_name ?? profile?.username}
-                <span className="w-fit border-gray-300 border px-2 text-xs font-normal rounded-full">
-                  {/* TODO: [Chiel] Fill with correct data form "message" in-output_price */}
-                  €0.99
-                </span>
+                {message.output_price != null ||
+                  (message.input_price != null && (
+                    <span className="w-fit border-gray-300 border px-2 text-xs font-normal rounded-full">
+                      {message.role === "assistant"
+                        ? message.output_price
+                        : message.input_price}
+                    </span>
+                  ))}
               </div>
             </div>
           )}
@@ -293,10 +294,15 @@ export const Message: FC<MessageProps> = ({
           ) : (
             <>
               <MessageMarkdown content={message.content} />
-              <span className="text-xs font-thin text-gray-300">
-                {/* TODO: [Chiel] Fill with correct data form "message" in-output_token */}
-                ( 0,00008 tokens )
-              </span>
+              {message.output_token != null ||
+                (message.input_token != null && (
+                  <span className="text-xs font-thin text-gray-300">
+                    {message.role === "assistant"
+                      ? message.output_token
+                      : message.input_token}
+                    tokens
+                  </span>
+                ))}
             </>
           )}
         </div>

@@ -374,7 +374,6 @@ export const processResponse = async (
                 message: {
                   ...chatMessage.message,
                   content: fullText,
-                  // TODO: [peter] add usage to the message
                   input_token,
                   output_token,
                   input_price: llm ? Number(llm.pricing?.inputCost) : 0,
