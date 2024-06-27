@@ -36,13 +36,11 @@ export const FilePicker: FC<FilePickerProps> = ({
     }
   }, [isFocused])
 
-  const filteredFiles = adminFiles
-    .concat(files)
-    .filter(
-      file =>
-        file.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        !selectedFileIds.includes(file.id)
-    )
+  const filteredFiles = files.filter(
+    file =>
+      file.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !selectedFileIds.includes(file.id)
+  )
 
   const filteredCollections = collections.filter(
     collection =>
