@@ -115,7 +115,11 @@ export async function buildFinalMessages(
     role: "system",
     sequence_number: processedChatMessages.length,
     updated_at: "",
-    user_id: ""
+    user_id: "",
+    input_price: null,
+    input_token: null,
+    output_price: null,
+    output_token: null
   }
 
   finalMessages.unshift(tempSystemMessage)
@@ -230,7 +234,11 @@ export async function buildGoogleGeminiFinalMessages(
     role: "system",
     sequence_number: chatMessages.length,
     updated_at: "",
-    user_id: ""
+    user_id: "",
+    input_price: null,
+    input_token: null,
+    output_price: null,
+    output_token: null
   }
 
   finalMessages.unshift(tempSystemMessage)
