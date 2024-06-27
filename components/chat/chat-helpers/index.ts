@@ -10,6 +10,7 @@ import {
   buildGoogleGeminiFinalMessages
 } from "@/lib/build-prompt"
 import { consumeReadableStream } from "@/lib/consume-stream"
+import { OPENAI_LLM_LIST } from "@/lib/models/llm/openai-llm-list"
 import { Tables, TablesInsert } from "@/supabase/types"
 import {
   ChatFile,
@@ -295,30 +296,29 @@ export const fetchChatResponse = async (
 //   return match ? match[0] : null
 // }
 
-const mapUsage = (input: string) => {
-  // let usage: { [x: string]: string };
-  // console.log("🚀 ~ mapUsage ~ usage:", usage)
-
-  if (input.includes("2:[")) {
-    const usageString = input.split("2:").pop()
-    return usageString
-      ?.replace(/[{}\[\]\n"]/g, "")
-      .split(",")
-      .map(usage => {
-        const [key, value] = usage.split(":")
-        return { [key]: value }
-      })
-    // .forEach(u => {
-    //   console.log("🚀 ~ mapUsage ~ usage:", u)
-    //   const [key, value] = u.split(":")
-    //   console.log("🚀 ~ mapUsage ~ value:", value)
-    //   console.log("🚀 ~ mapUsage ~ key:", key)
-    //   usage[key] = value
-    // })
+const getUsage = (input: string) => {
+  const usage = {
+    input_token: 0,
+    output_token: 0
   }
 
-  // console.log("🚀 ~ mapUsage ~ usage:", usage)
-  return undefined
+  /*
+    Hello! How can I assist you today?2:[{"prompt_tokens":34,"completion_tokens":9,"total_tokens":43}]
+  */
+  const usageValue = input.includes("2:[") && input.split("2:").pop()
+  if (!usageValue) return usage
+
+  usageValue
+    ?.replace(/[{}\[\]\n"]/g, "")
+    .split(",")
+    .forEach(input => {
+      const [key, value] = input.split(":")
+
+      if (key === "prompt_tokens") return (usage.input_token = +value)
+      if (key === "completion_tokens") return (usage.output_token = +value)
+    })
+
+  return usage
 }
 
 export const processResponse = async (
@@ -340,8 +340,8 @@ export const processResponse = async (
         // console.log("[peter] Chunk:", chunk)
         setFirstTokenReceived(true)
         setToolInUse("none")
-        const usage = mapUsage(chunk)
-        console.log("🚀 ~ usage:", usage)
+        const { input_token, output_token } = getUsage(chunk)
+        console.log("🚀 ~ OPENAI_LLM_LIST:", OPENAI_LLM_LIST)
 
         // Extract usage data from the chunk
         // let usage = null
@@ -378,12 +378,18 @@ export const processResponse = async (
         setChatMessages(prev =>
           prev.map(chatMessage => {
             if (chatMessage.message.id === lastChatMessage.message.id) {
+              const llm = OPENAI_LLM_LIST.find(
+                llm => llm.modelId === chatMessage.message.model
+              )
               const updatedChatMessage: ChatMessage = {
                 message: {
                   ...chatMessage.message,
                   content: fullText,
                   // TODO: [peter] add usage to the message
-                  ...usage
+                  input_token,
+                  output_token,
+                  input_price: llm ? Number(llm.pricing?.inputCost) : 0,
+                  output_price: llm ? Number(llm.pricing?.outputCost) : 0
                 },
                 fileItems: chatMessage.fileItems
               }
