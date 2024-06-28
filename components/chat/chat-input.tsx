@@ -219,7 +219,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         <div className="absolute bottom-[76px] left-0 max-h-[300px] w-full overflow-auto rounded-xl dark:border-none">
           <ChatCommandInput />
         </div>
-
         <>
           <IconCirclePlus
             className="absolute bottom-[12px] left-3 cursor-pointer p-1 hover:opacity-50"
@@ -239,7 +238,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
             accept={filesToAccept}
           />
         </>
-
         <TextareaAutosize
           textareaRef={chatInputRef}
           className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-14 py-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
@@ -257,7 +255,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
           onCompositionStart={() => setIsTyping(true)}
           onCompositionEnd={() => setIsTyping(false)}
         />
-
         <div className="absolute bottom-[14px] right-3 cursor-pointer hover:opacity-50">
           {isGenerating ? (
             <IconPlayerStopFilled
