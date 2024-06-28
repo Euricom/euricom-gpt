@@ -104,7 +104,8 @@ export const createTempMessages = (
       input_price: null,
       input_token: null,
       output_price: null,
-      output_token: null
+      output_token: null,
+      calc_price: null
     },
     fileItems: []
   }
@@ -125,7 +126,8 @@ export const createTempMessages = (
       input_price: null,
       input_token: null,
       output_price: null,
-      output_token: null
+      output_token: null,
+      calc_price: null
     },
     fileItems: []
   }
