@@ -298,28 +298,6 @@ function extractFooter(chunk: string) {
   return match ? match[0] : null
 }
 
-// TODO: remove after review
-// const getUsage = (usageString?: string) => {
-//   const usage = {
-//     input_token: 0,
-//     output_token: 0
-//   }
-
-//   if (!usageString) return usage
-
-//   usageString
-//     ?.replace(/[{}\[\]\n"]/g, "")
-//     .split(",")
-//     .forEach(input => {
-//       const [key, value] = input.split(":")
-
-//       if (key === "prompt_tokens") return (usage.input_token = +value)
-//       if (key === "completion_tokens") return (usage.output_token = +value)
-//     })
-
-//   return usage
-// }
-
 type Usage = {
   prompt_tokens: number
   completion_tokens: number
@@ -358,12 +336,6 @@ export const processResponse = async (
           // so it doesn't get displayed in the chat
           chunk = chunk.replace(footer, "")
         }
-
-        // TODO: remove after review
-        // const usageSeparator = "2:"
-        // const usageString = chunk.split(usageSeparator).pop() || ""
-        // const { input_token, output_token } = getUsage(usageString)
-        // chunk = chunk.replace(usageSeparator + usageString, "")
 
         try {
           contentToAdd = isHosted

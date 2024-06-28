@@ -184,7 +184,7 @@ export const Message: FC<MessageProps> = ({
     ((message?.input_token || 0) / 1_000_000) * (message?.input_price || 0)
   const outputCost =
     ((message?.output_token || 0) / 1_000_000) * (message?.output_price || 0)
-  const totalCost = ((inputCost + outputCost) / 100).toFixed(7)
+  const totalCost = ((inputCost + outputCost) / 100).toFixed(7) // price in dollars/euros with 7 decimals
   const totalTokens = (message?.input_token || 0) + (message?.output_token || 0)
 
   // console.log("[message] render", {
