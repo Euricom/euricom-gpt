@@ -146,16 +146,16 @@ export const createFile = async (
     file_path: filePath
   })
 
-  // const formData = new FormData()
-  // formData.append("file_id", createdFile.id)
-  // formData.append("embeddingsProvider", embeddingsProvider)
+  const formData = new FormData()
+  formData.append("file_id", createdFile.id)
+  formData.append("embeddingsProvider", embeddingsProvider)
 
-  // const response = await fetch("/api/retrieval/process", {
-  //   method: "POST",
-  //   body: formData
-  // })
+  const response = await fetch("/api/retrieval/process", {
+    method: "POST",
+    body: formData
+  })
 
-  const response = await retrievalProcess(createdFile.id, embeddingsProvider)
+  // const response = await retrievalProcess(createdFile.id, embeddingsProvider)
 
   if (!response.ok) {
     const jsonText = await response.text()
@@ -313,7 +313,6 @@ export const updateFile = async (
 }
 
 export const deleteFile = async (fileId: string) => {
-
   const { error } = await supabase.from("files").delete().eq("id", fileId)
   if (error) {
     throw new Error(error.message)
@@ -381,30 +380,47 @@ export const generateOwnFile = async (
   const existingFile = files.find(file => {
     return file.name === name
   })
+
+  let fileToUpload
   if (existingFile) {
     await deleteFileFromStorage(existingFile.file_path)
-    const filePath = await uploadFile(file, {
-      name: fileRecord.name,
-      user_id: fileRecord.user_id,
-      file_id: fileRecord.name
-    })
+    fileToUpload = existingFile
+  } else {
+    const { data: createdFile, error } = await supabase
+      .from("files")
+      .insert([fileRecord])
+      .select("*")
+      .single()
 
-    await updateFile(existingFile.id, {
-      file_path: filePath
-    })
-    await retrievalProcess(existingFile.id, "openai")
-
-    return
+    if (error) {
+      throw new Error(error.message)
+    }
+    fileToUpload = createdFile
   }
 
-  const createdFile = await createFileBasedOnExtension(
-    file,
-    fileRecord,
-    null,
-    "openai"
-  )
+  const filePath = await uploadFile(file, {
+    name: fileToUpload.name,
+    user_id: fileToUpload.user_id,
+    file_id: fileToUpload.name
+  })
 
-  return createdFile
+  await updateFile(fileToUpload.id, {
+    file_path: filePath
+  })
+
+  const response = await retrievalProcess(fileToUpload.id, "openai")
+
+  if (!response.ok) {
+    const jsonText = await response.text()
+    const json = JSON.parse(jsonText)
+    console.error(
+      `Error processing file:${fileToUpload.id}, status:${response.status}, response:${json.message}`
+    )
+    toast.error("Failed to process file. Reason:" + json.message, {
+      duration: 10000
+    })
+    await deleteFile(fileToUpload.id)
+  }
 }
 
 const generateJsonFile = (text: any, fileName: string) => {
