@@ -178,6 +178,21 @@ export const Message: FC<MessageProps> = ({
     return acc
   }, fileAccumulator)
 
+  // calculate cost
+  // pricing is per 1M tokens and in cents
+  const inputCost =
+    ((message?.input_token || 0) / 1_000_000) * (message?.input_price || 0)
+  const outputCost =
+    ((message?.output_token || 0) / 1_000_000) * (message?.output_price || 0)
+  const totalCost = ((inputCost + outputCost) / 100).toFixed(7)
+  const totalTokens = (message?.input_token || 0) + (message?.output_token || 0)
+
+  // console.log("[message] render", {
+  //   message,
+  //   totalTokens,
+  //   totalCost
+  // })
+
   return (
     <div
       className={cn(
@@ -214,7 +229,6 @@ export const Message: FC<MessageProps> = ({
             <div className="flex items-center space-x-3">
               {message.role === "assistant" ? (
                 messageAssistantImage ? (
-                  //changes Euricom (change Image to img)
                   <img
                     style={{
                       width: `${ICON_SIZE}px`,
@@ -263,14 +277,13 @@ export const Message: FC<MessageProps> = ({
                       ? selectedAssistant?.name
                       : MODEL_DATA?.modelName
                   : profile?.display_name ?? profile?.username}
-                {message.output_price != null ||
-                  (message.input_price != null && (
-                    <span className="w-fit border-gray-300 border px-2 text-xs font-normal rounded-full">
-                      {message.role === "assistant"
-                        ? message.output_price
-                        : message.input_price}
-                    </span>
-                  ))}
+                {/* {message.input_price != null && (
+                  <span className="w-fit border-gray-300 border px-2 text-xs font-normal rounded-full">
+                    {message.role === "assistant"
+                      ? message.output_price
+                      : message.input_price}
+                  </span>
+                )} */}
               </div>
             </div>
           )}
@@ -294,15 +307,12 @@ export const Message: FC<MessageProps> = ({
           ) : (
             <>
               <MessageMarkdown content={message.content} />
-              {message.output_token != null ||
-                (message.input_token != null && (
-                  <span className="text-xs font-thin text-gray-300">
-                    {message.role === "assistant"
-                      ? message.output_token
-                      : message.input_token}
-                    tokens
-                  </span>
-                ))}
+              {message.input_token != null && (
+                <span className="text-xs font-thin text-gray-300">
+                  {message?.input_token &&
+                    `${totalTokens} tokens ($${totalCost})`}
+                </span>
+              )}
             </>
           )}
         </div>
