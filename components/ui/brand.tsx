@@ -9,6 +9,9 @@ interface BrandProps {
 }
 
 export const Brand: FC<BrandProps> = ({ theme = "dark" }) => {
+  const iconPath =
+    theme === "dark" ? "/eurichatbot-dark.png" : "/eurichatbot-light.png"
+
   return (
     <div
       className="flex cursor-pointer flex-col items-center"
@@ -18,10 +21,10 @@ export const Brand: FC<BrandProps> = ({ theme = "dark" }) => {
       // rel="noopener noreferrer"
     >
       <div className="mb-2">
-        <ChatbotUISVG theme={theme === "dark" ? "dark" : "light"} scale={0.3} />
+        <img src={iconPath} className="w-16 h-16 object-cover" />
       </div>
 
-      <div className="text-4xl font-bold tracking-wide">Chatbot UI</div>
+      <div className="text-4xl font-bold tracking-wide">Euri Chatbot</div>
     </div>
   )
 }

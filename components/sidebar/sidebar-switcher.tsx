@@ -7,7 +7,8 @@ import {
   IconMessage,
   IconPencil,
   IconRobotFace,
-  IconSparkles
+  IconSparkles,
+  IconMessageChatbot
 } from "@tabler/icons-react"
 import { FC, useContext } from "react"
 import { TabsList } from "../ui/tabs"
@@ -39,6 +40,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
       <TabsList className="bg-primaryEuricom-900 grid h-[480px] grid-rows-9">
         <div className=" inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm">
           <img src="/euricom_logo_small.png" className="h-6 w-6" />
+          <IconMessageChatbot />
         </div>
 
         <SidebarSwitchItem
