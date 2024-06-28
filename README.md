@@ -4,6 +4,29 @@ The Euricom AI chat app for all your Euricom needs.
 
 <img src="./public/readme/screenshot.png" alt="Chatbot UI" width="600">
 
+## Usage Info
+
+### Assistant
+
+- When chatting, the entire chat history is taken in account, so try not to switch subject to much in a single chat.
+  
+- It will sometimes not find the information, even though it has access to it. 
+  - Try to rewrite the prompt so it can search more specific.
+  - Try starting a new chat so the entire history is not given as context.
+
+### Generating Files
+
+- json:
+  - Price: cheaper (1960 tokens)
+  - The AI writes his own text using the data
+  - Speed: normal
+  - Quality: Good. Most test questions were answered correctly, but sometimes the data was not found.
+- PDF en TXT:
+  - Price: more expensive (pdf: 4256 tokens en txt: 4267 tokens)
+  - The AI only writes his own text when necessary. Otherwise just answers text from the file
+  - Speed: fast
+  - Quality: Good. Most test questions were answered correctly, but sometimes the data was not found.
+
 ## Quick Start
 
 Follow these steps to get your own Euricom Chatbot UI instance running locally.
@@ -16,7 +39,7 @@ npm install
 npm run dev
 
 # db handling
-npm run db-reset  
+npm run db-reset
 npm run db-migrate
 npm run db-types,
 npm run db-pull
@@ -30,7 +53,6 @@ This is a fork of the original Chatbot UI project. The original project can be f
 Use Chatbot UI without having to host it yourself!
 
 Find the official hosted version of Chatbot UI [here](https://chatbotui.com).
-
 
 ### Local Quickstart
 
@@ -246,4 +268,3 @@ For the full list of environment variables, refer to the '.env.local.example' fi
 Click "Deploy" and wait for your frontend to deploy.
 
 Once deployed, you should be able to use your hosted instance of Chatbot UI via the URL Vercel gives you.
-
