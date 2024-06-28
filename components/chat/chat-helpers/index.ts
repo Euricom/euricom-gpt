@@ -432,7 +432,7 @@ export const handleCreateMessages = async (
   modelData: LLM,
   messageContent: string,
   generatedText: string,
-  usage: any,
+  usage: Usage | null,
   newMessageImages: MessageImage[],
   isRegeneration: boolean,
   retrievedFileItems: Tables<"file_items">[],
@@ -462,17 +462,28 @@ export const handleCreateMessages = async (
     image_paths: []
   }
 
+  const inputToken = usage?.prompt_tokens || 0
+  const inputPrice = modelData?.pricing?.inputCost || 0
+  const inputCost = (inputToken / 1_000_000) * inputPrice
+
+  const outputToken = usage?.completion_tokens || 0
+  const outputPrice = modelData?.pricing?.outputCost || 0
+  const outputCost = (outputToken / 1_000_000) * outputPrice
+
+  // calculate cost
+  // pricing is per 1M tokens and in cents
+  const totalCost = +(inputCost + outputCost).toFixed(7) // price in dollars/euros with 7 decimals
+
   const finalAssistantMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
     assistant_id: selectedAssistant?.id || null,
     user_id: profile.user_id,
     content: generatedText,
-    input_token: usage?.prompt_tokens || null,
-    output_token: usage?.completion_tokens || null,
-    input_price:
-      (modelData?.pricing?.inputCost || 0) * 100 /* convert to cents */,
-    output_price:
-      (modelData?.pricing?.outputCost || 0) * 100 /* convert to cents */,
+    input_token: inputToken,
+    output_token: outputToken,
+    input_price: inputPrice * 100 /* convert to cents */,
+    output_price: outputPrice * 100 /* convert to cents */,
+    calc_price: totalCost,
     model: modelData.modelId,
     role: "assistant",
     sequence_number: chatMessages.length + 1,
