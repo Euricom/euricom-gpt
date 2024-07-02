@@ -38,7 +38,8 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
     setChatFiles,
     setShowFilesDisplay,
     setUseRetrieval,
-    setSelectedTools
+    setSelectedTools,
+    chatMessages
   } = useContext(ChatbotUIContext)
 
   const { handleNewChat, handleFocusChatInput } = useChatHandler()
@@ -56,6 +57,9 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
   } = useScroll()
 
   const [loading, setLoading] = useState(true)
+  const totalCost = chatMessages
+    .reduce((acc, msg) => acc + Number(msg.message.calc_price), 0)
+    .toFixed(7)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -196,17 +200,14 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
           scrollToBottom={scrollToBottom}
         />
       </div>
-
       <div className="absolute right-4 top-1 flex h-[40px] items-center space-x-2">
         <ChatSecondaryButtons />
       </div>
-
       <div className="bg-secondary flex max-h-[50px] min-h-[50px] w-full items-center justify-center border-b-2 font-bold">
         <div className="max-w-[200px] truncate sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
           {selectedChat?.name || "Chat"}
         </div>
       </div>
-
       <div
         className="flex size-full flex-col overflow-auto border-b"
         onScroll={handleScroll}
@@ -217,11 +218,12 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
 
         <div ref={messagesEndRef} />
       </div>
-
-      <div className="relative w-full min-w-[300px] items-end px-2 pb-3 pt-0 sm:w-[600px] sm:pb-8 sm:pt-5 md:w-[700px] lg:w-[700px] xl:w-[800px]">
-        <ChatInput />
+      <div className="flex items-center justify-center w-full gap-4">
+        <div className="relative w-full min-w-[200px] items-end px-2 pb-3 pt-0 sm:w-[600px] sm:pb-8 sm:pt-5 md:w-[700px] lg:w-[700px] xl:w-[800px]">
+          <ChatInput />
+        </div>
+        <p className="text-xs font-extralight">Total chat cost: ${totalCost}</p>
       </div>
-
       {/*
       //Changes Euricom to adapt Azure (remove help component)
       <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">

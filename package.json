@@ -22,7 +22,8 @@
     "db-migrate": "supabase migration up && npm run db-types",
     "db-types": "supabase gen types typescript --project-id 'cgckvakqjgfqwttzwkwc' --schema public > supabase/types.ts",
     "db-pull": "supabase db pull",
-    "db-push": "supabase db push"
+    "db-push": "supabase db push",
+    "db-push:prod": "supabase link --project-ref czgmgngxexnmelvhvaug && supabase db push"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.18.0",

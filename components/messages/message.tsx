@@ -27,7 +27,6 @@ const ICON_SIZE = 32
 
 interface MessageProps {
   message: Tables<"messages">
-  usage?: any // TODO: [peter] Fix this type
   fileItems: Tables<"file_items">[]
   isEditing: boolean
   isLast: boolean
@@ -38,7 +37,6 @@ interface MessageProps {
 
 export const Message: FC<MessageProps> = ({
   message,
-  usage,
   fileItems,
   isEditing,
   isLast,
@@ -62,9 +60,6 @@ export const Message: FC<MessageProps> = ({
     files,
     models
   } = useContext(ChatbotUIContext)
-
-  // TODO: [peter] display usage
-  // console.log("message usage", usage)
 
   const { handleSendMessage } = useChatHandler()
 
@@ -183,6 +178,8 @@ export const Message: FC<MessageProps> = ({
     return acc
   }, fileAccumulator)
 
+  const totalTokens = (message?.input_token || 0) + (message?.output_token || 0)
+
   return (
     <div
       className={cn(
@@ -219,7 +216,6 @@ export const Message: FC<MessageProps> = ({
             <div className="flex items-center space-x-3">
               {message.role === "assistant" ? (
                 messageAssistantImage ? (
-                  //changes Euricom (change Image to img)
                   <img
                     style={{
                       width: `${ICON_SIZE}px`,
@@ -258,7 +254,7 @@ export const Message: FC<MessageProps> = ({
                 />
               )}
 
-              <div className="font-semibold">
+              <div className="font-semibold flex flex-col">
                 {message.role === "assistant"
                   ? message.assistant_id
                     ? assistants.find(
@@ -268,6 +264,13 @@ export const Message: FC<MessageProps> = ({
                       ? selectedAssistant?.name
                       : MODEL_DATA?.modelName
                   : profile?.display_name ?? profile?.username}
+                {/* {message.input_price != null && (
+                  <span className="w-fit border-gray-300 border px-2 text-xs font-normal rounded-full">
+                    {message.role === "assistant"
+                      ? message.output_price
+                      : message.input_price}
+                  </span>
+                )} */}
               </div>
             </div>
           )}
@@ -289,7 +292,15 @@ export const Message: FC<MessageProps> = ({
               maxRows={20}
             />
           ) : (
-            <MessageMarkdown content={message.content} />
+            <>
+              <MessageMarkdown content={message.content} />
+              {message.input_token != null && (
+                <span className="text-xs font-thin text-gray-300">
+                  {message?.input_token &&
+                    `${totalTokens} tokens ($${message.calc_price})`}
+                </span>
+              )}
+            </>
           )}
         </div>
         {/*

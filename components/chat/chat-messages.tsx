@@ -8,7 +8,6 @@ interface ChatMessagesProps {}
 
 export const ChatMessages: FC<ChatMessagesProps> = ({}) => {
   const { chatMessages, chatFileItems } = useContext(ChatbotUIContext)
-  console.log("🚀 ~ chatMessages:", chatMessages)
 
   const { handleSendEdit } = useChatHandler()
 
@@ -26,8 +25,6 @@ export const ChatMessages: FC<ChatMessagesProps> = ({}) => {
       return (
         <Message
           key={chatMessage.message.sequence_number}
-          // TODO: [peter] add usage
-          // usage={chatMessage.message.usage}
           message={chatMessage.message}
           fileItems={messageFileItems}
           isEditing={editingMessage?.id === chatMessage.message.id}

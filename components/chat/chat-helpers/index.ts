@@ -10,7 +10,6 @@ import {
   buildGoogleGeminiFinalMessages
 } from "@/lib/build-prompt"
 import { consumeReadableStream } from "@/lib/consume-stream"
-import { OPENAI_LLM_LIST } from "@/lib/models/llm/openai-llm-list"
 import { Tables, TablesInsert } from "@/supabase/types"
 import {
   ChatFile,
@@ -105,7 +104,8 @@ export const createTempMessages = (
       input_price: null,
       input_token: null,
       output_price: null,
-      output_token: null
+      output_token: null,
+      calc_price: null
     },
     fileItems: []
   }
@@ -126,7 +126,8 @@ export const createTempMessages = (
       input_price: null,
       input_token: null,
       output_price: null,
-      output_token: null
+      output_token: null,
+      calc_price: null
     },
     fileItems: []
   }
@@ -284,37 +285,25 @@ export const fetchChatResponse = async (
     toast.error(errorData.message)
 
     setIsGenerating(false)
+
     setChatMessages(prevMessages => prevMessages.slice(0, -2))
   }
 
   return response
 }
 
-// function extractFooter(input: string) {
-//   const regex = /__(.*?)__/
-//   const match = input.match(regex)
-//   return match ? match[0] : null
-// }
+function extractFooter(chunk: string) {
+  // start with '2:[' and end with ']'
+  // be aware special regex characters need to be escaped
+  const regex = /2:\[(.*?)\]/
+  const match = chunk.match(regex)
+  return match ? match[0] : null
+}
 
-const getUsage = (usageString?: string) => {
-  const usage = {
-    input_token: 0,
-    output_token: 0
-  }
-
-  if (!usageString) return usage
-
-  usageString
-    ?.replace(/[{}\[\]\n"]/g, "")
-    .split(",")
-    .forEach(input => {
-      const [key, value] = input.split(":")
-
-      if (key === "prompt_tokens") return (usage.input_token = +value)
-      if (key === "completion_tokens") return (usage.output_token = +value)
-    })
-
-  return usage
+type Usage = {
+  prompt_tokens: number
+  completion_tokens: number
+  total_tokens: number
 }
 
 export const processResponse = async (
@@ -330,20 +319,25 @@ export const processResponse = async (
   let contentToAdd = ""
 
   if (response.body) {
+    let usage: Usage | null = null
     await consumeReadableStream(
       response.body,
       chunk => {
-        // console.log("[peter] Chunk:", chunk)
         setFirstTokenReceived(true)
         setToolInUse("none")
 
-        /*
-          ex.: Hello! How can I assist you today?2:[{"prompt_tokens":34,"completion_tokens":9,"total_tokens":43}]
-        */
-        const usageSeparator = "2:"
-        const usageString = chunk.split(usageSeparator).pop() || ""
-        const { input_token, output_token } = getUsage(usageString)
-        chunk = chunk.replace(usageSeparator + usageString, "")
+        // Extract usage from the chunk
+        // Ex: Hello! How can I assist you today?2:[{"prompt_tokens":34,"completion_tokens":9,"total_tokens":43}]
+        const footer = extractFooter(chunk)
+        if (footer) {
+          // Ex: 2:[{"prompt_tokens":34,"completion_tokens":9,"total_tokens":43}]
+          const usageJsonText = footer.substring(3, footer.length - 1)
+          usage = JSON.parse(usageJsonText)
+
+          // Remove the footer from the chunk
+          // so it doesn't get displayed in the chat
+          chunk = chunk.replace(footer, "")
+        }
 
         try {
           contentToAdd = isHosted
@@ -367,22 +361,13 @@ export const processResponse = async (
         setChatMessages(prev =>
           prev.map(chatMessage => {
             if (chatMessage.message.id === lastChatMessage.message.id) {
-              const llm = OPENAI_LLM_LIST.find(
-                llm => llm.modelId === chatMessage.message.model
-              )
               const updatedChatMessage: ChatMessage = {
                 message: {
                   ...chatMessage.message,
-                  content: fullText,
-                  // TODO: [peter] add usage to the message
-                  input_token,
-                  output_token,
-                  input_price: llm ? Number(llm.pricing?.inputCost) : 0,
-                  output_price: llm ? Number(llm.pricing?.outputCost) : 0
+                  content: fullText
                 },
                 fileItems: chatMessage.fileItems
               }
-
               return updatedChatMessage
             }
 
@@ -393,7 +378,7 @@ export const processResponse = async (
       controller.signal
     )
 
-    return fullText
+    return { fullText, usage }
   } else {
     throw new Error("Response body is null")
   }
@@ -447,6 +432,7 @@ export const handleCreateMessages = async (
   modelData: LLM,
   messageContent: string,
   generatedText: string,
+  usage: Usage | null,
   newMessageImages: MessageImage[],
   isRegeneration: boolean,
   retrievedFileItems: Tables<"file_items">[],
@@ -457,6 +443,14 @@ export const handleCreateMessages = async (
   setChatImages: React.Dispatch<React.SetStateAction<MessageImage[]>>,
   selectedAssistant: Tables<"assistants"> | null
 ) => {
+  console.log("[chat-helper] handleCreateMessages", {
+    chatMessages,
+    messageContent,
+    generatedText,
+    usage,
+    modelData
+  })
+
   const finalUserMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
     assistant_id: null,
@@ -468,11 +462,28 @@ export const handleCreateMessages = async (
     image_paths: []
   }
 
+  const inputToken = usage?.prompt_tokens || 0
+  const inputPrice = modelData?.pricing?.inputCost || 0
+  const inputCost = (inputToken / 1_000_000) * inputPrice
+
+  const outputToken = usage?.completion_tokens || 0
+  const outputPrice = modelData?.pricing?.outputCost || 0
+  const outputCost = (outputToken / 1_000_000) * outputPrice
+
+  // calculate cost
+  // pricing is per 1M tokens and in cents
+  const totalCost = +(inputCost + outputCost).toFixed(7) // price in dollars/euros with 7 decimals
+
   const finalAssistantMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
     assistant_id: selectedAssistant?.id || null,
     user_id: profile.user_id,
     content: generatedText,
+    input_token: inputToken,
+    output_token: outputToken,
+    input_price: inputPrice * 100 /* convert to cents */,
+    output_price: outputPrice * 100 /* convert to cents */,
+    calc_price: totalCost,
     model: modelData.modelId,
     role: "assistant",
     sequence_number: chatMessages.length + 1,

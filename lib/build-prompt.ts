@@ -119,7 +119,8 @@ export async function buildFinalMessages(
     input_price: null,
     input_token: null,
     output_price: null,
-    output_token: null
+    output_token: null,
+    calc_price: null
   }
 
   finalMessages.unshift(tempSystemMessage)
@@ -238,7 +239,8 @@ export async function buildGoogleGeminiFinalMessages(
     input_price: null,
     input_token: null,
     output_price: null,
-    output_token: null
+    output_token: null,
+    calc_price: null
   }
 
   finalMessages.unshift(tempSystemMessage)

@@ -271,6 +271,7 @@ export const useChatHandler = () => {
       }
 
       let generatedText = ""
+      let msgUsage: any = null
 
       if (selectedTools.length > 0) {
         setToolInUse("Tools")
@@ -295,7 +296,7 @@ export const useChatHandler = () => {
 
         setToolInUse("none")
 
-        generatedText = await processResponse(
+        const { fullText, usage } = await processResponse(
           response,
           isRegeneration
             ? payload.chatMessages[payload.chatMessages.length - 1]
@@ -306,9 +307,11 @@ export const useChatHandler = () => {
           setChatMessages,
           setToolInUse
         )
+        generatedText = fullText
+        msgUsage = usage
       } else {
         if (modelData!.provider === "ollama") {
-          generatedText = await handleLocalChat(
+          const { fullText, usage } = await handleLocalChat(
             payload,
             profile!,
             chatSettings!,
@@ -320,8 +323,10 @@ export const useChatHandler = () => {
             setChatMessages,
             setToolInUse
           )
+          generatedText = fullText
+          msgUsage = usage
         } else {
-          generatedText = await handleHostedChat(
+          const { fullText, usage } = await handleHostedChat(
             payload,
             profile!,
             modelData!,
@@ -335,6 +340,8 @@ export const useChatHandler = () => {
             setChatMessages,
             setToolInUse
           )
+          generatedText = fullText
+          msgUsage = usage
         }
       }
 
@@ -371,6 +378,7 @@ export const useChatHandler = () => {
         modelData!,
         messageContent,
         generatedText,
+        msgUsage,
         newMessageImages,
         isRegeneration,
         retrievedFileItems,
@@ -406,6 +414,7 @@ export const useChatHandler = () => {
       chatMessage => chatMessage.message.sequence_number < sequenceNumber
     )
 
+    console.log("setChatMessages:handleSendEdit", filteredMessages)
     setChatMessages(filteredMessages)
 
     handleSendMessage(editedContent, filteredMessages, false)
