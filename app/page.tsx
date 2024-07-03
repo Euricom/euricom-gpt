@@ -25,7 +25,7 @@ export default async function HomePage() {
   })
   console.log(
     "🚀 ~ HomePage ~ NEXT_PUBLIC_SUPABASE_PASSWORD:",
-    process.env.NEXT_PUBLIC_SUPABASE_EMAIL
+    process.env.NEXT_PUBLIC_SUPABASE_PASSWORD
   )
   console.log(
     "🚀 ~ HomePage ~ NEXT_PUBLIC_SUPABASE_EMAIL:",
