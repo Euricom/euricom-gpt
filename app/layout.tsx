@@ -11,7 +11,8 @@ const inter = Inter({ subsets: ["latin"] })
 const APP_NAME = "Euri Chatbot"
 const APP_DEFAULT_TITLE = "Euri Chatbot"
 const APP_TITLE_TEMPLATE = "%s - Euri Chatbot"
-const APP_DESCRIPTION = "Euri Chatbot PWA!"
+const APP_DESCRIPTION =
+  "Euri ChatBot is our advanced chatbot supporting all OpenAI models and is well-versed in Euricom policies, providing comprehensive assistance and information"
 
 interface RootLayoutProps {
   children: ReactNode
