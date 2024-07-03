@@ -23,6 +23,15 @@ export default async function HomePage() {
     email: process.env.NEXT_PUBLIC_SUPABASE_EMAIL!,
     password: process.env.NEXT_PUBLIC_SUPABASE_PASSWORD!
   })
+  console.log(
+    "🚀 ~ HomePage ~ NEXT_PUBLIC_SUPABASE_PASSWORD:",
+    process.env.NEXT_PUBLIC_SUPABASE_EMAIL
+  )
+  console.log(
+    "🚀 ~ HomePage ~ NEXT_PUBLIC_SUPABASE_EMAIL:",
+    process.env.NEXT_PUBLIC_SUPABASE_EMAIL
+  )
+  console.error("🚀 ~ HomePage ~ error:", error)
   if (error) {
     return redirect(`/help?message=${error.message}`)
   }
