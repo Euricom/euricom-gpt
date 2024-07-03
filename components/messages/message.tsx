@@ -295,7 +295,7 @@ export const Message: FC<MessageProps> = ({
             <>
               <MessageMarkdown content={message.content} />
               {message.input_token != null && (
-                <span className="text-xs font-thin text-gray-300">
+                <span className="text-xs font-thin">
                   {message?.input_token &&
                     `${totalTokens} tokens ($${message.calc_price})`}
                 </span>
