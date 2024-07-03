@@ -5,6 +5,7 @@ import { getApplicationAccessToken } from "@/lib/server/auth"
 import { NextRequest } from "next/server"
 import smoelenboek from "../../../../smoelenboek.json"
 
+export const dynamic = "force-dynamic" // defaults to auto
 export async function GET(request: NextRequest) {
   // const json = await request.json()
 
