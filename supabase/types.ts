@@ -756,6 +756,13 @@ export type Database = {
             referencedRelation: "chats"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
         ]
       }
       model_workspaces: {
@@ -1309,6 +1316,35 @@ export type Database = {
           object_path: string
         }
         Returns: Record<string, unknown>
+      }
+      get_balances:
+        | {
+            Args: Record<PropertyKey, never>
+            Returns: {
+              display_name: string
+              total_price: number
+            }[]
+          }
+        | {
+            Args: {
+              start_date: string
+              end_date: string
+            }
+            Returns: {
+              display_name: string
+              created_at: string
+              total_price: number
+            }[]
+          }
+      get_balances_between_dates: {
+        Args: {
+          start_date: string
+          end_date: string
+        }
+        Returns: {
+          display_name: string
+          total_price: number
+        }[]
       }
       match_file_items_local: {
         Args: {
