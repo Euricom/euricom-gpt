@@ -18,6 +18,7 @@ import { SidebarSwitchItem } from "./sidebar-switch-item"
 import { ChatbotUIContext } from "@/context/context"
 import { Divider } from "@nextui-org/react"
 import { isInRole } from "@/lib/server/auth"
+import BalanceOverviewItem from "./items/balanceOverview/balance-overview-item"
 
 export const SIDEBAR_ICON_SIZE = 28
 
@@ -96,6 +97,12 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
                 contentType="adminFiles"
                 onContentTypeChange={onContentTypeChange}
               />
+
+              <WithTooltip
+                display={<div>Balance overview</div>}
+                trigger={<BalanceOverviewItem />}
+              />
+
               {/* <SidebarSwitchItem
                 icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
                 contentType="tools"
