@@ -8,8 +8,20 @@ import {
 import { IconCoins } from "@tabler/icons-react"
 import { SIDEBAR_ICON_SIZE } from "../../sidebar-switcher"
 import { Button } from "@/components/ui/button"
+import { getBalances } from "@/db/balances"
+import { useEffect } from "react"
 
 const BalanceOverviewItem = () => {
+  // const balances = await getBalances()
+  // console.log("🚀 ~ BalanceOverviewItem ~ balances:", balances)
+  useEffect(() => {
+    const fetchChat = async () => {
+      const balances = await getBalances()
+      console.log("🚀 ~ fetchChat ~ balances:", balances)
+    }
+    fetchChat()
+  }, [])
+
   return (
     <Sheet>
       <SheetTrigger asChild>
