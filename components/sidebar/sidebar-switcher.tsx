@@ -30,8 +30,11 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
   onContentTypeChange
 }) => {
   //Changes Euricom to adapt Azure (Admin check)
-  const { user } = useContext(ChatbotUIContext)
+  const { user, balances } = useContext(ChatbotUIContext)
+  const userBalance =
+    balances.find(b => b.name === user?.name)?.balance.toFixed(2) || 0
   let admin = false
+
   if (user) {
     admin = isInRole(user, "admin")
   }
@@ -120,6 +123,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
         {/* TODO */}
         {/* <Alerts /> */}
 
+        <p>$ {userBalance}</p>
         <WithTooltip
           display={<div>Profile Settings</div>}
           trigger={<ProfileSettings />}
