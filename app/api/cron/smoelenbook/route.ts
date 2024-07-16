@@ -4,6 +4,7 @@ import { generateOwnFile } from "@/db/files"
 import { getApplicationAccessToken } from "@/lib/server/auth"
 import { NextRequest } from "next/server"
 import smoelenboek from "../../../../smoelenboek.json"
+import { de } from "date-fns/locale"
 
 export const dynamic = "force-dynamic" // defaults to auto
 export async function GET(request: NextRequest) {
@@ -18,38 +19,36 @@ export async function GET(request: NextRequest) {
 
   // retrieve data from sharepoint (smoelenbook)
   const accessToken = (await getApplicationAccessToken()).access_token
+  const siteId =
+    "euricom.sharepoint.com,f7f41bd5-d192-4a3f-aed3-52f69b021224,9c644b71-f2b7-4af3-8fc7-b12615162907"
+  const pageId = "a7e23c78-b05a-4c1b-8555-5508d032bdff"
 
   const s = await fetch(
-    "https://graph.microsoft.com/v1.0/sites/euricom.sharepoint.com,f7f41bd5-d192-4a3f-aed3-52f69b021224,9c644b71-f2b7-4af3-8fc7-b12615162907/pages/a7e23c78-b05a-4c1b-8555-5508d032bdff/microsoft.graph.sitepage/webparts",
+    `https://graph.microsoft.com/v1.0/sites/${siteId}/pages/${pageId}/microsoft.graph.sitepage/webparts`,
     {
       method: "GET",
       headers: {
-        accept: "*/*",
-        "accept-language": "nl-NL,nl;q=0.9,en-US;q=0.8,en;q=0.7",
-        authorization: "Bearer " + accessToken,
-        "cache-control": "no-cache",
-        "client-request-id": "0c444de4-1c6a-7311-7b71-c0b31d6a4cc9",
-        origin: "https://developer.microsoft.com",
-        pragma: "no-cache",
-        prefer: "ms-graph-dev-mode",
-        referer: "https://developer.microsoft.com/",
-        sdkversion: "GraphExplorer/4.0, graph-js/3.0.7 (featureUsage=6)",
-        "sec-ch-ua":
-          '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"macOS"',
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-site",
-        "user-agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+        authorization: "Bearer " + accessToken
       }
     }
   )
 
+  const sharepointPageDetails = await fetch(
+    `https://graph.microsoft.com/v1.0/sites/${siteId}/pages/${pageId}`,
+    {
+      method: "GET",
+      headers: {
+        authorization: "Bearer " + accessToken
+      }
+    }
+  )
+  const { lastModifiedDateTime } = await sharepointPageDetails.json()
+  console.log("🚀 ~ GET ~ lastModifiedDateTime:", lastModifiedDateTime)
+
+  // console.log("🚀 ~ GET ~ s:", s)
   const sm = await s.json()
   const smoelenbook = sm
-  // console.log("🚀 ~ GET ~ smoelenbook:", smoelenbook)
+  // console.dir(smoelenbook.value, { depth: null })
 
   const formattedsmoelenbook = smoelenbook.value.map((group: any) => {
     return {
@@ -65,6 +64,10 @@ export async function GET(request: NextRequest) {
       })
     }
   })
+  // console.log(
+  //   "🚀 ~ formattedsmoelenbook ~ formattedsmoelenbook:",
+  //   formattedsmoelenbook
+  // )
   let text =
     "Dit is een overzicht van alle werknemers van euricom. Dit overzicht bevat de staff members, de bench en alle klanten waar euricom consultants momenteel aan het werk zijn:\n"
   formattedsmoelenbook.forEach((value: any) => {
@@ -88,10 +91,10 @@ export async function GET(request: NextRequest) {
     )
   })
 
-  // console.log(
-  //   "🚀 ~ formattedsmoelenbook.forEach ~ formattedsmoelenbook:",
-  //   formattedsmoelenbook
-  // )
+  console.log(
+    "🚀 ~ formattedsmoelenbook.forEach ~ formattedsmoelenbook:",
+    formattedsmoelenbook
+  )
   await generateOwnFile(formattedsmoelenbook, "smoelenboek", "json")
 
   return new Response(JSON.stringify("success"), {

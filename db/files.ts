@@ -343,6 +343,7 @@ export const generateOwnFile = async (
   fileName: string,
   extension: "txt" | "pdf" | "json"
 ) => {
+  // console.log("🚀 ~ text:", text)
   const name = getValidFileName(fileName, extension)
   let file
   switch (extension) {
@@ -412,7 +413,7 @@ export const generateOwnFile = async (
   })
 
   const response = await retrievalProcess(fileToUpload.id, "openai")
-  console.log("🚀 ~ response:", response)
+  // console.log("🚀 ~ response:", response)
 
   if (!response.ok) {
     const jsonText = await response.text()

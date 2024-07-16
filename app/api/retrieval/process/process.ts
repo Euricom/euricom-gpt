@@ -33,7 +33,7 @@ export const retrievalProcess = async (
     .select("*")
     .eq("id", file_id)
     .single()
-  console.dir(fileMetadata, { depth: null })
+  // console.dir(fileMetadata, { depth: null })
 
   if (metadataError) {
     throw new Error(
