@@ -8,26 +8,11 @@ import {
 import { IconCoins } from "@tabler/icons-react"
 import { SIDEBAR_ICON_SIZE } from "../../sidebar-switcher"
 import { Button } from "@/components/ui/button"
-import { getBalances } from "@/db/balances"
-import { useEffect, useState } from "react"
-
-type Balances = {
-  name: string
-  balance: number
-}
+import { useContext } from "react"
+import { ChatbotUIContext } from "@/context/context"
 
 const BalanceOverviewItem = () => {
-  const [balances, setBalances] = useState<Array<Balances>>([])
-
-  useEffect(() => {
-    const fetchChat = async () => {
-      const data = (await getBalances()) || []
-      setBalances(
-        data.map(d => ({ name: d.display_name, balance: d.total_price }))
-      )
-    }
-    fetchChat()
-  }, [])
+  const { balances } = useContext(ChatbotUIContext)
 
   return (
     <Sheet>
