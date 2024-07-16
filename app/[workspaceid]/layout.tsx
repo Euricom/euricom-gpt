@@ -48,7 +48,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setTools,
     setModels,
     setAdminFiles,
-    setBalances,
     selectedWorkspace,
     setSelectedWorkspace,
     setSelectedChat,
@@ -168,11 +167,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
     const adminFileData = await getAdminFiles()
     setAdminFiles(adminFileData)
-
-    const balances = (await getBalances()) || []
-    setBalances(
-      balances.map(b => ({ name: b.display_name, balance: b.total_price }))
-    )
 
     const presetData = await getPresetWorkspacesByWorkspaceId(workspaceId)
     setPresets(presetData.presets)

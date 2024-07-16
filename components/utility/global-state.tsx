@@ -26,7 +26,6 @@ import { AssistantImage } from "@/types/images/assistant-image"
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { useRouter } from "next/navigation"
 import { FC, useEffect, useState } from "react"
-import { Balances } from "@/types/balance"
 
 interface GlobalStateProps {
   children: React.ReactNode
@@ -62,7 +61,6 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, user }) => {
   const [files, setFiles] = useState<Tables<"files">[]>([])
   //Changes Euricom (add admin files)
   const [adminFiles, setAdminFiles] = useState<Tables<"files">[]>([])
-  const [balances, setBalances] = useState<Array<Balances>>([])
 
   const [folders, setFolders] = useState<Tables<"folders">[]>([])
   const [models, setModels] = useState<Tables<"models">[]>([])
@@ -262,8 +260,6 @@ export const GlobalState: FC<GlobalStateProps> = ({ children, user }) => {
         setWorkspaces,
         adminFiles,
         setAdminFiles,
-        balances,
-        setBalances,
 
         // MODELS STORE
         envKeyMap,

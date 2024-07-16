@@ -9,7 +9,6 @@ import {
   OpenRouterLLM,
   WorkspaceImage
 } from "@/types"
-import { Balances } from "@/types/balance"
 import { AssistantImage } from "@/types/images/assistant-image"
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { Dispatch, SetStateAction, createContext } from "react"
@@ -44,8 +43,6 @@ interface ChatbotUIContext {
   //Changes Euricom (add admin files)
   adminFiles: Tables<"files">[]
   setAdminFiles: Dispatch<SetStateAction<Tables<"files">[]>>
-  balances: Array<Balances>
-  setBalances: Dispatch<SetStateAction<Array<Balances>>>
 
   // MODELS STORE
   envKeyMap: Record<string, VALID_ENV_KEYS>
@@ -175,8 +172,6 @@ export const ChatbotUIContext = createContext<ChatbotUIContext>({
   setWorkspaces: () => {},
   adminFiles: [],
   setAdminFiles: () => {},
-  balances: [],
-  setBalances: () => {},
 
   // MODELS STORE
   envKeyMap: {},

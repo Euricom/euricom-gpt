@@ -1346,6 +1346,14 @@ export type Database = {
           total_price: number
         }[]
       }
+      get_my_balance: {
+        Args: {
+          user_id: string
+          start_date: string
+          end_date: string
+        }
+        Returns: number
+      }
       match_file_items_local: {
         Args: {
           query_embedding: string

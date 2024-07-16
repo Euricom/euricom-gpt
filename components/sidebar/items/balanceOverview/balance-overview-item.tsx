@@ -8,13 +8,24 @@ import {
 import { IconCoins } from "@tabler/icons-react"
 import { SIDEBAR_ICON_SIZE } from "../../sidebar-switcher"
 import { Button } from "@/components/ui/button"
-import { useContext, useState } from "react"
-import { ChatbotUIContext } from "@/context/context"
+import { useEffect, useState } from "react"
 import { SidebarSearch } from "../../sidebar-search"
+import { Balance } from "@/types/balance"
+import { getBalances } from "@/db/balances"
 
 const BalanceOverviewItem = () => {
-  const { balances } = useContext(ChatbotUIContext)
+  const [balances, setBalances] = useState<Array<Balance>>([])
   const [searchTerm, setSearchTerm] = useState("")
+
+  useEffect(() => {
+    const fetchBalances = async () => {
+      const data = (await getBalances()) || []
+      setBalances(
+        data.map(d => ({ name: d.display_name, balance: d.total_price }))
+      )
+    }
+    fetchBalances()
+  }, [])
 
   const filteredData =
     balances.filter(b =>
