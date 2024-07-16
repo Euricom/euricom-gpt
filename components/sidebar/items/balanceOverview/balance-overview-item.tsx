@@ -9,15 +9,25 @@ import { IconCoins } from "@tabler/icons-react"
 import { SIDEBAR_ICON_SIZE } from "../../sidebar-switcher"
 import { Button } from "@/components/ui/button"
 import { getBalances } from "@/db/balances"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+
+type Balances = {
+  name: string
+  balance: number
+}
 
 const BalanceOverviewItem = () => {
   // const balances = await getBalances()
   // console.log("🚀 ~ BalanceOverviewItem ~ balances:", balances)
+  const [balances, setBalances] = useState<Array<Balances>>([])
+  console.log("🚀 ~ BalanceOverviewItem ~ balances:", balances)
+
   useEffect(() => {
     const fetchChat = async () => {
-      const balances = await getBalances()
-      console.log("🚀 ~ fetchChat ~ balances:", balances)
+      const data = (await getBalances()) || []
+      setBalances(
+        data.map(d => ({ name: d.display_name, balance: d.total_price }))
+      )
     }
     fetchChat()
   }, [])
@@ -34,9 +44,19 @@ const BalanceOverviewItem = () => {
           <SheetHeader>
             <SheetTitle>Balance Overview</SheetTitle>
           </SheetHeader>
-          <div className="flex justify-between">
-            <p>name</p>
-            <p>balance</p>
+          <div className="flex flex-col gap-1 mt-4">
+            {balances.length === 0 ? (
+              <div className=" text-center text-muted-foreground p-8 text-lg italic">
+                No balances.
+              </div>
+            ) : (
+              balances.map(b => (
+                <div className="flex justify-between">
+                  <p>{b.name}</p>
+                  <p>$ {b.balance.toFixed(2)}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </SheetContent>
