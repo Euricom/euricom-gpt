@@ -49,6 +49,7 @@ export async function GET(request: NextRequest) {
 
   const sm = await s.json()
   const smoelenbook = sm
+  // console.log("🚀 ~ GET ~ smoelenbook:", smoelenbook)
 
   const formattedsmoelenbook = smoelenbook.value.map((group: any) => {
     return {
@@ -87,9 +88,11 @@ export async function GET(request: NextRequest) {
     )
   })
 
+  // console.log(
+  //   "🚀 ~ formattedsmoelenbook.forEach ~ formattedsmoelenbook:",
+  //   formattedsmoelenbook
+  // )
   await generateOwnFile(formattedsmoelenbook, "smoelenboek", "json")
-  await generateOwnFile(text, "smoelenboek", "pdf")
-  await generateOwnFile(text, "smoelenboek", "txt")
 
   return new Response(JSON.stringify("success"), {
     status: 200

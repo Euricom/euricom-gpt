@@ -377,9 +377,11 @@ export const generateOwnFile = async (
   } as TablesInsert<"files">
 
   const files = await getAdminFiles()
+  // console.log("🚀 ~ files:", files)
   const existingFile = files.find(file => {
     return file.name === name
   })
+  // console.log("🚀 ~ existingFile ~ existingFile:", existingFile)
 
   let fileToUpload
   if (existingFile) {
@@ -404,11 +406,13 @@ export const generateOwnFile = async (
     file_id: fileToUpload.name
   })
 
+  // console.log("🚀 ~ filePath:", filePath)
   await updateFile(fileToUpload.id, {
     file_path: filePath
   })
 
   const response = await retrievalProcess(fileToUpload.id, "openai")
+  console.log("🚀 ~ response:", response)
 
   if (!response.ok) {
     const jsonText = await response.text()
