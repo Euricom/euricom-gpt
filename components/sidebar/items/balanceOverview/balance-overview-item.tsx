@@ -17,10 +17,7 @@ type Balances = {
 }
 
 const BalanceOverviewItem = () => {
-  // const balances = await getBalances()
-  // console.log("🚀 ~ BalanceOverviewItem ~ balances:", balances)
   const [balances, setBalances] = useState<Array<Balances>>([])
-  console.log("🚀 ~ BalanceOverviewItem ~ balances:", balances)
 
   useEffect(() => {
     const fetchChat = async () => {
