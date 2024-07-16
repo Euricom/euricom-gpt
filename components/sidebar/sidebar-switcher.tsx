@@ -10,14 +10,17 @@ import {
   IconSparkles,
   IconMessageChatbot
 } from "@tabler/icons-react"
-import { FC, useContext } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import { TabsList } from "../ui/tabs"
 import { WithTooltip } from "../ui/with-tooltip"
 import { ProfileSettings } from "../utility/profile-settings"
 import { SidebarSwitchItem } from "./sidebar-switch-item"
-import { ChatbotUIContext } from "@/context/context"
 import { Divider } from "@nextui-org/react"
 import { isInRole } from "@/lib/server/auth"
+import BalanceOverviewItem from "./items/balanceOverview/balance-overview-item"
+import { Balance } from "@/types/balance"
+import { ChatbotUIContext } from "@/context/context"
+import { getMyBalance } from "@/db/balances"
 
 export const SIDEBAR_ICON_SIZE = 28
 
@@ -30,10 +33,18 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
 }) => {
   //Changes Euricom to adapt Azure (Admin check)
   const { user } = useContext(ChatbotUIContext)
-  let admin = false
-  if (user) {
-    admin = isInRole(user, "admin")
-  }
+  const [myBalance, setMyBalances] = useState(0)
+  const admin = user ? isInRole(user, "admin") : false
+
+  useEffect(() => {
+    if (!user) return
+
+    const fetchMyBalance = async () => {
+      const data = await getMyBalance(user.id)
+      setMyBalances(data)
+    }
+    fetchMyBalance()
+  }, [])
 
   return (
     <div className="flex flex-col justify-between border-r-2 pb-5 bg-primaryEuricom-900">
@@ -96,6 +107,12 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
                 contentType="adminFiles"
                 onContentTypeChange={onContentTypeChange}
               />
+
+              <WithTooltip
+                display={<div>Balance overview</div>}
+                trigger={<BalanceOverviewItem />}
+              />
+
               {/* <SidebarSwitchItem
                 icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
                 contentType="tools"
@@ -113,6 +130,7 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
         {/* TODO */}
         {/* <Alerts /> */}
 
+        <p>$ {myBalance.toFixed(2)}</p>
         <WithTooltip
           display={<div>Profile Settings</div>}
           trigger={<ProfileSettings />}
