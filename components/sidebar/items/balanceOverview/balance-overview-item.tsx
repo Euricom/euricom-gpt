@@ -42,7 +42,12 @@ const BalanceOverviewItem = () => {
       <SheetContent className="flex flex-col justify-between" side="left">
         <div className="grow overflow-auto">
           <SheetHeader>
-            <SheetTitle>Balance Overview</SheetTitle>
+            <SheetTitle>
+              Balance Overview{" "}
+              <span className="text-muted-foreground text-xs">
+                (Current month)
+              </span>
+            </SheetTitle>
           </SheetHeader>
 
           <div className="flex flex-col gap-4">
