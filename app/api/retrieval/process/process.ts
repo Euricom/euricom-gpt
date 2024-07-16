@@ -99,9 +99,9 @@ export const retrievalProcess = async (
       })
   }
 
-  let embeddings: any = []
+  // let embeddings: any = []
 
-  let openai
+  // let openai
   // if (profile.use_azure_openai) {
   //   openai = new OpenAI({
   //     apiKey: profile.azure_openai_api_key || "",
@@ -143,15 +143,15 @@ export const retrievalProcess = async (
     file_id,
     user_id: fileMetadata.user_id,
     content: chunk.content,
-    tokens: chunk.tokens,
-    openai_embedding:
-      embeddingsProvider === "openai"
-        ? ((embeddings[index] || null) as any)
-        : null,
-    local_embedding:
-      embeddingsProvider === "local"
-        ? ((embeddings[index] || null) as any)
-        : null
+    tokens: chunk.tokens
+    // openai_embedding:
+    //   embeddingsProvider === "openai"
+    //     ? ((embeddings[index] || null) as any)
+    //     : null,
+    // local_embedding:
+    //   embeddingsProvider === "local"
+    //     ? ((embeddings[index] || null) as any)
+    //     : null
   }))
 
   await supabaseAdmin.from("file_items").upsert(file_items)
