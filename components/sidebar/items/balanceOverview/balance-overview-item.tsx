@@ -12,20 +12,38 @@ import { useEffect, useState } from "react"
 import { SidebarSearch } from "../../sidebar-search"
 import { Balance } from "@/types/balance"
 import { getBalances } from "@/db/balances"
+import { IconLeft, IconRight } from "react-day-picker"
+
+const monthNames = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december"
+]
 
 const BalanceOverviewItem = () => {
   const [balances, setBalances] = useState<Array<Balance>>([])
   const [searchTerm, setSearchTerm] = useState("")
+  const monthToday = new Date().getMonth()
+  const [month, setMonth] = useState(new Date().getMonth())
 
   useEffect(() => {
     const fetchBalances = async () => {
-      const data = (await getBalances()) || []
+      const data = (await getBalances(month)) || []
       setBalances(
         data.map(d => ({ name: d.display_name, balance: d.total_price }))
       )
     }
     fetchBalances()
-  }, [])
+  }, [month])
 
   const filteredData =
     balances.filter(b =>
@@ -42,11 +60,27 @@ const BalanceOverviewItem = () => {
       <SheetContent className="flex flex-col justify-between" side="left">
         <div className="grow overflow-auto">
           <SheetHeader>
-            <SheetTitle>
-              Balance Overview{" "}
-              <span className="text-muted-foreground text-xs">
-                (Current month)
-              </span>
+            <SheetTitle className="flex items-center justify-between">
+              Balance Overview
+              <div className="flex items-center text-muted-foreground">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={month === 0}
+                  onClick={() => setMonth(month - 1)}
+                >
+                  <IconLeft />
+                </Button>
+                <p>{monthNames[month]}</p>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={month === monthToday}
+                  onClick={() => setMonth(month + 1)}
+                >
+                  <IconRight />
+                </Button>
+              </div>
             </SheetTitle>
           </SheetHeader>
 
