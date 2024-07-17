@@ -1,9 +1,7 @@
 //changes Euricom (encoding process as own function)
 "use server"
 
-import { generateLocalEmbedding } from "@/lib/generate-local-embedding"
 import { NextResponse } from "next/server"
-import OpenAI from "openai"
 import {
   processCSV,
   processJSON,
@@ -12,21 +10,14 @@ import {
   processTxt
 } from "../../../../lib/retrieval/processing"
 import { FileItemChunk } from "@/types"
-import { checkApiKey, getServerProfile } from "@/lib/server/server-chat-helpers"
 import { createClient } from "@supabase/supabase-js"
 import { Database } from "@/supabase/types"
 
-export const retrievalProcess = async (
-  file_id: string,
-  embeddingsProvider: string
-) => {
+export const retrievalProcess = async (file_id: string) => {
   const supabaseAdmin = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
-
-  const profile = await getServerProfile()
-
   const { data: fileMetadata, error: metadataError } = await supabaseAdmin
     .from("files")
     .select("*")
@@ -38,14 +29,7 @@ export const retrievalProcess = async (
       `Failed to retrieve file metadata: ${metadataError.message}`
     )
   }
-
-  if (!fileMetadata) {
-    throw new Error("File not found")
-  }
-
-  if (fileMetadata.user_id !== profile.user_id) {
-    throw new Error("Unauthorized")
-  }
+  if (!fileMetadata) throw new Error("File not found")
 
   const { data: file, error: fileError } = await supabaseAdmin.storage
     .from("files")
@@ -57,22 +41,6 @@ export const retrievalProcess = async (
   const fileBuffer = Buffer.from(await file.arrayBuffer())
   const blob = new Blob([fileBuffer])
   const fileExtension = fileMetadata.name.split(".").pop()?.toLowerCase()
-
-  if (embeddingsProvider === "openai") {
-    try {
-      if (profile.use_azure_openai) {
-        checkApiKey(profile.azure_openai_api_key, "Azure OpenAI")
-      } else {
-        checkApiKey(profile.openai_api_key, "OpenAI")
-      }
-    } catch (error: any) {
-      error.message =
-        error.message +
-        ", make sure it is configured or else use local embeddings"
-      throw error
-    }
-  }
-
   let chunks: FileItemChunk[] = []
 
   switch (fileExtension) {
@@ -97,59 +65,11 @@ export const retrievalProcess = async (
       })
   }
 
-  let embeddings: any = []
-
-  let openai
-  if (profile.use_azure_openai) {
-    openai = new OpenAI({
-      apiKey: profile.azure_openai_api_key || "",
-      baseURL: `${profile.azure_openai_endpoint}/openai/deployments/${profile.azure_openai_embeddings_id}`,
-      defaultQuery: { "api-version": "2023-12-01-preview" },
-      defaultHeaders: { "api-key": profile.azure_openai_api_key }
-    })
-  } else {
-    openai = new OpenAI({
-      apiKey: profile.openai_api_key || "",
-      organization: profile.openai_organization_id
-    })
-  }
-
-  if (embeddingsProvider === "openai") {
-    const response = await openai.embeddings.create({
-      model: "text-embedding-3-small",
-      input: chunks.map(chunk => chunk.content)
-    })
-
-    embeddings = response.data.map((item: any) => {
-      return item.embedding
-    })
-  } else if (embeddingsProvider === "local") {
-    const embeddingPromises = chunks.map(async chunk => {
-      try {
-        return await generateLocalEmbedding(chunk.content)
-      } catch (error) {
-        console.error(`Error generating embedding for chunk: ${chunk}`, error)
-
-        return null
-      }
-    })
-
-    embeddings = await Promise.all(embeddingPromises)
-  }
-
   const file_items = chunks.map((chunk, index) => ({
     file_id,
-    user_id: profile.user_id,
+    user_id: fileMetadata.user_id,
     content: chunk.content,
-    tokens: chunk.tokens,
-    openai_embedding:
-      embeddingsProvider === "openai"
-        ? ((embeddings[index] || null) as any)
-        : null,
-    local_embedding:
-      embeddingsProvider === "local"
-        ? ((embeddings[index] || null) as any)
-        : null
+    tokens: chunk.tokens
   }))
 
   await supabaseAdmin.from("file_items").upsert(file_items)

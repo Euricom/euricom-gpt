@@ -1,3 +1,4 @@
+import { getToken } from "next-auth/jwt"
 import { supabase } from "@/lib/supabase/browser-client"
 import { Database, TablesInsert, TablesUpdate } from "@/supabase/types"
 import mammoth from "mammoth"
@@ -154,8 +155,6 @@ export const createFile = async (
     method: "POST",
     body: formData
   })
-
-  // const response = await retrievalProcess(createdFile.id, embeddingsProvider)
 
   if (!response.ok) {
     const jsonText = await response.text()
@@ -383,6 +382,21 @@ export const generateOwnFile = async (
 
   let fileToUpload
   if (existingFile) {
+    const existingFileUpdatedAt =
+      existingFile.updated_at && new Date(existingFile.updated_at)
+    const sharePointFileLastModifiedDateTime = new Date(
+      text.lastModifiedDateTime
+    )
+
+    // Check if the file is already uploaded and if the file on Sharepoint is newer
+    if (
+      existingFileUpdatedAt &&
+      existingFileUpdatedAt > sharePointFileLastModifiedDateTime
+    ) {
+      // console.log("🚀 ~ return NULL because no new version on Sharepoint:")
+      return null
+    }
+
     await deleteFileFromStorage(existingFile.file_path)
     fileToUpload = existingFile
   } else {
@@ -408,7 +422,7 @@ export const generateOwnFile = async (
     file_path: filePath
   })
 
-  const response = await retrievalProcess(fileToUpload.id, "openai")
+  const response = await retrievalProcess(fileToUpload.id)
 
   if (!response.ok) {
     const jsonText = await response.text()
