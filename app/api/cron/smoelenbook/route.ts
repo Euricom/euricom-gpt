@@ -43,12 +43,9 @@ export async function GET(request: NextRequest) {
     }
   )
   const { lastModifiedDateTime } = await sharepointPageDetails.json()
-  console.log("🚀 ~ GET ~ lastModifiedDateTime:", lastModifiedDateTime)
 
-  // console.log("🚀 ~ GET ~ s:", s)
   const sm = await s.json()
   const smoelenbook = sm
-  // console.dir(smoelenbook.value, { depth: null })
 
   const formattedsmoelenbook = smoelenbook.value.map((group: any) => {
     return {
@@ -64,10 +61,7 @@ export async function GET(request: NextRequest) {
       })
     }
   })
-  // console.log(
-  //   "🚀 ~ formattedsmoelenbook ~ formattedsmoelenbook:",
-  //   formattedsmoelenbook
-  // )
+
   let text =
     "Dit is een overzicht van alle werknemers van euricom. Dit overzicht bevat de staff members, de bench en alle klanten waar euricom consultants momenteel aan het werk zijn:\n"
   formattedsmoelenbook.forEach((value: any) => {
@@ -91,10 +85,6 @@ export async function GET(request: NextRequest) {
     )
   })
 
-  console.log(
-    "🚀 ~ formattedsmoelenbook.forEach ~ formattedsmoelenbook:",
-    formattedsmoelenbook
-  )
   await generateOwnFile(
     { lastModifiedDateTime, ...formattedsmoelenbook },
     "smoelenboek",

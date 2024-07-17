@@ -156,8 +156,6 @@ export const createFile = async (
     body: formData
   })
 
-  // const response = await retrievalProcess(createdFile.id, embeddingsProvider)
-
   if (!response.ok) {
     const jsonText = await response.text()
     const json = JSON.parse(jsonText)
@@ -344,7 +342,6 @@ export const generateOwnFile = async (
   fileName: string,
   extension: "txt" | "pdf" | "json"
 ) => {
-  console.log("🚀 ~ Sharepoint file:", text)
   const name = getValidFileName(fileName, extension)
   let file
   switch (extension) {
@@ -379,11 +376,9 @@ export const generateOwnFile = async (
   } as TablesInsert<"files">
 
   const files = await getAdminFiles()
-  // console.log("🚀 ~ files:", files)
   const existingFile = files.find(file => {
     return file.name === name
   })
-  console.log("🚀 ~ existingFile ~ existingFile:", existingFile)
 
   let fileToUpload
   if (existingFile) {
@@ -417,20 +412,17 @@ export const generateOwnFile = async (
     fileToUpload = createdFile
   }
 
-  console.log("🚀 ~ fileToUpload:", fileToUpload)
   const filePath = await uploadFile(file, {
     name: fileToUpload.name,
     user_id: fileToUpload.user_id,
     file_id: fileToUpload.name
   })
 
-  // console.log("🚀 ~ filePath:", filePath)
   await updateFile(fileToUpload.id, {
     file_path: filePath
   })
 
-  const response = await retrievalProcess(fileToUpload.id, "openai")
-  // console.log("🚀 ~ response:", response)
+  const response = await retrievalProcess(fileToUpload.id)
 
   if (!response.ok) {
     const jsonText = await response.text()
