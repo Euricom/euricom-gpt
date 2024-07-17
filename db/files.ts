@@ -1,3 +1,4 @@
+import { getToken } from "next-auth/jwt"
 import { supabase } from "@/lib/supabase/browser-client"
 import { Database, TablesInsert, TablesUpdate } from "@/supabase/types"
 import mammoth from "mammoth"
@@ -343,7 +344,7 @@ export const generateOwnFile = async (
   fileName: string,
   extension: "txt" | "pdf" | "json"
 ) => {
-  // console.log("🚀 ~ text:", text)
+  console.log("🚀 ~ Sharepoint file:", text)
   const name = getValidFileName(fileName, extension)
   let file
   switch (extension) {
@@ -382,10 +383,25 @@ export const generateOwnFile = async (
   const existingFile = files.find(file => {
     return file.name === name
   })
-  // console.log("🚀 ~ existingFile ~ existingFile:", existingFile)
+  console.log("🚀 ~ existingFile ~ existingFile:", existingFile)
 
   let fileToUpload
   if (existingFile) {
+    const existingFileUpdatedAt =
+      existingFile.updated_at && new Date(existingFile.updated_at)
+    const sharePointFileLastModifiedDateTime = new Date(
+      text.lastModifiedDateTime
+    )
+
+    // Check if the file is already uploaded and if the file on Sharepoint is newer
+    if (
+      existingFileUpdatedAt &&
+      existingFileUpdatedAt > sharePointFileLastModifiedDateTime
+    ) {
+      // console.log("🚀 ~ return NULL because no new version on Sharepoint:")
+      return null
+    }
+
     await deleteFileFromStorage(existingFile.file_path)
     fileToUpload = existingFile
   } else {
@@ -401,6 +417,7 @@ export const generateOwnFile = async (
     fileToUpload = createdFile
   }
 
+  console.log("🚀 ~ fileToUpload:", fileToUpload)
   const filePath = await uploadFile(file, {
     name: fileToUpload.name,
     user_id: fileToUpload.user_id,

@@ -95,7 +95,11 @@ export async function GET(request: NextRequest) {
     "🚀 ~ formattedsmoelenbook.forEach ~ formattedsmoelenbook:",
     formattedsmoelenbook
   )
-  await generateOwnFile(formattedsmoelenbook, "smoelenboek", "json")
+  await generateOwnFile(
+    { lastModifiedDateTime, ...formattedsmoelenbook },
+    "smoelenboek",
+    "json"
+  )
 
   return new Response(JSON.stringify("success"), {
     status: 200
