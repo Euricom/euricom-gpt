@@ -126,6 +126,13 @@ export const CHAT_SETTING_LIMITS: Record<LLMID, ChatSettingLimits> = {
     MAX_TOKEN_OUTPUT_LENGTH: 4096,
     MAX_CONTEXT_LENGTH: 128000
   },
+  //Changes Euricom (add gpt-4o-mini)
+  "gpt-4o-mini": {
+    MIN_TEMPERATURE: 0.0,
+    MAX_TEMPERATURE: 2.0,
+    MAX_TOKEN_OUTPUT_LENGTH: 16383,
+    MAX_CONTEXT_LENGTH: 128000
+  },
 
   // PERPLEXITY MODELS
   "pplx-7b-online": {

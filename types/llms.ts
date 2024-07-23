@@ -9,7 +9,9 @@ export type LLMID =
   | PerplexityLLMID
 
 // OpenAI Models (UPDATED 5/13/24)
+//Changes Euricom (add gpt-4o-mini)
 export type OpenAILLMID =
+  | "gpt-4o-mini" // GPT-4o Mini
   | "gpt-4o" // GPT-4o
   | "gpt-4-turbo-preview" // GPT-4 Turbo
   | "gpt-4" // GPT-4

@@ -51,7 +51,7 @@ export default async function HomePage() {
 
     await createWorkspace({
       default_context_length: 4096,
-      default_model: "gpt-3.5-turbo",
+      default_model: "gpt-4o-mini",
       default_prompt: "You are a friendly, helpful AI assistant.",
       default_temperature: 0.5,
       description: "My home workspace.",
