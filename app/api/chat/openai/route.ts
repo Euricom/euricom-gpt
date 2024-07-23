@@ -26,13 +26,17 @@ export async function POST(request: Request) {
       organization: profile.openai_organization_id
     })
 
-    // console.log("messages", messages)
-
+    //Changes Euricom (add gpt-4o-mini)
     const response = await openai.chat.completions.create({
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
       messages: messages as ChatCompletionCreateParamsBase["messages"],
       temperature: chatSettings.temperature,
-      max_tokens: chatSettings.model === "gpt-4o" ? 4096 : null, // TODO: Fix
+      max_tokens:
+        chatSettings.model === "gpt-4o"
+          ? 4096
+          : chatSettings.model === "gpt-4o-mini"
+            ? 16383
+            : null, // TODO: Fix
       stream: true,
       stream_options: { include_usage: true }
     })
