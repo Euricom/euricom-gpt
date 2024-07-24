@@ -11,6 +11,19 @@ export const getChatById = async (chatId: string) => {
   return chat
 }
 
+export const getChatsPerPerson = async (month: number) => {
+  const year = new Date().getFullYear()
+  const startDate = new Date(year, month, 1)
+  const endDate = new Date(year, month + 1, 1)
+
+  const { data: chat } = await supabase.rpc("get_messages_between_dates", {
+    start_date: startDate.toISOString(),
+    end_date: endDate.toISOString()
+  })
+
+  return chat
+}
+
 export const getChatsByWorkspaceId = async (workspaceId: string) => {
   const { data: chats, error } = await supabase
     .from("chats")
@@ -56,7 +69,7 @@ export const updateChat = async (
   chatId: string,
   chat: TablesUpdate<"chats">
 ) => {
-  const { data: updatedChat, error } = await supabase  
+  const { data: updatedChat, error } = await supabase
     .from("chats")
     .update(chat)
     .eq("id", chatId)
