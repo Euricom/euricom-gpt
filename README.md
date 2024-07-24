@@ -9,9 +9,8 @@ The Euricom AI chat app for all your Euricom needs.
 ### Assistant
 
 - When chatting, the entire chat history is taken in account, so try not to switch subject to much in a single chat.
-  
-- It will sometimes not find the information, even though it has access to it. 
-  - Try to rewrite the prompt so it can search more specific.
+- It will sometimes not find the information, even though it has access to it.
+  - Try to rewrite the prompt so it can search more specifically.
   - Try starting a new chat so the entire history is not given as context.
 
 ### Generating Files

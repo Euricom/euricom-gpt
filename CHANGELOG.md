@@ -150,7 +150,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed file picker to not show admin files
 
-## [2.5.0] - 2024-06-28
+## [2.5.0] - 2024-07-02
 
 ### Added
 
@@ -161,6 +161,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed default model to 3.5
+- Changed logo's and name
 
 ### Fixed
 
@@ -170,3 +171,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed openai Vision model
 - Removed token calculation from the ui
+
+## [2.5.1] - 2024-07-03
+
+### Added
+
+- Added app description
+
+### Changed
+
+- Changed color of cost per message
+
+### Fixed
+
+- Fixed error: cron page was seen as static instead of dynamic
+
+## [2.5.2] - 2024-07-16
+
+### Added
+
+- Added balance overview in sidebar
+
+### Changed
+
+- Changed color of cost per message
+
+### Fixed
+
+- Fixed error: cron page was seen as static instead of dynamic
+
+## [2.5.3] - 2024-07-17
+
+### Added
+
+- Added cron job for smoelenboek
+- Added month switcher for balances
+
+## [2.5.4] - 2024-07-24
+
+### Added
+
+- Added gpt-4o-mini model from openai
+- Added messages, chats and total in balance overview
+
+### Changed
+
+- Changed default model to gpt-4o-mini

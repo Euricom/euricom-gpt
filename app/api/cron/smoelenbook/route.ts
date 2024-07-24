@@ -2,21 +2,10 @@
 
 import { generateOwnFile } from "@/db/files"
 import { getApplicationAccessToken } from "@/lib/server/auth"
-import { NextRequest } from "next/server"
-import smoelenboek from "../../../../smoelenboek.json"
-import { de } from "date-fns/locale"
 
 export const dynamic = "force-dynamic" // defaults to auto
-export async function GET(request: NextRequest) {
-  // const json = await request.json()
 
-  // const authHeader = request.headers.get('authorization');
-  // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-  //   return new Response('Unauthorized', {
-  //     status: 401,
-  //   });
-  // }
-
+export async function GET() {
   // retrieve data from sharepoint (smoelenbook)
   const accessToken = (await getApplicationAccessToken()).access_token
   const siteId =
@@ -44,8 +33,7 @@ export async function GET(request: NextRequest) {
   )
   const { lastModifiedDateTime } = await sharepointPageDetails.json()
 
-  const sm = await s.json()
-  const smoelenbook = sm
+  const smoelenbook = await s.json()
 
   const formattedsmoelenbook = smoelenbook.value.map((group: any) => {
     return {
@@ -95,6 +83,3 @@ export async function GET(request: NextRequest) {
     status: 200
   })
 }
-
-// GET /api/cron?action=smoelenbook&para1=2222
-// GET /api/cron/smoelenbook?para1=2222

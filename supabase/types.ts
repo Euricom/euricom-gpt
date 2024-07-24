@@ -1346,6 +1346,17 @@ export type Database = {
           total_price: number
         }[]
       }
+      get_messages_between_dates: {
+        Args: {
+          start_date: string
+          end_date: string
+        }
+        Returns: {
+          display_name: string
+          chats: number
+          messages: number
+        }[]
+      }
       get_my_balance: {
         Args: {
           user_id: string
