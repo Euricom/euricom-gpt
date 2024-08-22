@@ -74,7 +74,12 @@ export const updateMessage = async (
 }
 
 export const deleteMessage = async (messageId: string) => {
-  const { error } = await supabase.from("messages").delete().eq("id", messageId)
+  const { error } = await supabase
+    .from("messages")
+    .update({ deleted: true })
+    .eq("id", messageId)
+    .select("*")
+    .single()
 
   if (error) {
     throw new Error(error.message)

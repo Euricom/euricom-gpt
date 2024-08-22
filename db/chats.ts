@@ -29,6 +29,7 @@ export const getChatsByWorkspaceId = async (workspaceId: string) => {
     .from("chats")
     .select("*")
     .eq("workspace_id", workspaceId)
+    .eq("deleted", false)
     .order("created_at", { ascending: false })
 
   if (!chats) {
@@ -84,7 +85,12 @@ export const updateChat = async (
 }
 
 export const deleteChat = async (chatId: string) => {
-  const { error } = await supabase.from("chats").delete().eq("id", chatId)
+  const { error } = await supabase
+    .from("chats")
+    .update({ deleted: true })
+    .eq("id", chatId)
+    .select("*")
+    .single()
 
   if (error) {
     throw new Error(error.message)

@@ -274,6 +274,7 @@ export type Database = {
           assistant_id: string | null
           context_length: number
           created_at: string
+          deleted: boolean | null
           embeddings_provider: string
           folder_id: string | null
           id: string
@@ -292,6 +293,7 @@ export type Database = {
           assistant_id?: string | null
           context_length: number
           created_at?: string
+          deleted?: boolean | null
           embeddings_provider: string
           folder_id?: string | null
           id?: string
@@ -310,6 +312,7 @@ export type Database = {
           assistant_id?: string | null
           context_length?: number
           created_at?: string
+          deleted?: boolean | null
           embeddings_provider?: string
           folder_id?: string | null
           id?: string
@@ -693,6 +696,7 @@ export type Database = {
           chat_id: string
           content: string
           created_at: string
+          deleted: boolean | null
           id: string
           image_paths: string[]
           input_price: number | null
@@ -711,6 +715,7 @@ export type Database = {
           chat_id: string
           content: string
           created_at?: string
+          deleted?: boolean | null
           id?: string
           image_paths: string[]
           input_price?: number | null
@@ -729,6 +734,7 @@ export type Database = {
           chat_id?: string
           content?: string
           created_at?: string
+          deleted?: boolean | null
           id?: string
           image_paths?: string[]
           input_price?: number | null

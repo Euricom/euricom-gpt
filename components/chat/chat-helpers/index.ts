@@ -97,6 +97,7 @@ export const createTempMessages = (
       id: uuidv4(),
       image_paths: b64Images,
       model: chatSettings.model,
+      deleted: false,
       role: "user",
       sequence_number: chatMessages.length,
       updated_at: "",
@@ -117,6 +118,7 @@ export const createTempMessages = (
       content: "",
       created_at: "",
       id: uuidv4(),
+      deleted: false,
       image_paths: [],
       model: chatSettings.model,
       role: "assistant",
@@ -497,7 +499,16 @@ export const handleCreateMessages = async (
 
     const updatedMessage = await updateMessage(lastStartingMessage.id, {
       ...lastStartingMessage,
-      content: generatedText
+      content: generatedText,
+      input_token: (lastStartingMessage.input_token ?? 0) + inputToken,
+      output_token: (lastStartingMessage.output_token ?? 0) + outputToken,
+      input_price:
+        (lastStartingMessage.input_price ?? 0) +
+        inputPrice * 100 /* convert to cents */,
+      output_price:
+        (lastStartingMessage.output_price ?? 0) +
+        outputPrice * 100 /* convert to cents */,
+      calc_price: (lastStartingMessage.calc_price ?? 0) + totalCost
     })
 
     chatMessages[chatMessages.length - 1].message = updatedMessage
