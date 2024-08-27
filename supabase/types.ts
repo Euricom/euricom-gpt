@@ -183,6 +183,7 @@ export type Database = {
           temperature: number
           updated_at: string | null
           user_id: string
+          user_roles: string[] | null
         }
         Insert: {
           context_length: number
@@ -201,6 +202,7 @@ export type Database = {
           temperature: number
           updated_at?: string | null
           user_id: string
+          user_roles?: string[] | null
         }
         Update: {
           context_length?: number
@@ -219,6 +221,7 @@ export type Database = {
           temperature?: number
           updated_at?: string | null
           user_id?: string
+          user_roles?: string[] | null
         }
         Relationships: [
           {

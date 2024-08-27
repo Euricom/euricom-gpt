@@ -29,6 +29,7 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
   useHotkey("p", () => setIsOpen(prevState => !prevState))
 
   const {
+    user,
     presets,
     assistants,
     selectedAssistant,
@@ -165,10 +166,17 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
 
   const items = [
     ...presets.map(preset => ({ ...preset, contentType: "presets" })),
-    ...assistants.map(assistant => ({
-      ...assistant,
-      contentType: "assistants"
-    }))
+    ...assistants
+      .filter(
+        assistant =>
+          !assistant.user_roles ||
+          assistant.user_roles.length === 0 ||
+          assistant.user_roles.some(role => user?.roles.includes(role))
+      )
+      .map(assistant => ({
+        ...assistant,
+        contentType: "assistants"
+      }))
   ]
 
   const selectedAssistantImage = selectedPreset

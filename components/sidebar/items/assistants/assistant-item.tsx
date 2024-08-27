@@ -11,6 +11,8 @@ import profile from "react-syntax-highlighter/dist/esm/languages/hljs/profile"
 import { SidebarItem } from "../all/sidebar-display-item"
 import { AssistantRetrievalSelect } from "./assistant-retrieval-select"
 import { AssistantToolSelect } from "./assistant-tool-select"
+import { UserRole, userRoles } from "@/types/user-role"
+import { AssistantRoleSelect } from "./assistant-role-select"
 
 interface AssistantItemProps {
   assistant: Tables<"assistants">
@@ -32,6 +34,9 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
   })
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [imageLink, setImageLink] = useState("")
+  const [userRoles, setUserRoles] = useState<UserRole[]>(
+    (assistant.user_roles ?? []) as UserRole[]
+  )
 
   useEffect(() => {
     const assistantImage =
@@ -76,6 +81,23 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
         )
       } else {
         return [...prevState, collection]
+      }
+    })
+  }
+
+  const handleRoleSelect = (
+    role: UserRole,
+    setSelectedAssistantRoles: React.Dispatch<React.SetStateAction<UserRole[]>>
+  ) => {
+    setSelectedAssistantRoles(prevState => {
+      const isRoleAlreadySelected = prevState.find(
+        selectedFile => selectedFile === role
+      )
+
+      if (isRoleAlreadySelected) {
+        return prevState.filter(selectedRole => selectedRole !== role)
+      } else {
+        return [...prevState, role]
       }
     })
   }
@@ -265,6 +287,17 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
                       item,
                       renderState.setSelectedAssistantCollections
                     )
+              }
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label>User roles</Label>
+
+            <AssistantRoleSelect
+              selectedAssistantRoleItems={userRoles}
+              onAssistantRoleSelect={Role =>
+                handleRoleSelect(Role, setUserRoles)
               }
             />
           </div>

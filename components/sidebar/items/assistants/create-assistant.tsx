@@ -9,6 +9,8 @@ import { Tables, TablesInsert } from "@/supabase/types"
 import { FC, useContext, useEffect, useState } from "react"
 import { AssistantRetrievalSelect } from "./assistant-retrieval-select"
 import { AssistantToolSelect } from "./assistant-tool-select"
+import { AssistantRoleSelect } from "./assistant-role-select"
+import { UserRole } from "@/types/user-role"
 
 interface CreateAssistantProps {
   isOpen: boolean
@@ -37,6 +39,9 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
   const [imageLink, setImageLink] = useState("")
   const [selectedAssistantRetrievalItems, setSelectedAssistantRetrievalItems] =
     useState<Tables<"files">[] | Tables<"collections">[]>([])
+  const [selectedAssistantRoleItems, setSelectedAssistantRoleItems] = useState<
+    UserRole[]
+  >([])
   const [selectedAssistantToolItems, setSelectedAssistantToolItems] = useState<
     Tables<"tools">[]
   >([])
@@ -65,6 +70,19 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
 
       if (isItemAlreadySelected) {
         return prevState.filter(selectedItem => selectedItem.id !== item.id)
+      } else {
+        return [...prevState, item]
+      }
+    })
+  }
+  const handleRoleItemSelect = (item: UserRole) => {
+    setSelectedAssistantRoleItems(prevState => {
+      const isItemAlreadySelected = prevState.find(
+        selectedItem => selectedItem === item
+      )
+
+      if (isItemAlreadySelected) {
+        return prevState.filter(selectedItem => selectedItem !== item)
       } else {
         return [...prevState, item]
       }
@@ -127,7 +145,8 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
           collections: selectedAssistantRetrievalItems.filter(
             item => !item.hasOwnProperty("type")
           ) as Tables<"collections">[],
-          tools: selectedAssistantToolItems
+          tools: selectedAssistantToolItems,
+          user_roles: selectedAssistantRoleItems
         } as TablesInsert<"assistants">
       }
       isOpen={isOpen}
@@ -185,6 +204,14 @@ export const CreateAssistant: FC<CreateAssistantProps> = ({
             <AssistantRetrievalSelect
               selectedAssistantRetrievalItems={selectedAssistantRetrievalItems}
               onAssistantRetrievalItemsSelect={handleRetrievalItemSelect}
+            />
+          </div>
+          <div className="space-y-1 pt-2">
+            <Label>User roles</Label>
+
+            <AssistantRoleSelect
+              selectedAssistantRoleItems={selectedAssistantRoleItems}
+              onAssistantRoleSelect={handleRoleItemSelect}
             />
           </div>
 
