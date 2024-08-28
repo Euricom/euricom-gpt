@@ -159,7 +159,8 @@ export const AssistantItem: FC<AssistantItemProps> = ({ assistant }) => {
         model: assistantChatSettings.model,
         image_path: assistant.image_path,
         prompt: assistantChatSettings.prompt,
-        temperature: assistantChatSettings.temperature
+        temperature: assistantChatSettings.temperature,
+        user_roles: userRoles
       }}
       renderInputs={(renderState: {
         startingAssistantFiles: Tables<"files">[]
