@@ -47,4 +47,24 @@ const MIXTRAL_8X7B: LLM = {
   }
 }
 
-export const GROQ_LLM_LIST: LLM[] = [LLaMA3_8B, LLaMA3_70B, MIXTRAL_8X7B]
+const LLaMA31_405B: LLM = {
+  modelId: "llama-3.1-405b-reasoning",
+  modelName: "LLaMA31-405b-chat",
+  provider: "groq",
+  hostedId: "llama-3.1-405b-reasoning",
+  platformLink: GROQ_PLATORM_LINK,
+  imageInput: false,
+  pricing: {
+    currency: "USD",
+    unit: "1M tokens",
+    inputCost: 0.59,
+    outputCost: 0.79
+  }
+}
+
+export const GROQ_LLM_LIST: LLM[] = [
+  LLaMA3_8B,
+  LLaMA3_70B,
+  MIXTRAL_8X7B,
+  LLaMA31_405B
+]
