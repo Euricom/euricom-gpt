@@ -195,7 +195,6 @@ export const useChatHandler = () => {
     isRegeneration: boolean
   ) => {
     const startingInput = messageContent
-
     try {
       setUserInput("")
       setIsGenerating(true)
@@ -410,14 +409,15 @@ export const useChatHandler = () => {
       sequenceNumber
     )
 
-    const filteredMessages = chatMessages.filter(
-      chatMessage => chatMessage.message.sequence_number < sequenceNumber
+    chatMessages.forEach(chatMessage =>
+      chatMessage.message.sequence_number >= sequenceNumber
+        ? (chatMessage.message.deleted = true)
+        : ""
     )
+    console.log("setChatMessages:handleSendEdit", chatMessages)
+    setChatMessages(chatMessages)
 
-    console.log("setChatMessages:handleSendEdit", filteredMessages)
-    setChatMessages(filteredMessages)
-
-    handleSendMessage(editedContent, filteredMessages, false)
+    handleSendMessage(editedContent, chatMessages, false)
   }
 
   return {
