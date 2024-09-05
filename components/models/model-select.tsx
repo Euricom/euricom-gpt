@@ -41,7 +41,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     if (isOpen) {
       setTimeout(() => {
         inputRef.current?.focus()
-      }, 100) // FIX: hacky
+      }, 200) // FIX: hacky
     }
   }, [isOpen])
 

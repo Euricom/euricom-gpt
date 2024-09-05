@@ -40,6 +40,7 @@ export const useChatHandler = () => {
     setSelectedChat,
     setChats,
     setSelectedTools,
+    setSelectedAssistant,
     availableLocalModels,
     availableOpenRouterModels,
     abortController,
@@ -96,85 +97,86 @@ export const useChatHandler = () => {
     setShowFilesDisplay(false)
     setIsPromptPickerOpen(false)
     setIsFilePickerOpen(false)
+    setSelectedAssistant(null)
 
     setSelectedTools([])
     setToolInUse("none")
 
-    if (selectedAssistant) {
-      setChatSettings({
-        model: selectedAssistant.model as LLMID,
-        prompt: selectedAssistant.prompt,
-        temperature: selectedAssistant.temperature,
-        contextLength: selectedAssistant.context_length,
-        includeProfileContext: selectedAssistant.include_profile_context,
-        includeWorkspaceInstructions:
-          selectedAssistant.include_workspace_instructions,
-        embeddingsProvider: selectedAssistant.embeddings_provider as
-          | "openai"
-          | "local"
-      })
+    // if (selectedAssistant) {
+    //   setChatSettings({
+    //     model: selectedAssistant.model as LLMID,
+    //     prompt: selectedAssistant.prompt,
+    //     temperature: selectedAssistant.temperature,
+    //     contextLength: selectedAssistant.context_length,
+    //     includeProfileContext: selectedAssistant.include_profile_context,
+    //     includeWorkspaceInstructions:
+    //       selectedAssistant.include_workspace_instructions,
+    //     embeddingsProvider: selectedAssistant.embeddings_provider as
+    //       | "openai"
+    //       | "local"
+    //   })
 
-      let allFiles = []
+    //   let allFiles = []
 
-      const assistantFiles = (
-        await getAssistantFilesByAssistantId(selectedAssistant.id)
-      ).files
-      allFiles = [...assistantFiles]
-      const assistantCollections = (
-        await getAssistantCollectionsByAssistantId(selectedAssistant.id)
-      ).collections
-      for (const collection of assistantCollections) {
-        const collectionFiles = (
-          await getCollectionFilesByCollectionId(collection.id)
-        ).files
-        allFiles = [...allFiles, ...collectionFiles]
-      }
-      const assistantTools = (
-        await getAssistantToolsByAssistantId(selectedAssistant.id)
-      ).tools
+    //   const assistantFiles = (
+    //     await getAssistantFilesByAssistantId(selectedAssistant.id)
+    //   ).files
+    //   allFiles = [...assistantFiles]
+    //   const assistantCollections = (
+    //     await getAssistantCollectionsByAssistantId(selectedAssistant.id)
+    //   ).collections
+    //   for (const collection of assistantCollections) {
+    //     const collectionFiles = (
+    //       await getCollectionFilesByCollectionId(collection.id)
+    //     ).files
+    //     allFiles = [...allFiles, ...collectionFiles]
+    //   }
+    //   const assistantTools = (
+    //     await getAssistantToolsByAssistantId(selectedAssistant.id)
+    //   ).tools
 
-      setSelectedTools(assistantTools)
-      setChatFiles(
-        allFiles.map(file => ({
-          id: file.id,
-          name: file.name,
-          type: file.type,
-          file: null
-        }))
-      )
+    //   setSelectedTools(assistantTools)
+    //   setChatFiles(
+    //     allFiles.map(file => ({
+    //       id: file.id,
+    //       name: file.name,
+    //       type: file.type,
+    //       file: null
+    //     }))
+    //   )
 
-      if (allFiles.length > 0) setShowFilesDisplay(true)
-    } else if (selectedPreset) {
-      setChatSettings({
-        model: selectedPreset.model as LLMID,
-        prompt: selectedPreset.prompt,
-        temperature: selectedPreset.temperature,
-        contextLength: selectedPreset.context_length,
-        includeProfileContext: selectedPreset.include_profile_context,
-        includeWorkspaceInstructions:
-          selectedPreset.include_workspace_instructions,
-        embeddingsProvider: selectedPreset.embeddings_provider as
-          | "openai"
-          | "local"
-      })
-    } else if (selectedWorkspace) {
-      // setChatSettings({
-      //   model: (selectedWorkspace.default_model ||
-      //     "gpt-4-1106-preview") as LLMID,
-      //   prompt:
-      //     selectedWorkspace.default_prompt ||
-      //     "You are a friendly, helpful AI assistant.",
-      //   temperature: selectedWorkspace.default_temperature || 0.5,
-      //   contextLength: selectedWorkspace.default_context_length || 4096,
-      //   includeProfileContext:
-      //     selectedWorkspace.include_profile_context || true,
-      //   includeWorkspaceInstructions:
-      //     selectedWorkspace.include_workspace_instructions || true,
-      //   embeddingsProvider:
-      //     (selectedWorkspace.embeddings_provider as "openai" | "local") ||
-      //     "openai"
-      // })
-    }
+    //   if (allFiles.length > 0) setShowFilesDisplay(true)
+    // } else if (selectedPreset) {
+    //   setChatSettings({
+    //     model: selectedPreset.model as LLMID,
+    //     prompt: selectedPreset.prompt,
+    //     temperature: selectedPreset.temperature,
+    //     contextLength: selectedPreset.context_length,
+    //     includeProfileContext: selectedPreset.include_profile_context,
+    //     includeWorkspaceInstructions:
+    //       selectedPreset.include_workspace_instructions,
+    //     embeddingsProvider: selectedPreset.embeddings_provider as
+    //       | "openai"
+    //       | "local"
+    //   })
+    // } else if (selectedWorkspace) {
+    // setChatSettings({
+    //   model: (selectedWorkspace.default_model ||
+    //     "gpt-4-1106-preview") as LLMID,
+    //   prompt:
+    //     selectedWorkspace.default_prompt ||
+    //     "You are a friendly, helpful AI assistant.",
+    //   temperature: selectedWorkspace.default_temperature || 0.5,
+    //   contextLength: selectedWorkspace.default_context_length || 4096,
+    //   includeProfileContext:
+    //     selectedWorkspace.include_profile_context || true,
+    //   includeWorkspaceInstructions:
+    //     selectedWorkspace.include_workspace_instructions || true,
+    //   embeddingsProvider:
+    //     (selectedWorkspace.embeddings_provider as "openai" | "local") ||
+    //     "openai"
+    // })
+    // }
 
     return router.push(`/${selectedWorkspace.id}/chat`)
   }

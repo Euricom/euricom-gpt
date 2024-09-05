@@ -171,6 +171,8 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
         ).tools
         setSelectedTools(assistantTools)
       }
+    } else {
+      setSelectedAssistant(null)
     }
 
     setSelectedChat(chat)

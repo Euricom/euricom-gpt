@@ -217,3 +217,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed default model to gpt-4o-mini
+
+## [2.5.5] - 2024-09-05
+
+### Changed
+
+- Changed assistants so they can be assigned to a role
+
+### Fixed
+
+- Fixed pricing when deleting chats
+- Fixed bug when switching chats when talking to assistant
+
+### Removed
+
+- Removed really small old logo
