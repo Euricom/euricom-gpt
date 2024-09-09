@@ -31,24 +31,33 @@ export async function GET() {
       }
     }
   )
+
   const { lastModifiedDateTime } = await sharepointPageDetails.json()
 
   const smoelenbook = await s.json()
 
-  const formattedsmoelenbook = smoelenbook.value.map((group: any) => {
-    return {
-      company: group.data.serverProcessedContent.searchablePlainTexts[0].value,
-      people: group.data.properties.persons.map((person: any, i: number) => {
+  const formattedsmoelenbook = smoelenbook.value
+    .map((group: any) => {
+      if (group.data.properties.persons) {
         return {
-          mail: person.id,
-          role: person.role,
-          name: group.data.serverProcessedContent.searchablePlainTexts.find(
-            (name: any) => name.key === `persons[${i}].name`
-          ).value
+          company:
+            group.data.serverProcessedContent.searchablePlainTexts[0].value ||
+            "",
+          people: group.data.properties.persons.map(
+            (person: any, i: number) => {
+              return {
+                mail: person.id,
+                role: person.role,
+                name: group.data.serverProcessedContent.searchablePlainTexts.find(
+                  (name: any) => name.key === `persons[${i}].name`
+                ).value
+              }
+            }
+          )
         }
-      })
-    }
-  })
+      }
+    })
+    .filter(Boolean)
 
   let text =
     "Dit is een overzicht van alle werknemers van euricom. Dit overzicht bevat de staff members, de bench en alle klanten waar euricom consultants momenteel aan het werk zijn:\n"
