@@ -302,7 +302,7 @@ function extractFooter(chunk: string) {
   return match ? match[0] : null
 }
 
-type Usage = {
+export type Usage = {
   prompt_tokens: number
   completion_tokens: number
   total_tokens: number

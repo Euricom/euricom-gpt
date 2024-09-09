@@ -1,4 +1,5 @@
 import { CHAT_SETTING_LIMITS } from "@/lib/chat-setting-limits"
+import { getUsageStreamData } from "@/lib/models/get-usage-stream-data"
 import { checkApiKey, getServerProfile } from "@/lib/server/server-chat-helpers"
 import { getBase64FromDataURL, getMediaTypeFromDataURL } from "@/lib/utils"
 import { ChatSettings } from "@/types"
@@ -71,8 +72,15 @@ export async function POST(request: NextRequest) {
       })
 
       try {
-        const stream = AnthropicStream(response)
-        return new StreamingTextResponse(stream)
+        const [stream, streamCopy] = response.tee()
+        const readableStream = AnthropicStream(stream)
+        const usageStreamDate = getUsageStreamData(streamCopy, "anthropic")
+
+        return new StreamingTextResponse(
+          readableStream,
+          undefined,
+          usageStreamDate
+        )
       } catch (error: any) {
         console.error("Error parsing Anthropic API response:", error)
         return new NextResponse(
