@@ -36,53 +36,53 @@ const GPT4Turbo: LLM = {
 
 // GPT-4 Vision (UPDATED 12/18/23)
 // Legacy not available anymore
-const GPT4Vision: LLM = {
-  modelId: "gpt-4-vision-preview",
-  modelName: "GPT-4 Vision",
-  provider: "openai",
-  hostedId: "gpt-4-vision-preview",
-  platformLink: OPENAI_PLATORM_LINK,
-  imageInput: true,
-  pricing: {
-    currency: "USD",
-    unit: "1M tokens",
-    inputCost: 10
-  }
-}
+// const GPT4Vision: LLM = {
+//   modelId: "gpt-4-vision-preview",
+//   modelName: "GPT-4 Vision",
+//   provider: "openai",
+//   hostedId: "gpt-4-vision-preview",
+//   platformLink: OPENAI_PLATORM_LINK,
+//   imageInput: true,
+//   pricing: {
+//     currency: "USD",
+//     unit: "1M tokens",
+//     inputCost: 10
+//   }
+// }
 
 // o1-preview (UPDATED 09/13/24)
 // Only available in tier 4
-const O1Preview: LLM = {
-  modelId: "o1-preview",
-  modelName: "o1-preview",
-  provider: "openai",
-  hostedId: "o1-preview",
-  platformLink: OPENAI_PLATORM_LINK,
-  imageInput: true,
-  pricing: {
-    currency: "USD",
-    unit: "1M tokens",
-    inputCost: 30,
-    outputCost: 60
-  }
-}
+// const O1Preview: LLM = {
+//   modelId: "o1-preview",
+//   modelName: "o1-preview",
+//   provider: "openai",
+//   hostedId: "o1-preview",
+//   platformLink: OPENAI_PLATORM_LINK,
+//   imageInput: true,
+//   pricing: {
+//     currency: "USD",
+//     unit: "1M tokens",
+//     inputCost: 30,
+//     outputCost: 60
+//   }
+// }
 
 // o1-preview (UPDATED 09/13/24)
 // Only available in tier 4
-const O1Mini: LLM = {
-  modelId: "o1-mini",
-  modelName: "o1-mini",
-  provider: "openai",
-  hostedId: "o1-mini",
-  platformLink: OPENAI_PLATORM_LINK,
-  imageInput: true,
-  pricing: {
-    currency: "USD",
-    unit: "1M tokens",
-    inputCost: 30,
-    outputCost: 60
-  }
-}
+// const O1Mini: LLM = {
+//   modelId: "o1-mini",
+//   modelName: "o1-mini",
+//   provider: "openai",
+//   hostedId: "o1-mini",
+//   platformLink: OPENAI_PLATORM_LINK,
+//   imageInput: true,
+//   pricing: {
+//     currency: "USD",
+//     unit: "1M tokens",
+//     inputCost: 30,
+//     outputCost: 60
+//   }
+// }
 
 // GPT-4 (UPDATED 1/29/24)
 const GPT4: LLM = {
