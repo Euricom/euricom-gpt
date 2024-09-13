@@ -445,13 +445,13 @@ export const handleCreateMessages = async (
   setChatImages: React.Dispatch<React.SetStateAction<MessageImage[]>>,
   selectedAssistant: Tables<"assistants"> | null
 ) => {
-  console.log("[chat-helper] handleCreateMessages", {
-    chatMessages,
-    messageContent,
-    generatedText,
-    usage,
-    modelData
-  })
+  // console.log("[chat-helper] handleCreateMessages", {
+  //   chatMessages,
+  //   messageContent,
+  //   generatedText,
+  //   usage,
+  //   modelData
+  // })
 
   const finalUserMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,

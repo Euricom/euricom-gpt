@@ -43,9 +43,21 @@ export const fetchHostedModels = async (profile: Tables<"profiles">) => {
       }
     }
 
+    // Euricom - filter out all GPT models if no OpenAI API key
+    const hostedModels = modelsToAdd.filter(model => {
+      if (
+        model.provider === "openai" &&
+        model.modelId !== "gpt-4o-mini" &&
+        !profile.openai_api_key
+      ) {
+        return false
+      }
+      return true
+    })
+
     return {
       envKeyMap: data.isUsingEnvKeyMap,
-      hostedModels: modelsToAdd
+      hostedModels
     }
   } catch (error) {
     console.warn("Error fetching hosted models: " + error)

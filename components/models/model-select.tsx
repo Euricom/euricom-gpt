@@ -51,18 +51,6 @@ export const ModelSelect: FC<ModelSelectProps> = ({
     setIsOpen(false)
   }
 
-  const availableFilteredHostedModels = availableHostedModels.filter(model => {
-    // include
-    // - all models with personal API keys
-    // - GPT-4o-mini (default on for Euricom)
-    // - all models of open ai when openai_organization (miss-used as personal API key) is set
-    return (
-      !envKeyMap[model.provider] ||
-      model.hostedId == "gpt-4o-mini" ||
-      (profile?.openai_organization_id && model.provider == "openai")
-    )
-  })
-
   const allModels = [
     ...models.map(model => ({
       modelId: model.model_id as LLMID,
@@ -72,7 +60,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
       platformLink: "",
       imageInput: false
     })),
-    ...availableFilteredHostedModels, // availableHostedModels
+    ...availableHostedModels,
     ...availableLocalModels,
     ...availableOpenRouterModels
   ]

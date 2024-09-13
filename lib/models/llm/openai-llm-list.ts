@@ -18,26 +18,10 @@ const GPT4o: LLM = {
   }
 }
 
-//Changes Euricom (add gpt-4o-mini)
-const GPT4oMini: LLM = {
-  modelId: "gpt-4o-mini",
-  modelName: "GPT-4o Mini",
-  provider: "openai",
-  hostedId: "gpt-4o-mini",
-  platformLink: OPENAI_PLATORM_LINK,
-  imageInput: true,
-  pricing: {
-    currency: "USD",
-    unit: "1M tokens",
-    inputCost: 0.15,
-    outputCost: 0.6
-  }
-}
-
 // GPT-4 Turbo (UPDATED 1/25/24)
 const GPT4Turbo: LLM = {
   modelId: "gpt-4-turbo-preview",
-  modelName: "GPT-4 Turbo",
+  modelName: "GPT-4 Turbo (Legacy)",
   provider: "openai",
   hostedId: "gpt-4-turbo-preview",
   platformLink: OPENAI_PLATORM_LINK,
@@ -50,10 +34,60 @@ const GPT4Turbo: LLM = {
   }
 }
 
+// GPT-4 Vision (UPDATED 12/18/23)
+// Legacy not available anymore
+const GPT4Vision: LLM = {
+  modelId: "gpt-4-vision-preview",
+  modelName: "GPT-4 Vision",
+  provider: "openai",
+  hostedId: "gpt-4-vision-preview",
+  platformLink: OPENAI_PLATORM_LINK,
+  imageInput: true,
+  pricing: {
+    currency: "USD",
+    unit: "1M tokens",
+    inputCost: 10
+  }
+}
+
+// o1-preview (UPDATED 09/13/24)
+// Only available in tier 4
+const O1Preview: LLM = {
+  modelId: "o1-preview",
+  modelName: "o1-preview",
+  provider: "openai",
+  hostedId: "o1-preview",
+  platformLink: OPENAI_PLATORM_LINK,
+  imageInput: true,
+  pricing: {
+    currency: "USD",
+    unit: "1M tokens",
+    inputCost: 30,
+    outputCost: 60
+  }
+}
+
+// o1-preview (UPDATED 09/13/24)
+// Only available in tier 4
+const O1Mini: LLM = {
+  modelId: "o1-mini",
+  modelName: "o1-mini",
+  provider: "openai",
+  hostedId: "o1-mini",
+  platformLink: OPENAI_PLATORM_LINK,
+  imageInput: true,
+  pricing: {
+    currency: "USD",
+    unit: "1M tokens",
+    inputCost: 30,
+    outputCost: 60
+  }
+}
+
 // GPT-4 (UPDATED 1/29/24)
 const GPT4: LLM = {
   modelId: "gpt-4",
-  modelName: "GPT-4",
+  modelName: "GPT-4 (Legacy)",
   provider: "openai",
   hostedId: "gpt-4",
   platformLink: OPENAI_PLATORM_LINK,
@@ -82,10 +116,29 @@ const GPT3_5Turbo: LLM = {
   }
 }
 
+const GPT4oMini: LLM = {
+  modelId: "gpt-4o-mini",
+  modelName: "GPT-4o Mini",
+  provider: "openai",
+  hostedId: "gpt-4o-mini",
+  platformLink: OPENAI_PLATORM_LINK,
+  imageInput: true,
+  pricing: {
+    currency: "USD",
+    unit: "1M tokens",
+    inputCost: 0.15,
+    outputCost: 0.6
+  }
+}
+
 export const OPENAI_LLM_LIST: LLM[] = [
-  GPT4oMini,
   GPT4o,
   GPT4Turbo,
+  // GPT4Vision,
   GPT4,
-  GPT3_5Turbo
+  GPT3_5Turbo,
+  GPT4oMini
+  // https://platform.openai.com/docs/guides/rate-limits/usage-tiers for more details on usage tiers.
+  // O1Preview,
+  // O1Mini
 ]

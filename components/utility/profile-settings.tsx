@@ -97,6 +97,9 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
   const [azureOpenai45VisionID, setAzureOpenai45VisionID] = useState(
     profile?.azure_openai_45_vision_id || ""
   )
+  const [azureOpenai45OID, setAzureOpenai45OID] = useState(
+    profile?.azure_openai_45_o_id || ""
+  )
   const [azureEmbeddingsID, setAzureEmbeddingsID] = useState(
     profile?.azure_openai_embeddings_id || ""
   )
@@ -164,6 +167,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
       azure_openai_35_turbo_id: azureOpenai35TurboID,
       azure_openai_45_turbo_id: azureOpenai45TurboID,
       azure_openai_45_vision_id: azureOpenai45VisionID,
+      azure_openai_45_o_id: azureOpenai45OID,
       azure_openai_embeddings_id: azureEmbeddingsID,
       openrouter_api_key: openrouterAPIKey
     })
@@ -449,7 +453,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
                       ? envKeyMap["azure"]
                         ? ""
                         : "Azure OpenAI API Key"
-                      : envKeyMap["openai"]
+                      : envKeyMap["openai-full"]
                         ? ""
                         : "OpenAI API Key"}
 
@@ -484,10 +488,8 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
                     </>
                   ) : (
                     <>
-                      {envKeyMap["openai"] ? (
-                        <Label>
-                          OpenAI API key set by admin (GPT-4o Mini).
-                        </Label>
+                      {envKeyMap["openai-full"] ? (
+                        <Label>OpenAI API key set by admin.</Label>
                       ) : (
                         <Input
                           placeholder="OpenAI API Key"
@@ -614,6 +616,28 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
                           )}
                         </div>
                       }
+
+                      {
+                        <div className="space-y-1">
+                          {envKeyMap["azure_gpt_45_o_name"] ? (
+                            <Label className="text-xs">
+                              Azure GPT-4.5 O deployment name set by admin.
+                            </Label>
+                          ) : (
+                            <>
+                              <Label>Azure GPT-4.5 O Deployment Name</Label>
+
+                              <Input
+                                placeholder="Azure GPT-4.5 O Deployment Name"
+                                value={azureOpenai45OID}
+                                onChange={e =>
+                                  setAzureOpenai45OID(e.target.value)
+                                }
+                              />
+                            </>
+                          )}
+                        </div>
+                      }
                     </>
                   ) : (
                     <>
@@ -624,8 +648,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
                           </Label>
                         ) : (
                           <>
-                            {/* <Label>OpenAI Organization ID</Label> */}
-                            <Label>OpenAI API key</Label>
+                            <Label>OpenAI Organization ID</Label>
                             <Input
                               placeholder="OpenAI API Key"
                               disabled={

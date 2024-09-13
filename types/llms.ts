@@ -9,18 +9,23 @@ export type LLMID =
   | PerplexityLLMID
 
 // OpenAI Models (UPDATED 5/13/24)
-//Changes Euricom (add gpt-4o-mini)
 export type OpenAILLMID =
-  | "gpt-4o-mini" // GPT-4o Mini
   | "gpt-4o" // GPT-4o
   | "gpt-4-turbo-preview" // GPT-4 Turbo
+  | "gpt-4-vision-preview" // GPT-4 Vision
   | "gpt-4" // GPT-4
   | "gpt-3.5-turbo" // Updated GPT-3.5 Turbo
+  | "gpt-4o-mini" // GPT-4o Mini
+  | "o1-mini"
+  | "o1-preview"
 
 // Google Models
 export type GoogleLLMID =
   | "gemini-pro" // Gemini Pro
   | "gemini-pro-vision" // Gemini Pro Vision
+  | "gemini-1.5-pro-latest" // Gemini 1.5 Pro
+  | "gemini-1.5-flash" // Gemini 1.5 Flash
+  | "gemini-1.5-pro-exp-0801" // Gemini 1.5 Pro Exp 0801
 
 // Anthropic Models
 export type AnthropicLLMID =
@@ -29,6 +34,7 @@ export type AnthropicLLMID =
   | "claude-3-haiku-20240307" // Claude 3 Haiku
   | "claude-3-sonnet-20240229" // Claude 3 Sonnet
   | "claude-3-opus-20240229" // Claude 3 Opus
+  | "claude-3-5-sonnet-20240620" // Claude 3.5 Sonnet
 
 // Mistral Models
 export type MistralLLMID =
@@ -36,12 +42,21 @@ export type MistralLLMID =
   | "mistral-small-latest" // Mistral Small
   | "mistral-medium-latest" // Mistral Medium
   | "mistral-large-latest" // Mistral Large
+  | "open-mistral-nemo" // Open Mistral Nemo
+  | "codestral-mamba-2407" // CodeStral Mamba 2407
+  | "codestral-2405" // CodeStral 2405
+  | "mistral-large-2407" // Mistral Large 2407
 
 export type GroqLLMID =
   | "llama3-8b-8192" // LLaMA3-8b
   | "llama3-70b-8192" // LLaMA3-70b
   | "mixtral-8x7b-32768" // Mixtral-8x7b
+  | "gemma-7b-it" // Gemma-7b IT
   | "llama-3.1-405b-reasoning" // LLaMA31-405b
+  | "llama-3.1-70b-versatile" // LLaMA31-405b Instruct
+  | "llama-3.1-8b-instant" // LLaMA31-405b Chat
+  | "llama3-groq-70b-8192-tool-use-preview" // LLaMA3 Groq 70B Tool Use
+  | "llama3-groq-8b-8192-tool-use-preview" // LLaMA3 Groq 70B Translation
 
 // Perplexity Models (UPDATED 1/31/24)
 export type PerplexityLLMID =
