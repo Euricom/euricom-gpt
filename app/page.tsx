@@ -42,7 +42,7 @@ export default async function HomePage() {
       user_id: adUser.id,
       username: adUser.name,
       display_name: adUser.name,
-      azure_openai_45_o_id: "",
+      // azure_openai_45_o_id: "",
       bio: "",
       image_path: "",
       image_url: "",

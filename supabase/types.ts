@@ -971,7 +971,7 @@ export type Database = {
         Row: {
           anthropic_api_key: string | null
           azure_openai_35_turbo_id: string | null
-          azure_openai_45_o_id: string | null
+          // azure_openai_45_o_id: string | null
           azure_openai_45_turbo_id: string | null
           azure_openai_45_vision_id: string | null
           azure_openai_api_key: string | null
@@ -1000,7 +1000,7 @@ export type Database = {
         Insert: {
           anthropic_api_key?: string | null
           azure_openai_35_turbo_id?: string | null
-          azure_openai_45_o_id: string | null
+          // azure_openai_45_o_id: string | null
           azure_openai_45_turbo_id?: string | null
           azure_openai_45_vision_id?: string | null
           azure_openai_api_key?: string | null
@@ -1029,7 +1029,7 @@ export type Database = {
         Update: {
           anthropic_api_key?: string | null
           azure_openai_35_turbo_id?: string | null
-          azure_openai_45_o_id: string | null
+          // azure_openai_45_o_id: string | null
           azure_openai_45_turbo_id?: string | null
           azure_openai_45_vision_id?: string | null
           azure_openai_api_key?: string | null

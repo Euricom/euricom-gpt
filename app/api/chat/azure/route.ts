@@ -26,9 +26,9 @@ export async function POST(request: Request) {
       case "gpt-4-turbo-preview":
         DEPLOYMENT_ID = profile.azure_openai_45_turbo_id || ""
         break
-      case "gpt-4o":
-        DEPLOYMENT_ID = profile.azure_openai_45_o_id || ""
-        break
+      // case "gpt-4o":
+      //   DEPLOYMENT_ID = profile.azure_openai_45_o_id || ""
+      //   break
       default:
         return new Response(JSON.stringify({ message: "Model not found" }), {
           status: 400
